@@ -70,9 +70,11 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			value = False
 		return (value, response_data)
 	
-	def validate_sin(self, sin):		
-		# SOMEONE CHECK SIN IS A 9 DIGIT NUMBER WITH REGEX - DAVID
-		return True;
+	def validate_sin(self, sin):
+                """Verifies that the SIN is a nine digit number."""
+		sin = "".join(sin.split()) # remove whitespace
+		if (len(sin) != 9): return False
+		return sin.isdigit();
 
 	def handle(self):
 		self.data = self.request.recv(2048).strip()
