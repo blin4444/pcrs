@@ -1,7 +1,7 @@
 import SocketServer
 #import BaseHTTPServer, SimpleHTTPServer
 #import ssl
-import MySQLdb
+from query import Query
 
 from datetime import datetime
 from BaseHTTPServer import BaseHTTPRequestHandler
@@ -21,94 +21,29 @@ class HTTPRequest(BaseHTTPRequestHandler):
 
 class MyTCPHandler(SocketServer.BaseRequestHandler):
 	
-	def validate_token(self, token_string):
-		query = """SELECT id FROM User where token=%s"""
-		cur.execute(query, (token_string))		
-		row = cur.fetchone()
-			
-		if row == None:
-			return None
-		return row[0]
-
-	def insert_sign_in(self, user_id, reason_id):
-		sql = """INSERT INTO Sign_In (user_id, reason_id, sign_in_time) VALUES (%s, %s, %s)"""
-		cur.execute(sql, (user_id, reason_id, datetime.now(),))
-		db.commit()
-
+	
 	def sign_in(self, token, reason_id):
 		try:
-			user_id = self.validate_token(token)
+			user_id = query.validate_token(token)
 		
 			if user_id == None:
 				return "No user with token found"
 
-			self.insert_sign_in(user_id, 1)
+			query.insert_sign_in(user_id, 1)
 			return str(user_id)
 		
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
 			return "Unknown Database Error"
 	
-	def generate_token(self):
-		#temperory generator until we figure out a better way		
-		max_id = 100000		
-		try:
-			cur.execute("""SELECT MAX(id) FROM User""")		
-			max_id = cur.fetchone()
-			if max_id != None:
-				max_id = max_id[0]
-		except:
-			max_id = None
-		
-		if max_id != None:
-			return "user"+str(max_id+1)
-		else:
-			return "user1"
-			
-	def insert_user(self, user_id, token):
-		sql = """INSERT INTO User(id, token) VALUES (%s, %s)"""
-		try:		
-			cur.execute(sql, (user_id,token))
-			return True
-		except Exception, err:
-			print "Unexpected Error: "+str(err)
-			return False
-	
-	def insert_user_info(self, last_name, first_name, middle_name, sex, sin,\
-			street_address, city, province, postal_code, \
-			phone, alternate_phone, email):
-		sql = """INSERT INTO User_Info(last_name, first_name, middle_name, gender, sin,
-			street_address, city, province, postal_code, phone, 
-			alternate_phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-		
-		query = """SELECT id FROM User_Info WHERE sin=%s"""
-		try:
-			cur.execute(sql, (last_name, first_name, middle_name, sex, \
-					sin, street_address, city, province, \
-					postal_code, phone, alternate_phone, email))
-			print "GOT HERE!"
-			db.commit()
-			cur.execute(query, (sin))
-
-			user_id = cur.fetchone()
-			if user_id != None:
-				user_id = user_id[0]
-			if user_id == None:
-				return None
-								
-			return user_id
-		except Exception, err:
-			print "Unexpected Error: "+str(err)
-			return None
-
 	def register(self,last_name, first_name, middle_name, sex, sin, date_of_birth, \
 				street_address, city, province, postal_code, phone, alternate_phone, email):		
 
-		check_duplicate = self.sin_already_exists(sin)
+		check_duplicate = query.sin_already_exists(sin)
 		if check_duplicate:
 			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
 
-		user_id = self.insert_user_info(last_name, first_name, \
+		user_id = query.insert_user_info(last_name, first_name, \
 				middle_name, sex, sin, \
 				street_address, city, province, postal_code, \
 				phone, alternate_phone, email)
@@ -116,11 +51,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		if user_id == None:
 			return "Failed to input user into the database"
 
-		token = self.generate_token()
-		success = self.insert_user(user_id, token)
+		token = query.generate_token()
+		success = query.insert_user(user_id, token)
 		#success = True
-		if success:
-			db.commit()					
+		if success:				
 			return token 
 		return "Failed to input user info"
 	
@@ -135,17 +69,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			response_data = response_data + name+ " is empty.\n"
 			value = False
 		return (value, response_data)
-
-	def sin_already_exists(self, sin):
-		query = """SELECT * FROM User_Info WHERE sin = %s"""
-		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
-		cur.execute(query, (sin))
-		row = cur.fetchone()
-		if row != None:
-			cur.execute(info_query, (sin))
-			return cur.fetchone()
-		else:
-			return False
 	
 	def validate_sin(self, sin):		
 		# SOMEONE CHECK SIN IS A 9 DIGIT NUMBER WITH REGEX - DAVID
@@ -162,7 +85,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		elif request.path == "/validate/":
 			if 'token' in request.headers:
 				token = request.headers["token"]
-				if self.validate_token(token) == None:
+				if query.validate_token(token) == None:
 					response_data = "No user with token found"
 				else:	
 					response_data = "User exists in the system"
@@ -214,14 +137,10 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
-	db = MySQLdb.connect(host="localhost",
-				user = "root",
-				passwd = "root",
-				db="PCRS_V3");
-	cur = db.cursor()
+	query = Query()
+
 	server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
 	try:
 		server.serve_forever()
 	finally:
-		cur.close()
-		db.close()
+		query.close()
