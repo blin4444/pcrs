@@ -29,7 +29,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			if user_id == None:
 				return "No user with token found"
 
-			query.insert_sign_in(user_id, 1)
+			query.insert_sign_in(user_id, reason_id)
 			return str(user_id)
 		
 		except Exception, err:

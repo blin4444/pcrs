@@ -2,7 +2,7 @@ import MySQLdb
 from datetime import datetime
 class Query:
 
-  def __init__(self):
+	def __init__(self):
 		self.db = MySQLdb.connect(host="localhost",
 				user = "root",
 				passwd = "root",
