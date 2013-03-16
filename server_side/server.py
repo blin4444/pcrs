@@ -79,7 +79,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		print self.data
 
 		request = HTTPRequest(self.data)	
-		reponse_data = ""
+		response_data = "Test Response"
 		if request.error_code != None:
 			response_data = "Request Data Corrupted: "+request.error_message
 		elif request.path == "/validate/":
@@ -89,6 +89,8 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 					response_data = "No user with token found"
 				else:	
 					response_data = "User exists in the system"
+			else:
+				response_data = "request must have token parameter in header"
 		elif request.path == "/signin/":
 			if 'token' in request.headers and 'reason_id' \
 			in request.headers:			
