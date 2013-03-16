@@ -120,9 +120,8 @@
   <data name="button2.Text" xml:space="preserve">
     <value>I'm here to submit a resume</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="textBox1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Verdana, 20.25pt</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Please enter your login token!</value>
   </data>
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -149,6 +148,7 @@
   <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="button4.Font" type="System.Drawing.Font, System.Drawing">
     <value>Arial, 20.25pt</value>
   </data>
@@ -254,6 +254,9 @@
   <data name="button3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Arial, 20.25pt</value>
   </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;button1.Name" xml:space="preserve">
     <value>button1</value>
   </data>
@@ -269,11 +272,11 @@
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MyForm</value>
   </data>
   <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
     <value>104, 419</value>
@@ -281,8 +284,8 @@
   <data name="&gt;&gt;button3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="button4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>411, 55</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>PCRS Login</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>If you don't have a token, please go to the receptionist.</value>
@@ -296,17 +299,17 @@
   <data name="&gt;&gt;button2.Name" xml:space="preserve">
     <value>button2</value>
   </data>
-  <data name="&gt;&gt;button3.Name" xml:space="preserve">
-    <value>button3</value>
+  <data name="button3.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;button4.Name" xml:space="preserve">
     <value>button4</value>
   </data>
-  <data name="button3.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="button4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>411, 55</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>PCRS Login</value>
+  <data name="textBox1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 20.25pt</value>
   </data>
   <data name="button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>408, 55</value>
@@ -317,14 +320,11 @@
   <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>411, 55</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MyForm</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Please enter your login token!</value>
+  <data name="&gt;&gt;button3.Name" xml:space="preserve">
+    <value>button3</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
