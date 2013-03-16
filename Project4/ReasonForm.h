@@ -10,12 +10,12 @@ namespace Project4 {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for MyForm
+	/// Summary for ReasonForm
 	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::Form
+	public ref class ReasonForm : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm(void)
+		ReasonForm(void)
 		{
 			InitializeComponent();
 			//
@@ -27,7 +27,7 @@ namespace Project4 {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~MyForm()
+		~ReasonForm()
 		{
 			if (components)
 			{
@@ -35,13 +35,14 @@ namespace Project4 {
 			}
 		}
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Panel^  panel1;
+
+
 	protected: 
 
 	private:
@@ -57,82 +58,84 @@ namespace Project4 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(ReasonForm::typeid));
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
-			// 
-			// label1
-			// 
-			resources->ApplyResources(this->label1, L"label1");
-			this->label1->Name = L"label1";
-			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
-			// 
-			// textBox1
-			// 
-			resources->ApplyResources(this->textBox1, L"textBox1");
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->UseSystemPasswordChar = true;
 			// 
 			// button1
 			// 
 			resources->ApplyResources(this->button1, L"button1");
 			this->button1->Name = L"button1";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &ReasonForm::button1_Click);
 			// 
 			// button2
 			// 
 			resources->ApplyResources(this->button2, L"button2");
 			this->button2->Name = L"button2";
 			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			this->button2->Click += gcnew System::EventHandler(this, &ReasonForm::button2_Click);
 			// 
 			// button3
 			// 
 			resources->ApplyResources(this->button3, L"button3");
 			this->button3->Name = L"button3";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &ReasonForm::button3_Click);
 			// 
 			// button4
 			// 
 			resources->ApplyResources(this->button4, L"button4");
 			this->button4->Name = L"button4";
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &ReasonForm::button4_Click);
 			// 
-			// label2
+			// panel1
 			// 
-			resources->ApplyResources(this->label2, L"label2");
-			this->label2->ForeColor = System::Drawing::Color::Black;
-			this->label2->Name = L"label2";
-			this->label2->Click += gcnew System::EventHandler(this, &MyForm::label2_Click);
+			resources->ApplyResources(this->panel1, L"panel1");
+			this->panel1->Controls->Add(this->button4);
+			this->panel1->Controls->Add(this->button3);
+			this->panel1->Controls->Add(this->button2);
+			this->panel1->Controls->Add(this->button1);
+			this->panel1->Name = L"panel1";
 			// 
-			// MyForm
+			// ReasonForm
 			// 
 			resources->ApplyResources(this, L"$this");
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->button4);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->label1);
-			this->Name = L"MyForm";
+			this->BackColor = System::Drawing::SystemColors::Window;
+			this->ControlBox = false;
+			this->Controls->Add(this->panel1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->Name = L"ReasonForm";
+			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
+			this->Load += gcnew System::EventHandler(this, &ReasonForm::ReasonForm_Load);
+			this->panel1->ResumeLayout(false);
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void label1_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+				 CloseFunction(1);
 			 }
-	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+				 CloseFunction(2);
 			 }
-private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+				 CloseFunction(3);
+			 }
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+				 CloseFunction(4);
+			 }
+private: System::Void ReasonForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		 }
+private: void CloseFunction(int button_number){
+			 Application::Exit();
 		 }
 };
 }
