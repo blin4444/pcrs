@@ -15,16 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp">
+    <ClCompile Include="FirstUseForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WelcomeForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyForm.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstUseForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReasonForm.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WelcomeForm.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -33,8 +45,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="French.resx">
-      <Filter>Source Files</Filter>
+    <EmbeddedResource Include="ReasonForm.fr-FR.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReasonForm.resx">
+      <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

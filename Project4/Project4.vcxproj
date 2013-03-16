@@ -78,21 +78,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="FirstUseForm.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="WelcomeForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyForm.h">
+    <ClInclude Include="FirstUseForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ReasonForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WelcomeForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="French.resx" />
-    <EmbeddedResource Include="MyForm.fr-FR.resx">
-      <DependentUpon>MyForm.h</DependentUpon>
+    <EmbeddedResource Include="FirstUseForm.en-CA.resx">
+      <DependentUpon>FirstUseForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MyForm.resx">
-      <DependentUpon>MyForm.h</DependentUpon>
+    <EmbeddedResource Include="FirstUseForm.fr-FR.resx">
+      <DependentUpon>FirstUseForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FirstUseForm.resx">
+      <DependentUpon>FirstUseForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReasonForm.fr-FR.resx">
+      <DependentUpon>ReasonForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReasonForm.resx">
+      <DependentUpon>ReasonForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

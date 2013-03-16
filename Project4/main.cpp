@@ -1,4 +1,4 @@
-#include "MyForm.h"
+#include "WelcomeForm.h"
 using namespace Project4;
 
 int main()
@@ -7,5 +7,5 @@ int main()
 	test->Show();
 	while (true) {
 	}*/
-	System::Windows::Forms::Application::Run(gcnew MyForm());
+	System::Windows::Forms::Application::Run(gcnew WelcomeForm());
 }
