@@ -34,13 +34,14 @@ namespace Project4 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^  label1;
+
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label1;
 	protected: 
 
 	private:
@@ -56,6 +57,7 @@ namespace Project4 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -67,87 +69,52 @@ namespace Project4 {
 			// 
 			// label1
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 27.75F));
-			this->label1->Location = System::Drawing::Point(65, 35);
+			resources->ApplyResources(this->label1, L"label1");
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(501, 42);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"Please enter your login token!";
 			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
 			// 
 			// textBox1
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Verdana", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(103, 166);
+			resources->ApplyResources(this->textBox1, L"textBox1");
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(410, 40);
-			this->textBox1->TabIndex = 1;
 			this->textBox1->UseSystemPasswordChar = true;
 			// 
 			// button1
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(103, 236);
+			resources->ApplyResources(this->button1, L"button1");
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(411, 55);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"I\'m here to find a job!";
 			this->button1->UseVisualStyleBackColor = true;
 			// 
 			// button2
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(103, 297);
+			resources->ApplyResources(this->button2, L"button2");
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(411, 55);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"I\'m here to submit a resume";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
 			// button3
 			// 
-			this->button3->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->button3->Location = System::Drawing::Point(104, 419);
+			resources->ApplyResources(this->button3, L"button3");
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(408, 55);
-			this->button3->TabIndex = 4;
-			this->button3->Text = L"I\'m here to other";
 			this->button3->UseVisualStyleBackColor = true;
 			// 
 			// button4
 			// 
-			this->button4->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
-				static_cast<System::Byte>(0)));
-			this->button4->Location = System::Drawing::Point(103, 358);
+			resources->ApplyResources(this->button4, L"button4");
 			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(411, 55);
-			this->button4->TabIndex = 4;
-			this->button4->Text = L"I\'m here to get training";
 			this->button4->UseVisualStyleBackColor = true;
 			// 
 			// label2
 			// 
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18));
+			resources->ApplyResources(this->label2, L"label2");
 			this->label2->ForeColor = System::Drawing::Color::Black;
-			this->label2->Location = System::Drawing::Point(139, 93);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(334, 70);
-			this->label2->TabIndex = 5;
-			this->label2->Text = L"If you don\'t have a token, please go to the receptionist.";
-			this->label2->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			this->label2->Click += gcnew System::EventHandler(this, &MyForm::label2_Click);
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			resources->ApplyResources(this, L"$this");
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(632, 509);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button3);
@@ -156,7 +123,6 @@ namespace Project4 {
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
 			this->Name = L"MyForm";
-			this->Text = L"PCRS Login";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
