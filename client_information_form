@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Form>
+  <Section1 table="User_Info">
+		<NameFirst column="first_name" type="string"/>
+		<NameMiddle column="middle_name" type="string"/>
+		<NameLast column="last_name" type="string"/>
+		<SIN column="sin" type="string"/>
+		<BirthDate column="date_of_birth" type="string"/>
+		<Gender column="gender" type="string"/>
+		<AddressStreet column="street_address" type="string"/>
+		<AddressCity column="city" type="string"/>
+		<AddressProvince column="province" type="string"/>
+		<AddressPostal column="postal_code" type="string"/>
+		<PhoneNumber column="phone" type="string"/>
+		<PhoneNumberAlt column="alternate_phone" type="string"/>
+		<Email column="email" type="string"/>		
+	</Section1>
+	
+	<Section2 table="_____">
+		<EmployementSituation column="employement_situation" type="integer"/>
+		<UnemploymentDuration column="unemployment_duation" type="integer"/>
+		<GovernmentAssistance column="government_assistance" type="integer"/>
+		<ResidencyStatus column="residency_status" type="integer"/>
+	</Section2>
+	
+	<Section3 table="_____">
+		<OfficeUse column="office_use" type="integer"/>
+	</Section3>
+</Form>
