@@ -122,11 +122,17 @@
     <value>None</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 19</value>
+  </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>524, 55</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
     <value>Je suis ici pour trouver du travail</value>
+  </data>
+  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 146</value>
   </data>
   <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>524, 55</value>
@@ -134,11 +140,17 @@
   <data name="button2.Text" xml:space="preserve">
     <value>Je suis ici pour envoyer un CV</value>
   </data>
+  <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 401</value>
+  </data>
   <data name="button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>523, 55</value>
   </data>
   <data name="button3.Text" xml:space="preserve">
     <value>Je suis ici pour quelque chose d'autre</value>
+  </data>
+  <data name="button4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 273</value>
   </data>
   <data name="button4.Size" type="System.Drawing.Size, System.Drawing">
     <value>524, 55</value>

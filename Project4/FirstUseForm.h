@@ -1,5 +1,6 @@
 #pragma once
 #include "ReasonForm.h"
+#include "ServerCommunication.h"
 
 namespace Project4 {
 
@@ -85,7 +86,6 @@ namespace Project4 {
 			// 
 			resources->ApplyResources(this->label2, L"label2");
 			this->label2->Name = L"label2";
-			this->label2->Click += gcnew System::EventHandler(this, &FirstUseForm::label2_Click);
 			// 
 			// token_entry
 			// 
@@ -121,13 +121,11 @@ namespace Project4 {
 		}
 #pragma endregion
 	private: System::Void button_ok_Click(System::Object^  sender, System::EventArgs^  e) {
+				 ServerCommunication^ comm = gcnew ServerCommunication();
+				 comm->CheckToken(FirstUseForm::token_entry->Text);
 				 FirstUseForm::Visible = false;
 				 ReasonForm ^form2 = gcnew ReasonForm();
 				 form2->ShowDialog();
-			 }
-	private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  e) {
-			 }
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 			 }
 private: System::Void token_entry_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		 }

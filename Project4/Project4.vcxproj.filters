@@ -24,6 +24,9 @@
     <ClCompile Include="WelcomeForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ServerCommunication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -37,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="WelcomeForm.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCommunication.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
