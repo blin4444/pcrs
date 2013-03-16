@@ -104,6 +104,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 	def register(self,last_name, first_name, middle_name, sex, sin, date_of_birth, \
 				street_address, city, province, postal_code, phone, alternate_phone, email):		
 
+		check_duplicate = self.sin_already_exists(sin)
+		if check_duplicate:
+			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
 
 		user_id = self.insert_user_info(last_name, first_name, \
 				middle_name, sex, sin, \
@@ -133,16 +136,20 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			value = False
 		return (value, response_data)
 
+	def sin_already_exists(self, sin):
+		query = """SELECT * FROM User_Info WHERE sin = %s"""
+		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
+		cur.execute(query, (sin))
+		row = cur.fetchone()
+		if row != None:
+			cur.execute(info_query, (sin))
+			return cur.fetchone()
+		else:
+			return False
+	
 	def validate_sin(self, sin):		
 		# SOMEONE CHECK SIN IS A 9 DIGIT NUMBER WITH REGEX - DAVID
 		return True;
-		query = """SELECT * FROM User_Info WHERE sin = %s"""
-		print "1!!!!"
-		cur.execute(query, (sin))
-		print "2!!!!"
-		row = cur.fetchone()
-		print "3!!!!"		
-		return row == None
 
 	def handle(self):
 		self.data = self.request.recv(2048).strip()
@@ -152,6 +159,13 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		reponse_data = ""
 		if request.error_code != None:
 			response_data = "Request Data Corrupted: "+request.error_message
+		elif request.path == "/validate/":
+			if 'token' in request.headers:
+				token = request.headers["token"]
+				if self.validate_token(token) == None:
+					response_data = "No user with token found"
+				else:	
+					response_data = "User exists in the system"
 		elif request.path == "/signin/":
 			if 'token' in request.headers and 'reason_id' \
 			in request.headers:			
@@ -186,7 +200,8 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			alternate_phone = request.headers.get("alternate_phone", "-")
 			email = request.headers.get("email", "-")
 
-			if last_name and first_name and sex and sin and date_of_birth and street_address and city and province and postal_code and phone:
+			if last_name and first_name and sex and sin and date_of_birth\
+				 and street_address and city and province and postal_code and phone:
 				response_data = self.register(last_name, first_name, middle_name, sex, sin, date_of_birth, \
 							street_address, city, province, postal_code, phone,\
 							alternate_phone, email) 
