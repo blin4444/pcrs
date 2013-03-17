@@ -26,6 +26,7 @@ int ServerCommunication::CheckToken(System::String^ token)
 
 int ServerCommunication::SendNewSession(System::String^ token, int reason)
 {
+	int resultCode = 0;
 	HttpClient^ client = gcnew HttpClient();
 	HttpRequestMessage^ message = gcnew HttpRequestMessage();
 	System::Uri^ server_uri = gcnew System::Uri("http://localhost:9999/validate/");
@@ -39,7 +40,7 @@ int ServerCommunication::SendNewSession(System::String^ token, int reason)
 
 	task->Wait();
 	HttpResponseMessage^ result = task->Result;
-	resultCode = (int)result->StatusCode;
+	resultCode = System::Convert::ToInt32(result->Content);
 
 	return resultCode;
 }
