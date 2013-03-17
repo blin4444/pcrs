@@ -123,7 +123,7 @@ namespace Project4 {
 	private: System::Void button_ok_Click(System::Object^  sender, System::EventArgs^  e) {
 				 ServerCommunication^ comm = gcnew ServerCommunication();
 				 int r = comm->CheckToken(FirstUseForm::token_entry->Text);
-				 if (r==200) {
+				 if (r==0) {
 					 FirstUseForm::Visible = false;
 					 ReasonForm ^form2 = gcnew ReasonForm(FirstUseForm::token_entry->Text);
 					 form2->ShowDialog();

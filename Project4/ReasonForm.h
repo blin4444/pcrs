@@ -140,7 +140,7 @@ private: System::Void ReasonForm_Load(System::Object^  sender, System::EventArgs
 private: void CloseFunction(int button_number){
 			 ServerCommunication^ comm = gcnew ServerCommunication();
 			 int result = comm->SendNewSession(myToken, button_number);
-			 if (result==200)
+			 if (result==0)
 				Application::Exit();
 		 }
 };
