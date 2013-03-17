@@ -35,6 +35,8 @@ public:
 		return label;
 	}
 
+	virtual void AddRadioGroup(vector<String^>& radioGroup, bool isList) = 0;
+
 protected:
 	bool isSeparateLines;
 	Control^ lastControl;

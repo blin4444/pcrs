@@ -3,6 +3,8 @@ using namespace System::Xml;
 using namespace System::Drawing;
 #include "XmlGuiMaker.h"
 #include "PcrsXmlGuiMaker.h"
+#include <vector>
+using namespace std;
 
 namespace Receptionist {
 
@@ -75,65 +77,15 @@ namespace Receptionist {
 		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("form.xml");
 
 			FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
-			panel->Padding = System::Windows::Forms::Padding(32);
+			panel->Padding = System::Windows::Forms::Padding(24);
 			panel->AutoScroll = true;
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
 
-			String^ id;
-			String^ elementType;
-			String^ type;
+			
+
 			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
-			while (reader->Read()) 
-			{
-				switch (reader->NodeType) 
-				{
-					case XmlNodeType::Element: // The node is an element.
-						id = reader->GetAttribute("id");
-						type = reader->GetAttribute("type");
-						elementType = reader->Name;
-						Console::Write("ELEMENT <" + elementType + id);
-						Console::WriteLine(">");
-						if (elementType == "Section")
-						{
-							if (type != nullptr)
-							{
-								maker->SetSeparateLines(type->Contains("separate"));
-							}
-						}
-						else if (elementType == "Field")
-						{
-							if (id != nullptr)
-							{
-								if (id == "Gender")
-								{
-									maker->AddGenderField();
-								}
-								else
-								{
-									maker->AddField(id);
-								}
-								if (maker->GetSeparateLines())
-								{
-									maker->CreateBreak(true);
-								}
-							}
-							//Ignoring fields with no ID
-						}
-						else if (elementType == "br")
-						{
-							maker->CreateBreak(false);
-						}
-						break;
-					case XmlNodeType::Text: //Display the text in each element.
-						Console::WriteLine ("VALUE" + reader->Value);
-						break;
-					case XmlNodeType::EndElement: //Display the end of the element.
-						Console::Write("END </" + reader->Name);
-						Console::WriteLine(">");
-						break;
-				}
-			}
+			
 		}
 	};
 }

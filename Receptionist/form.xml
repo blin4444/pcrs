@@ -3,11 +3,11 @@
     <Section id="1" table="User_Info">
 		<Field id="First Name" column="first_name" type="string"/>
 		<Field id="Middle Name" column="middle_name" type="string"/>
-		<Field id="Last Name" column="last_name" type="string"/>
+		<Field id="Last Name" column="last_name" optional type="string"/>
 		<Field id="SIN" column="sin" type="string"/>
-        <br />
         <Field id="Birth Date" column="date_of_birth" type="string"/>
-        <Field id="Gender" column="gender" type="string"/>
+        <!--<Field id="Gender" column="gender" type="string"/>-->
+        <Field id="Gender" column="gender" type="integer" style="list" />
         <br />
         <Field id="Street Address" column="street_address" type="string"/>
         <Field id="City" column="city" type="string"/>
@@ -21,7 +21,13 @@
     </Section>
 
     <Section id="2" table="_____">
-        <Field id="Employment Situation" column="employement_situation" type="integer"/>
+		<RadioGroup id="Employment Situation" column="employment_situation" type="integer" style="radio">
+			<Radio>I am unemployed</Radio>
+			<Radio>I am working 20 hours or less and want to work more</Radio>
+			<Radio>I must leave my job for medical reason</Radio>
+			<Radio>I am unemployed</Radio>
+		</RadioGroup>
+        <Field id="Employment Situation"  type="integer"/>
         <Field id="Unemployment Duration" column="unemployment_duation" type="integer"/>
         <Field id="Government Assistance" column="government_assistance" type="integer"/>
         <Field id="Residency Status" column="residency_status" type="integer"/>
