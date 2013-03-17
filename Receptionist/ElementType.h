@@ -8,7 +8,8 @@ namespace PCRS
 		RadioGroupType,
 		SectionType,
 		TextFieldType,
-		CheckBoxType
+		CheckBoxType,
+		DateType
 	};
 
 }

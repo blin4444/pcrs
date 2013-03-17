@@ -14,10 +14,11 @@ public:
 	virtual bool IsType(PCRS::ElementType type) = 0;
 
 	String^ id;
-	String^ label;
+	String^ label; 
 	//String^ style;
 	//String^ type;
 	bool isRequired;
+	String^ placeHolder;
 	
 };
 

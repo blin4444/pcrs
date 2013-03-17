@@ -11,8 +11,7 @@ public:
 		this->label = label;
 		this->isRequired = false;
 		this->isList = false;
-		this->container = nullptr;
-		this->comboBox = nullptr;
+		this->strings = gcnew System::ComponentModel::BindingList<String^>();
 		this->isGender = false;
 	}
 
@@ -23,7 +22,9 @@ public:
 
 	bool isList;
 	bool isGender;
-	System::Windows::Forms::TableLayoutPanel^ container;
-	System::Windows::Forms::ComboBox^ comboBox;
+	/*System::Windows::Forms::TableLayoutPanel^ container;
+	System::Windows::Forms::ComboBox^ comboBox;*/
+
+	System::ComponentModel::BindingList<String^>^ strings;
 };
 
