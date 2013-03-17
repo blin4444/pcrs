@@ -3,7 +3,7 @@
 2 - Database error when user tries to sign in
 3 - Database error when trying to enter user info
 4 - Database error when trying to enter user token
-5 - Unimplemented Request
+5 - Requested file not found
 6 - No token found when trying to validate token
 7 - No token or no reason in request to sign in
 8 - Registration form invalid
