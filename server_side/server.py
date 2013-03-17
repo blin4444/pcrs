@@ -103,18 +103,17 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			args = list()
 			sin = None
 			for argument in arguments:
-				if argument != "sin":
-					(value, response_data) = self.process_param(response_data, argument, self.headers.get(argument, False))
+				if argument[0] != "sin":
+					(value, response_data) = self.process_param(response_data, argument[1], self.headers.get(argument[0], False))
 					if not value:
 						should_register = False
 					args.append(value)
 				else:
 					sin = self.headers.get("sin", "0")
 					if not self.validate_sin(sin):
-						response_data = response_data + "sin is invalid\n"
+						response_data = response_data + "SIN is invalid\n"
 						should_register = False;
-					else:					
-						print "is valid"						
+					else:									
 						check_duplicate = query.sin_already_exists(sin)
 						if check_duplicate:
 							response_data = response_data + "User with this SIN already existself. Here is the related info: "+str(check_duplicate)
@@ -126,7 +125,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				if not response_data[0].isdigit():
 					response_data = "0 - "+response_data
 			else:
-				response_data = "8 - "+ response_data + "\n Will not register the user"
+				response_data = "8 - "+ response_data + "\nWill not register the user"
 		else:
 			response_data = "9 - Unknown request"
 
