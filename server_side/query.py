@@ -48,25 +48,25 @@ class Query:
 		sql = """INSERT INTO User(id, token) VALUES (%s, %s)"""
 		try:		
 			self.cur.execute(sql, (user_id,token))
-			db.commit()	
+			self.db.commit()	
 			return True
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
 			return False
 	
-	def insert_user_info(self, last_name, first_name, middle_name, sex, sin,\
+	def insert_user_info(self, last_name, first_name, middle_name, sex, sin, date_of_birth,\
 			street_address, city, province, postal_code, \
 			phone, alternate_phone, email):
 		sql = """INSERT INTO User_Info(last_name, first_name, middle_name, gender, sin,
-			street_address, city, province, postal_code, phone, 
-			alternate_phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+			date_of_birth, street_address, city, province, postal_code, phone, 
+			alternate_phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 		
 		query = """SELECT id FROM User_Info WHERE sin=%s"""
 		try:
 			self.cur.execute(sql, (last_name, first_name, middle_name, sex, \
-					sin, street_address, city, province, \
+					sin, date_of_birth, street_address, city, province, \
 					postal_code, phone, alternate_phone, email))
-			print "GOT HERE!"
+			
 			self.db.commit()
 			self.cur.execute(query, (sin))
 
@@ -86,9 +86,17 @@ class Query:
 		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
 		self.cur.execute(query, (sin))
 		row = self.cur.fetchone()
+		print "does sin already exist?"+str(row)
 		if row != None:
 			self.cur.execute(info_query, (sin))
-			return self.cur.fetchone()
+			result = self.cur.fetchone()
+			if result == None:
+				token = self.generate_token()			
+				self.insert_user(row[0], token)
+				self.cur.execute(info_query, (sin))
+				result = self.cur.fetchone()		
+			print str(result)
+			return result
 		else:
-			return False
+			return None
 
