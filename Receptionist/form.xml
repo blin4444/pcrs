@@ -28,6 +28,6 @@
     </div>
 
     <div id="3">
-        <input id="office_use" name="Office Use" type="integer"/>
+        <input id="office_use" name="Office Use" type="list"/>
     </div>
 </form>

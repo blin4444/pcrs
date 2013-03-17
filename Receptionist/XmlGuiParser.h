@@ -85,6 +85,7 @@ public:
 									else if (isRadio || isList || isGender)
 									{
 										RadioGroup^ radioGroup = gcnew RadioGroup(id, label);
+										radioGroup->isGender = isGender;
 										radioGroup->isList = isList;
 										newElement = radioGroup;
 										radioGroups->Add(id, radioGroup);
