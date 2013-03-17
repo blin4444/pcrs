@@ -18,8 +18,9 @@ int ServerCommunication::CheckToken(System::String^ token)
 	auto task = client->SendAsync(message);
 
 	task->Wait();
-	HttpResponseMessage^ result = task->Result;
-	resultCode = (int)result->StatusCode;
+	HttpResponseMessage^ response = task->Result;
+	HttpContent^ resultContent = response->Content;
+	System::String^ result = resultContent->ReadAsStringAsync()->Result;
 
 	return resultCode;
 }
@@ -39,8 +40,9 @@ int ServerCommunication::SendNewSession(System::String^ token, int reason)
 	auto task = client->SendAsync(message);
 
 	task->Wait();
-	HttpResponseMessage^ result = task->Result;
-	resultCode = System::Convert::ToInt32(result->Content);
+	HttpResponseMessage^ response = task->Result;
+	HttpContent^ resultContent = response->Content;
+	System::String^ result = resultContent->ReadAsStringAsync()->Result;
 
 	return resultCode;
 }

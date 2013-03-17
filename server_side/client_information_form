@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<form>
+    <div id="User_Info">
+        <input id="first_name" name="First Name" type="string"/>
+        <input id="middle_name" name="Middle Name" type="string" required="true"/>
+        <input id="last_name" name="Last Name" type="string"/>
+        <br/>
+        <input id="sin" name="SIN Number" type="string"/>
+        <input id="date_of_birth" name="Birth Date" type="string"/>
+        <input id="gender" name="Gender" type="string"/>
+        <br/>
+        <input id="street_address" name="Street Address" type="string"/>
+        <input id="city" name="City" type="string"/>
+        <input id="province" name="Province" type="string"/>
+        <input id="postal_code" name="Postal Code" type="string"/>
+        <br/>
+        <input id="phone" name="Phone Number" type="string"/>
+        <input id="alternate_phone" name="Alternate Phone Number" type="string" required="true"/>
+        <input id="email" name="Email" type="string"/>
+    </div>
+
+    <div id="2">
+        <input id="employement_situation" name="Employment Situation" type="integer"/>
+        <input id="unemployment_duation" name="Unemployment Duration" type="integer" required="true"/>
+        <br/>
+        <input id="government_assistance" name="Government Assistance" type="integer" required="true"/>
+        <input id="residency_status" name="Residency Status" type="integer"/>
+    </div>
+
+    <div id="3">
+        <input id="office_use" name="Office Use" type="integer"/>
+    </div>
+</form>
