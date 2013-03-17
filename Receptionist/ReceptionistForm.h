@@ -91,6 +91,7 @@ namespace Receptionist {
 
 			for each (FormElement^ formElement in elements)
 			{
+				sgValue = nullptr;
 				isRequired = formElement->isRequired;
 				id = formElement->id;
 
@@ -118,6 +119,11 @@ namespace Receptionist {
 				else if (formElement->IsType(PCRS::BreakType))
 				{
 					continue;
+				}
+
+				if (sgValue == nullptr)
+				{
+					sgValue = "N/A";
 				}
 				Console::WriteLine(id + ": " + sgValue);
 
