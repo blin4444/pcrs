@@ -281,7 +281,6 @@ namespace Receptionist {
 				submit->Click += gcnew System::EventHandler(this, &ReceptionistForm::btnSubmit_Click);
 				newPanel->Controls->Add(submit);
 				panel->Controls->Add(newPanel);
-				//panel->Controls->Add(submit);
 				panel->SetRow(newPanel, maker->IncRow());
 			}
 		}

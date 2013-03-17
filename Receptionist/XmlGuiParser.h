@@ -26,7 +26,9 @@ public:
 	{
 		ServerCommunication^ comm = gcnew ServerCommunication();
 		String^ test = comm->GetXmlFile(file);
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(comm->GetXmlFile(file)));
+		String^ xml = comm->GetXmlFile(file);
+		Console::Write(xml);
+		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(xml));
 
 		String^ id;
 		String^ label;
