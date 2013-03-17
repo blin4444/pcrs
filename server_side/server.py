@@ -125,7 +125,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
-	form = Form("client_information_form")
+	form = Form("client_information_form.xml")
 	server = BaseHTTPServer.HTTPServer((HOST, PORT), CustomHandler)
 	try:
 		server.serve_forever()
