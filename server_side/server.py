@@ -56,6 +56,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if (len(sin) != 9): return False
 		return sin.isdigit()
 	
+
 	def do_POST(self):
 		response_data = ""
 		if self.path == "/validate/":
@@ -96,20 +97,19 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			response_data = ""
 			should_register = True
 			sectionID = self.headers.get("sectionID", False)
+	
 			argumentMap = form.buildArgumentMap()
 			arguments = argumentMap[sectionID]
 			args = list()
 			sin = None
 			for argument in arguments:
 				if argument != "sin":
-					print "Not sin"
 					(value, response_data) = self.process_param(response_data, argument, self.headers.get(argument, False))
 					if not value:
 						should_register = False
 					args.append(value)
 				else:
 					sin = self.headers.get("sin", "0")
-					print "SIN!" + sin
 					if not self.validate_sin(sin):
 						response_data = response_data + "sin is invalid\n"
 						should_register = False;

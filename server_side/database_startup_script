@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Registration_Option(
 	ud_id INT,
 	ga_id INT,
 	rs_id INT,
+	ou_id INT,
 	registration_time DATETIME NOT NULL,
 	PRIMARY KEY(user_id, registration_time)
 );

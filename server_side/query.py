@@ -93,11 +93,11 @@ class Query:
 	            print "Unexpected Error: "+str(err)
 	            return None
 
-	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id):
-		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, registration_time)
-			 VALUES(%s, %s, %s, %s, %s, %s)"""
+	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id, ou_id):
+		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, ou_id, registration_time)
+			 VALUES(%s, %s, %s, %s, %s, %s, %s)"""
 		try:
-			self.cur.execute(sql, (user_id, es_id, ud_id, ga_id, rs_id, datetime.now()))
+			self.cur.execute(sql, (user_id, es_id, ud_id, ga_id, rs_id, ou_id, datetime.now()))
 			self.db.commit()
 			return True
 		except Exception, err:
