@@ -61,6 +61,7 @@ public:
 	void HandleMask(TextField^ textField, MaskedTextBox^ maskedTextBox)
 	{
 		maskedTextBox->ValidatingType = String::typeid;
+		maskedTextBox->TextMaskFormat = MaskFormat::ExcludePromptAndLiterals;
 		maskedTextBox->MaskInputRejected += gcnew System::Windows::Forms::MaskInputRejectedEventHandler(this, &XmlGuiMaker::maskedTextBox_MaskInputRejected);
 		maskedTextBox->TypeValidationCompleted += gcnew System::Windows::Forms::TypeValidationEventHandler(this, &XmlGuiMaker::maskedTextBox_MaskInputAccepted);
 		//maskedTextBox->Validated += gcnew System::EventHandler(this, &XmlGuiMaker::maskedTextBox_Validated);
@@ -69,6 +70,9 @@ public:
 		{
 			case Telephone:
 				maskedTextBox->Mask = "(999)-000-0000";
+				break;
+			case SIN:
+				maskedTextBox->Mask = "999/999/999";
 				break;
 		}
 	}
@@ -80,7 +84,14 @@ public:
 
 	System::Void maskedTextBox_MaskInputAccepted(System::Object^ sender, System::Windows::Forms::TypeValidationEventArgs^  e) {
 		MaskedTextBox^ maskedTextBox = (MaskedTextBox^) sender;
-		//maskedTextBox->BackColor = Color::LightGreen;
+		if (/*e->IsValidInput && */maskedTextBox->MaskFull)
+		{
+			maskedTextBox->BackColor = Color::LightGreen;
+		}
+		else
+		{
+			maskedTextBox->BackColor = Color::LightPink;
+		}
 	}
 
 	System::Void maskedTextBox_Validated(System::Object^ sender, System::EventArgs^ e)

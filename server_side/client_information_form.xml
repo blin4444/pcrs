@@ -14,8 +14,8 @@
         <input id="province" name="Province" type="text"/>
         <input id="postal_code" name="Postal Code" type="text"/>
         <br/>
-        <input id="phone" name="Phone Number" type="text" placeholder="n/a"/>
-        <input id="alternate_phone" name="Alternate Phone Number" type="text" placeholder="n/a"/>
+        <input id="phone" name="Phone Number" type="tel" placeholder="n/a"/>
+        <input id="alternate_phone" name="Alternate Phone Number" type="tel" placeholder="n/a"/>
         <input id="email" name="Email" type="text" placeholder="n/a"/>
 		<br/>
 		<br/>
