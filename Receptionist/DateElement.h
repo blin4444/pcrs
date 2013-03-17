@@ -17,6 +17,6 @@ public:
 	{
 		return type == PCRS::DateType;
 	}
-
+	
 };
 
