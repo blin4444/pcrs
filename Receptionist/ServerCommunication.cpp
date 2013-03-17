@@ -5,7 +5,7 @@ ServerCommunication::ServerCommunication(void)
 	client = gcnew HttpClient();
 }
 
-int ServerCommunication::sendRequest(String^ host, String^ path, Collections::Generic::List<KeyValue^>^ args, String^ result)
+String^ ServerCommunication::sendRequest(String^ host, String^ path, Collections::Generic::List<KeyValue^>^ args, String^ result)
 {
 	int resultCode = 0;
 	HttpRequestMessage^ message = gcnew HttpRequestMessage();
@@ -24,9 +24,8 @@ int ServerCommunication::sendRequest(String^ host, String^ path, Collections::Ge
 	HttpResponseMessage^ response = task->Result;
 	HttpContent^ resultContent = response->Content;
 	result = resultContent->ReadAsStringAsync()->Result;
-	resultCode = Convert::ToInt32(result[0])-48;
 
-	return resultCode;
+	return result;
 }
 
 String^ ServerCommunication::GetXmlFile(System::String^ file)
@@ -34,14 +33,18 @@ String^ ServerCommunication::GetXmlFile(System::String^ file)
 	Collections::Generic::List<KeyValue^>^ args = gcnew Collections::Generic::List<KeyValue^>();
 	args->Add(gcnew KeyValue("file", file));
 	String^ result;
-	if (!sendRequest("localhost:9999", "getxml", args, result))
-		return result;
-	else
-		return nullptr;
+	result = sendRequest("localhost:9999", "getxml", args, result);
+	return result;
+}
+
+int ServerCommunication::GetCodeFromResult(String^ result)
+{
+	return Convert::ToInt32(result[0])-48;
 }
 
 int ServerCommunication::SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args)
 {
 	String^ result;
-	return sendRequest("localhost:9999", "register", args, result);
+	result = sendRequest("localhost:9999", "register", args, result);
+	return GetCodeFromResult(result);
 }

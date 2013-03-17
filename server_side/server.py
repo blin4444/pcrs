@@ -70,12 +70,16 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		elif self.path == "/getxml/":
 			file = self.headers.get("file", False)
 			try:
-				if self.file == "remote_generated_xml":
+				if file == "remote_generated_xml":
 					response_data = self.options()
 				else:
-					response_data = str(open(file).read())
+					f = open(file, 'r')
+					response_data = f.read()
+					f.close()
 			except Exception, err:
 				response_data = "5 - Xml request failed, file not found"
+				f.close()
+				
 		
 
 		elif self.path == "/signin/":

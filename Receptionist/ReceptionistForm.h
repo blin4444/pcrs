@@ -225,11 +225,11 @@ namespace Receptionist {
 			String^ message;
 			try
 			{
-				guiParser->Parse("form.xml");
+				guiParser->Parse("client_information_form.xml");
 
 				maker->MakeFromElementList(guiParser->elements);
 
-				optionsParser->Parse("options.xml");
+				optionsParser->Parse("remote_generated_xml");
 			}
 			catch (System::IO::FileNotFoundException^ ex)
 			{

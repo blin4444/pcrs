@@ -10,6 +10,7 @@ using namespace std;
 #include "RadioGroup.h"
 #include "Break.h"
 #include "DateElement.h"
+#include "ServerCommunication.h"
 
 ref class XmlGuiParser
 {
@@ -23,7 +24,9 @@ public:
 
 	void Parse(String^ file)
 	{
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(file);
+		ServerCommunication^ comm = gcnew ServerCommunication();
+		String^ test = comm->GetXmlFile(file);
+		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(comm->GetXmlFile(file)));
 
 		String^ id;
 		String^ label;
