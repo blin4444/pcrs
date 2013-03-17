@@ -11,6 +11,7 @@
         <br/>
         <input id="street_address" name="Street Address" type="text"/>
         <input id="city" name="City" type="text"/>
+        <br/>
         <input id="province" name="Province" type="text"/>
         <input id="postal_code" name="Postal Code" type="text"/>
         <br/>

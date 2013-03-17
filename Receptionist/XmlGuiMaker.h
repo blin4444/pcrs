@@ -74,12 +74,12 @@ public:
 
 	virtual void PlaceToRight(Control^ left, Control^ right) 
 	{
-		right->SetBounds(left->Bounds.Width + 10,0, right->Bounds.Width, right->Bounds.Height);
+		right->SetBounds(left->Bounds.Width + 5,0, right->Bounds.Width, right->Bounds.Height);
 	}
 
 	virtual void PlaceUnder(Control^ top, Control^ bottom) 
 	{
-		bottom->SetBounds(0, top->Bounds.Height + 10, bottom->Bounds.Width, bottom->Bounds.Height);
+		bottom->SetBounds(0, top->Bounds.Height + 5, bottom->Bounds.Width, bottom->Bounds.Height);
 	}
 
 	/*virtual Label^ CreateLabel(System::String^ text)

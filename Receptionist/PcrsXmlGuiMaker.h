@@ -102,7 +102,8 @@ public:
 	virtual Panel^ CreateNewPanel() override
 	{
 		Panel^ newPanel = gcnew Panel();
-		newPanel->Padding = System::Windows::Forms::Padding(20, 0, 20,0);
+		newPanel->Margin = System::Windows::Forms::Padding(5);
+		newPanel->Padding = System::Windows::Forms::Padding(5, 0, 5,0);
 		lastControl = newPanel;
 		newPanel->AutoSize = true;
 		panel->Controls->Add(newPanel);
