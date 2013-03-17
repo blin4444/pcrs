@@ -12,9 +12,8 @@ public:
 		this->isRequired = false;
 		this->isList = false;
 		this->strings = gcnew System::ComponentModel::BindingList<String^>();
-		this->strings->Add("Nothing available");
 		this->isGender = false;
-		this->index = 0;
+		this->index = -1;
 	}
 
 	virtual bool IsType(PCRS::ElementType type) override

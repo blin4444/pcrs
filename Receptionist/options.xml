@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <options>
-	<div id="employment_situation" name="Please choose one: ">
-		<input id="1" value="I am unemployed" type="radio" />
-		<input id="2" value="I am working 20 hours or less and want to work more" type="radio" />
-		<input id="3" value="I must leave my job for medical reason" type="radio" />
-		<input id="4" value="I am employed and need an authorization to quit" type="radio" />
+	<div id="employment_situation">
+		<input id="1" value="I am unemployed" />
+		<input id="2" value="I am working 20 hours or less and want to work more" />
+		<input id="3" value="I must leave my job for medical reason" />
+		<input id="4" value="I am employed and need an authorization to quit" />
 	</div>
-	<div id="unemployment_duration" name="I have been unemployed for: ">
-		<input id="1" value="Less than six months" type="radio" />
-		<input id="2" value="Between six months and one year" type="radio" />
+	<div id="unemployment_duration">
+		<input id="1" value="Less than six months" />
+		<input id="2" value="Between six months and one year" />
 	</div>
 </options>

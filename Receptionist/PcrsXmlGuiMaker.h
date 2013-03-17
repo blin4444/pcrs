@@ -228,6 +228,7 @@ public:
 		//dateTimePicker->ShowUpDown = true;
 
 		dateTimePicker->DataBindings->Add("Text", date, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
+		newPanel->Controls->Add(label);
 		PlaceToRight(label, dateTimePicker);
 		newPanel->Controls->Add(dateTimePicker);
 	}
