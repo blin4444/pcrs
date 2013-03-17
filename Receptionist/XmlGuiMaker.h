@@ -1,4 +1,5 @@
 #pragma once
+#include "FormElement.h"
 using namespace System;
 using namespace System::Xml;
 using namespace System::Drawing;
@@ -10,6 +11,8 @@ ref class XmlGuiMaker abstract
 {
 public:
 
+	virtual void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list) = 0;
+	
 	virtual void AddField(System::String^ text) = 0;
 
 	virtual void AddGenderField() = 0;

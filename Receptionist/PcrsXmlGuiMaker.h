@@ -1,8 +1,16 @@
 #pragma once
+#include "ElementType.h"
+#include "Section.h"
+#include "FormElement.h"
+#include "RadioGroup.h"
+#include "TextField.h"
+
 using namespace System::Xml;
 using namespace System::Drawing;
 using namespace System::Windows::Forms;
 using namespace std;
+using namespace PCRS;
+
 
 #include "xmlguimaker.h"
 
@@ -30,11 +38,31 @@ public:
 		this->panel = panel;
 	}
 
-	void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list)
+	virtual void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list) override
 	{
+		Section^ currentSection;
 		for each (FormElement^ element in list)
 		{
-			
+			if (element->IsType(BreakType))
+			{
+			}
+			else if (element->IsType(SectionType))
+			{
+				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				currentSection = (Section^) element;
+				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
+				MakeFromElementList(currentSection->elements);
+				panel->AutoSize = true;
+				this->panel->Controls->Add(panel);
+
+			}
+			else if (element->IsType(RadioGroupType))
+			{
+			}
+			else if (element->IsType(TextFieldType))
+			{
+				this->AddField(((TextField^) element)->label);
+			}
 		}
 	}
 
