@@ -68,7 +68,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 		
 		elif self.path == "/getxml/":
-			file = headerself.get("file", False)
+			file = self.headers.get("file", False)
 			try:
 				if self.file == "remote_generated_xml":
 					response_data = self.options()
@@ -90,7 +90,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		elif self.path == "/register/":
 			response_data = ""
 			should_register = True
-			sectionID = self.headerself.get("sectionID", False)
+			sectionID = self.headers.get("sectionID", False)
 			argumentMap = form.buildArgumentMap()
 			arguments = argumentMap[sectionID]
 			args = list()
@@ -98,12 +98,12 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			for argument in arguments:
 				if argument != "sin":
 					print "Not sin"
-					(value, response_data) = self.process_param(response_data, argument, self.headerself.get(argument, False))
+					(value, response_data) = self.process_param(response_data, argument, self.headers.get(argument, False))
 					if not value:
 						should_register = False
-					argself.append(value)
+					args.append(value)
 				else:
-					sin = self.headerself.get("sin", "0")
+					sin = self.headers.get("sin", "0")
 					print "SIN!" + sin
 					if not self.validate_sin(sin):
 						response_data = response_data + "sin is invalid\n"
@@ -115,7 +115,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 							response_data = response_data + "User with this SIN already existself. Here is the related info: "+str(check_duplicate)
 							should_register = False;
 						else:
-							argself.append(sin)
+							args.append(sin)
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 			else:

@@ -43,5 +43,5 @@ String^ ServerCommunication::GetXmlFile(System::String^ file)
 int ServerCommunication::SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args)
 {
 	String^ result;
-	return sendRequest("localhost:9999", "getxml", args, result);
+	return sendRequest("localhost:9999", "register", args, result);
 }
