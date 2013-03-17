@@ -71,7 +71,7 @@ namespace Receptionist {
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 21);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1000, 480);
+			this->ClientSize = System::Drawing::Size(725, 480);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->ForeColor = System::Drawing::Color::Black;
