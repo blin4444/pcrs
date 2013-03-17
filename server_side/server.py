@@ -123,6 +123,8 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 							args.append(sin)
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
+				if not response_data[0].isdigit():
+					response_data = "0 - "+response_data
 			else:
 				response_data = "8 - "+ response_data + "\n Will not register the user"
 		else:
