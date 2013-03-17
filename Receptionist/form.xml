@@ -1,24 +1,27 @@
 <?xml version="1.0"?>
 <Form>
     <Section id="1" table="User_Info">
-        <Field id="First Name" column="first_name" type="string"/>
-        <Field id="Middle Name" column="middle_name" type="string"/>
-        <Field id="Last Name" column="last_name" type="string"/>
-        <Field id="SIN Number" column="sin" type="string"/>
-        <Break />
+		<Field id="First Name" column="first_name" type="string"/>
+		<Field id="Middle Name" column="middle_name" type="string"/>
+		<Field id="Last Name" column="last_name" type="string"/>
+		<Field id="SIN Number" column="sin" type="string"/>
+        <br />
         <Field id="Birth Date" column="date_of_birth" type="string"/>
         <Field id="Gender" column="gender" type="string"/>
+        <br />
         <Field id="Street Address" column="street_address" type="string"/>
         <Field id="City" column="city" type="string"/>
         <Field id="Province" column="province" type="string"/>
         <Field id="Postal Code" column="postal_code" type="string"/>
+        <br />
         <Field id="Phone Number" column="phone" type="string"/>
         <Field id="Alternate Phone Number" column="alternate_phone" type="string"/>
+        <br />
         <Field id="Email" column="email" type="string"/>
     </Section>
 
     <Section id="2" table="_____">
-        <Field id="Employement Situation" column="employement_situation" type="integer"/>
+        <Field id="Employment Situation" column="employement_situation" type="integer"/>
         <Field id="Unemployment Duration" column="unemployment_duation" type="integer"/>
         <Field id="Government Assistance" column="government_assistance" type="integer"/>
         <Field id="Residency Status" column="residency_status" type="integer"/>

@@ -26,5 +26,11 @@
     <ClInclude Include="XmlGuiMaker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PcrsTableXmlGuiBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PcrsXmlGuiMaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
