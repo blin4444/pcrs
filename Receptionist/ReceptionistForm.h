@@ -83,11 +83,11 @@ namespace Receptionist {
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
 
-			
-
 			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
 			XmlGuiParser^ parser = gcnew XmlGuiParser();
 			parser->Parse();
+
+			maker->MakeFromElementList(parser->elements);
 		}
 	};
 }

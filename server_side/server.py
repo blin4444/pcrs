@@ -3,6 +3,7 @@ import BaseHTTPServer, SimpleHTTPServer
 #import ssl
 from query import Query
 from form import Form
+from xmlgen import options_xml
 
 from datetime import datetime
 from BaseHTTPServer import BaseHTTPRequestHandler
@@ -24,8 +25,6 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			return "2 - Unknown Database Error"
 
 	def register(self, id, args, sin):
-
-
 		section = form.sectionMap[id]
 		user_id = query.insert_user_info(form.buildQuery(section), args, sin)
 
@@ -38,9 +37,10 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if success:				
 			return token 
 		return "4 - Failed to input user token"
-
-	def list_all(self):
-		return "5 - Unimplemented";
+	
+	def options(self):
+		options = query.select_registration_options()		
+		return options_xml(options)
 
 	def process_param(self, response_data, name, value):
 		print "processing "+name+" "+str(value)
@@ -110,16 +110,17 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 			else:
-				response_data = response_data + "\n Will not register the user"
-				return_code = 404
-		elif request.path == "/list/":
-			response_data = self.list_all()
+				response_data = "8 - "+ response_data + "\n Will not register the user"
+		elif s.path == "/options/":
+			response_data = s.options()
 		else:
 			response_data = "unknown request"
 			return_code = 404
+
 		s.send_response(return_code, response_data)
 		s.send_header("Content-type", "text/html")
 		s.end_headers()
+		s.wfile.write(response_data)
 
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999

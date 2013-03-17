@@ -1,8 +1,16 @@
 #pragma once
+#include "ElementType.h"
+#include "Section.h"
+#include "FormElement.h"
+#include "RadioGroup.h"
+#include "TextField.h"
+
 using namespace System::Xml;
 using namespace System::Drawing;
 using namespace System::Windows::Forms;
 using namespace std;
+using namespace PCRS;
+
 
 #include "xmlguimaker.h"
 
@@ -30,11 +38,45 @@ public:
 		this->panel = panel;
 	}
 
-	void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list)
+	virtual void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list) override
 	{
+		Section^ currentSection;
 		for each (FormElement^ element in list)
 		{
-			
+			if (element->IsType(BreakType))
+			{
+				panel->SetFlowBreak(this->lastControl, true);
+			}
+			else if (element->IsType(SectionType))
+			{
+
+				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				panel->BackColor = Color::Beige;
+				currentSection = (Section^) element;
+				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
+				guiMaker->MakeFromElementList(currentSection->elements);
+				panel->AutoSize = true;
+				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 80);
+				panel->Dock = DockStyle::Fill;
+				this->lastControl = panel;
+				this->panel->Controls->Add(panel);
+				if (this->lastControl != nullptr)
+				{
+					panel->SetFlowBreak(this->lastControl, true);
+				}
+			}
+			else if (element->IsType(RadioGroupType))
+			{
+				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				panel->AutoSize = true;
+				this->panel->Controls->Add(panel);
+				RadioGroup^ radioGroup = (RadioGroup^) element;
+				//radioGroup->container = panel;
+			}
+			else if (element->IsType(TextFieldType))
+			{
+				this->AddField(((TextField^) element)->label);
+			}
 		}
 	}
 
