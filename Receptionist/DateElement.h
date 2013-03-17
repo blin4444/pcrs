@@ -17,6 +17,17 @@ public:
 	{
 		return type == PCRS::DateType;
 	}
+
+	String^ sgDate;
 	
+	property String^ Value
+    {
+    public:
+		String^ get() { return this->sgDate; }
+        void set(String^ v)
+		{
+			this->sgDate = v;
+		}
+    }
 };
 

@@ -226,7 +226,8 @@ public:
 		// Show the CheckBox and display the control as an up-down control.
 		//dateTimePicker->ShowCheckBox = true;
 		//dateTimePicker->ShowUpDown = true;
-		newPanel->Controls->Add(label);
+
+		dateTimePicker->DataBindings->Add("Text", date, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 		PlaceToRight(label, dateTimePicker);
 		newPanel->Controls->Add(dateTimePicker);
 	}

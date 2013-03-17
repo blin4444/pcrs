@@ -82,13 +82,51 @@ namespace Receptionist {
 	private:
 
 		XmlGuiParser^ guiParser;
+
+		void GetData(System::Collections::Generic::List<FormElement^>^ elements)
+		{
+			bool isRequired;
+			String^ id;
+			String^ sgValue;
+
+			for each (FormElement^ formElement in elements)
+			{
+				isRequired = formElement->isRequired;
+				id = formElement->id;
+
+				if (formElement->IsType(PCRS::SectionType))
+				{
+					auto section = (Section^) formElement;
+					GetData(section->elements);
+				}
+				else if (formElement->IsType(PCRS::RadioGroupType))
+				{
+					auto section = (RadioGroup^) formElement;
+					int value = section->Value;
+					sgValue = value.ToString();
+				}
+				else if (formElement->IsType(PCRS::TextFieldType))
+				{
+					auto textField = (TextField^) formElement;
+					sgValue = textField->Value;
+				}
+				else if (formElement->IsType(PCRS::DateType))
+				{
+					auto date = (DateElement^) formElement;
+					sgValue = date->Value;
+				}
+				else if (formElement->IsType(PCRS::BreakType))
+				{
+					continue;
+				}
+				Console::WriteLine(id + ": " + sgValue);
+
+			}
+		}
 	
 		System::Void btnSubmit_Click(System::Object^  sender, System::EventArgs^  e)
 		{
-			for each (FormElement^ formElement in guiParser->elements)
-			{
-				Console::WriteLine(formElement->id + ": " + formElement->Value);
-			}
+			GetData(guiParser->elements);
 		}
 
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
