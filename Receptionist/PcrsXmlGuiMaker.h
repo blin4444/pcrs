@@ -71,12 +71,14 @@ public:
 			}
 			else if (element->IsType(RadioGroupType))
 			{
-				//RadioGroup^ radioGroup = (RadioGroup^) element;
-				TableLayoutPanel^ panel = gcnew TableLayoutPanel();
+				
+				/*TableLayoutPanel^ panel = gcnew TableLayoutPanel();
 				panel->AutoSize = true;
 				this->panel->Controls->Add(panel);
 				RadioGroup^ radioGroup = (RadioGroup^) element;
-				radioGroup->container = panel;
+				radioGroup->container = panel;*/
+				RadioGroup^ radioGroup = (RadioGroup^) element;
+				this->AddRadioGroup(element->id, radioGroup->isList);
 			}
 			else if (element->IsType(TextFieldType))
 			{
@@ -174,41 +176,41 @@ public:
 		}
 	}
 
-	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup, bool isList) override
+	virtual void AddRadioGroup(String^ name, bool isList) override
 	{
 		if (isList)
 		{
-			 AddListRadioGroup(name, radioGroup);
+			 AddListRadioGroup(name);
 		}
 		else
 		{
-			 AddRadioGroup(name, radioGroup);
+			 //AddRadioGroup(name, radioGroup);
 		}
 	}
-	*/
-	/*virtual void AddListRadioGroup(String^ name, vector<String^>& radioGroup)
+	
+	virtual void AddListRadioGroup(String^ name)
 	{
-		/*Panel^ newPanel = CreateNewPanel();
+		Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel(name);
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
 		
-		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
+		/*for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
 		{
 			listBox->Items->Add(*it);
-		}
+		}*/
 		listBox->Font = textBoxFont;
 		listBox->Size = textBoxSize;
 		listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
-	}*/
+	}
 
-	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup)
+	virtual void AddRadioGroup(String^ name) override
 	{
-		TableLayoutPanel^ newPanel = CreateNewTablePanel();
+		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
 		Label^ label = CreateLabel(name);
 		newPanel->Controls->Add(label);
 		int row = 1;
@@ -221,8 +223,8 @@ public:
 			newPanel->SetRow(radioButton, row);
 			row++;
 		}
-		newPanel->Controls->Add(newPanel);
-	}*/
+		newPanel->Controls->Add(newPanel);*/
+	}
 	
 private:
 	 System::Drawing::Size labelSize;

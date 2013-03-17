@@ -232,7 +232,37 @@ public:
 		}
 		newPanel->Controls->Add(newPanel);
 	}*/
-	
+
+	virtual void AddRadioGroup(String^ name, bool isList) override
+	{
+		/*if (isList)
+		{
+			 AddListRadioGroup(name);
+		}
+		else
+		{
+			 //AddRadioGroup(name, radioGroup);
+		}*/
+	}
+
+	virtual void AddRadioGroup(String^ name) override
+	{
+		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
+		Label^ label = CreateLabel(name);
+		newPanel->Controls->Add(label);
+		int row = 1;
+
+		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
+		{
+			RadioButton^ radioButton = gcnew RadioButton();
+			radioButton->Text = *it;
+			newPanel->Controls->Add(radioButton);
+			newPanel->SetRow(radioButton, row);
+			row++;
+		}
+		newPanel->Controls->Add(newPanel);*/
+	}
+
 private:
 	 System::Drawing::Size labelSize;
 	  System::Drawing::Font^ labelFont;
