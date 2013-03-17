@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
-<Form>
-    <Section id="User_Info">
-        <Field id="first_name" name="First Name" type="string" optional="false"/>
-        <Field id="middle_name" name="Middle Name" type="string" optional="true"/>
-        <Field id="last_name" name="Last Name" type="string" optional="false"/>
-        <Field id="sin" name="SIN Number" type="string" optional="false"/>
-        <Field id="date_of_birth" name="Birth Date" type="string" optional="false"/>
-        <Field id="gender" name="Gender" type="string" optional="false"/>
-        <Field id="street_address" name="Street Address" type="string" optional="false"/>
-        <Field id="city" name="City" type="string" optional="false"/>
-        <Field id="province" name="Province" type="string" optional="false"/>
-        <Field id="postal_code" name="Postal Code" type="string" optional="false"/>
-        <Field id="phone" name="Phone Number" type="string" optional="false"/>
-        <Field id="alternate_phone" name="Alternate Phone Number" type="string" optional="true"/>
-        <Field id="email" name="Email" type="string" optional="false"/>
-    </Section>
+<form>
+    <div id="User_Info">
+        <input id="first_name" name="First Name" type="string"/>
+        <input id="middle_name" name="Middle Name" type="string" required="true"/>
+        <input id="last_name" name="Last Name" type="string"/>
+        <input id="sin" name="SIN Number" type="string"/>
+        <input id="date_of_birth" name="Birth Date" type="string"/>
+        <input id="gender" name="Gender" type="string"/>
+        <input id="street_address" name="Street Address" type="string"/>
+        <input id="city" name="City" type="string"/>
+        <input id="province" name="Province" type="string"/>
+        <input id="postal_code" name="Postal Code" type="string"/>
+        <input id="phone" name="Phone Number" type="string"/>
+        <input id="alternate_phone" name="Alternate Phone Number" type="string" required="true"/>
+        <input id="email" name="Email" type="string"/>
+    </div>
 
-    <Section id="2">
-        <Field id="employement_situation" name="Employment Situation" type="integer" optional="false"/>
-        <Field id="unemployment_duation" name="Unemployment Duration" type="integer" optional="true"/>
-        <Field id="government_assistance" name="Government Assistance" type="integer" optional="true"/>
-        <Field id="residency_status" name="Residency Status" type="integer" optional="false"/>
-    </Section>
+    <div id="2">
+        <input id="employement_situation" name="Employment Situation" type="integer"/>
+        <input id="unemployment_duation" name="Unemployment Duration" type="integer" required="true"/>
+        <input id="government_assistance" name="Government Assistance" type="integer" required="true"/>
+        <input id="residency_status" name="Residency Status" type="integer"/>
+    </div>
 
-    <Section id="3">
-        <Field id="office_use" name="Office Use" type="integer" optional="false"/>
-    </Section>
-</Form>
+    <div id="3">
+        <input id="office_use" name="Office Use" type="integer"/>
+    </div>
+</form>
