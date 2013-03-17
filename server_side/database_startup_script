@@ -12,7 +12,12 @@ CREATE TABLE IF NOT EXISTS User_Info(
 	postal_code VARCHAR(6),
 	phone CHAR(10),
 	alternate_phone CHAR(10),
-	email VARCHAR(30)
+	email VARCHAR(30),
+	es_id INT,
+	ud_id INT,
+	ga_id INT,
+	rs_id INT,
+	ou_id INT
 );
 
 
@@ -50,17 +55,6 @@ CREATE TABLE IF NOT EXISTS Government_Assistance(
 CREATE TABLE IF NOT EXISTS Residency_Status(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	text VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS Registration_Option(
-	user_id INT NOT NULL,
-	es_id INT,
-	ud_id INT,
-	ga_id INT,
-	rs_id INT,
-	ou_id INT,
-	registration_time DATETIME NOT NULL,
-	PRIMARY KEY(user_id, registration_time)
 );
 
 CREATE TABLE IF NOT EXISTS Office_Use(
