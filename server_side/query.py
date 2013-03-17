@@ -17,6 +17,7 @@ class Query:
 
 	def validate_token(self, token_string):
 		query = """SELECT id FROM User where token=%s"""
+		print query
 		self.cur.execute(query, (token_string))		
 		row = self.cur.fetchone()
 			

@@ -3,5 +3,6 @@ ref class ServerCommunication
 {
 public:
 	ServerCommunication(void);
+
 };
 
