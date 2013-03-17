@@ -20,6 +20,7 @@ public:
 	{
 		elements = gcnew System::Collections::Generic::List<FormElement^>();
 		radioGroups = gcnew System::Collections::Generic::Dictionary<String^, FormElement^>();
+		formName = nullptr;
 	}
 
 	void Parse(String^ file)
@@ -57,6 +58,13 @@ public:
 		bool isGender;
 		bool isDate;
 
+		bool isSIN;
+		bool isPostalCode;
+		bool isProvince;
+		bool isTel;
+		bool isEmail;
+		bool isTextField;
+
 		while (reader->Read()) 
 		{
 			newElement = nullptr;
@@ -70,7 +78,15 @@ public:
 					elementType = reader->Name;
 					Console::Write("ELEMENT <" + elementType + id);
 					Console::WriteLine(">");
-					if (elementType == "Section" || elementType == "div")
+
+					if (elementType == "form")
+					{
+						if (label != nullptr)
+						{
+							formName = label;
+						}
+					}
+					else if (elementType == "Section" || elementType == "div")
 					{
 						currentSection = gcnew Section(id);
 						elements->Add(currentSection);
@@ -83,17 +99,25 @@ public:
 							if (type != nullptr)
 							{
 									
+								isText = type == "text" || type == "string";
+								isNumber = type == "number" || type == "integer";
+								isRadio = type == "radio";
+								isList = type == "list";
+								isGender = type == "gender";
+								isDate = type == "date";
 
-								bool isText = type == "text" || type == "string";
-								bool isNumber = type == "number" || type == "integer";
-								bool isRadio = type == "radio";
-								bool isList = type == "list";
-								bool isGender = type == "gender";
-								bool isDate = type == "date";
-								if (isText || isNumber)
+								isSIN = type == "sin";
+								isPostalCode = type == "postalcode";
+								isProvince = type =="province";
+								isTel = type == "tel";
+								isEmail = type == "email";
+
+								isTextField = isText || isNumber || isSIN || isPostalCode || isProvince || isTel || isEmail;
+
+								if (isTextField)
 								{
 									textField = gcnew TextField(id, label, placeholder);
-									textField->isNumber = isNumber;
+									textField->SetType(isNumber, isSIN, isPostalCode, isProvince, isTel, isEmail);
 									newElement = textField;
 								}
 								else if (type == "checkbox")
@@ -159,6 +183,8 @@ public:
 
 		Console::WriteLine("test");
 	}
+
+	String^ formName;
 
 	System::Collections::Generic::List<FormElement^>^ elements;
 

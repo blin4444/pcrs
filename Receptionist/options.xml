@@ -1,26 +1,30 @@
 <?xml version="1.0"?>
 <options>
-	<div id="employment_situation">
+	<div id="es_id">
 		<input id="1" value="I am unemployed" />
 		<input id="2" value="I am working 20 hours or less and want to work more" />
 		<input id="3" value="I must leave my job for medical reason" />
 		<input id="4" value="I am employed and need an authorization to quit" />
 	</div>
-	<div id="unemployment_duration">
+	<div id="ud_id">
 		<input id="1" value="Less than six months" />
 		<input id="2" value="Between six months and one year" />
 		<input id="3" value="Between one year and five years" />
 	</div>
-	<div id="residency_status">
+	<div id="rs_id">
 		<input id="1" value="The first digit of my Social Insurance Number is 1-8" />
 		<input id="2" value="I am a convention refugee" />
 		<input id="3" value="I am a permanent resident of Canada" />
 		<input id="4" value="I do not have a Social Insurance Number" />
 	</div>
-	<div id="government_assistance">
+	<div id="ga_id">
 		<input id="1" value="I am on Employment Insurance" />
 		<input id="2" value="I am on Income Assistance" />
 		<input id="3" value="None of the above" />
 	</div>
-	
+	<div id="ou_id">
+		<input id="1" value="Self Serve" />
+		<input id="2" value="Non-Case Managed" />
+		<input id="3" value="Case Managed" />
+	</div>
 </options>

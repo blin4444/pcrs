@@ -49,7 +49,6 @@ public:
 			
 			if (element->IsType(BreakType))
 			{
-				//panel->SetFlowBreak(this->lastControl, true);
 			}
 			else if (element->IsType(SectionType))
 			{
@@ -112,94 +111,7 @@ public:
 
 	virtual void CreateBreak(bool isForce) override
 	{
-		/*if (lastControl != nullptr)
-		{
-			if (!isSeparateLines || isForce)
-			{
-				panel->SetFlowBreak(lastControl, true);
-			}
-		}*/
-	}
-
-	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup, bool isList) override
-	{
-		if (isList)
-		{
-			 AddListRadioGroup(name, radioGroup);
-		}
-		else
-		{
-			 AddRadioGroup(name, radioGroup);
-		}
-	}
-	*/
-	/*virtual void AddListRadioGroup(String^ name, vector<String^>& radioGroup)
-	{
-		/*Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(name);
-		newPanel->Controls->Add(label);
-		//newPanel->SetFlowBreak(label, true);
-		ComboBox^ listBox = gcnew ComboBox();
-		listBox->DropDownWidth = 250;
-		
-		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
-		{
-			listBox->Items->Add(*it);
-		}
-		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
-		listBox->SelectedIndex = 0;
-		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceToRight(label, listBox);
-		newPanel->Controls->Add(listBox);
-	}*/
-
-	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup)
-	{
-		TableLayoutPanel^ newPanel = CreateNewTablePanel();
-		Label^ label = CreateLabel(name);
-		newPanel->Controls->Add(label);
-		int row = 1;
-
-		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
-		{
-			RadioButton^ radioButton = gcnew RadioButton();
-			radioButton->Text = *it;
-			newPanel->Controls->Add(radioButton);
-			newPanel->SetRow(radioButton, row);
-			row++;
-		}
-		newPanel->Controls->Add(newPanel);
-	}*/
-
-	virtual void AddRadioGroup(RadioGroup^ radioGroup) override
-	{
-		/*if (isList)
-		{
-			 AddListRadioGroup(name);
-		}
-		else
-		{
-			 //AddRadioGroup(name, radioGroup);
-		}*/
-	}
-
-	virtual void AddRadioGroup(String^ name)
-	{
-		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
-		Label^ label = CreateLabel(name);
-		newPanel->Controls->Add(label);
-		int row = 1;
-
-		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
-		{
-			RadioButton^ radioButton = gcnew RadioButton();
-			radioButton->Text = *it;
-			newPanel->Controls->Add(radioButton);
-			newPanel->SetRow(radioButton, row);
-			row++;
-		}
-		newPanel->Controls->Add(newPanel);*/
+		//Do nothing for table!
 	}
 
 	int IncRow() 

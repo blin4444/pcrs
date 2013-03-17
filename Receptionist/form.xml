@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<form>
+<form name="Test">
     <div id="User_Info">
         <input id="first_name" name="First Name" type="text"/>
         <input id="middle_name" name="Middle Name" type="text" required="true"/>

@@ -71,6 +71,9 @@
     <ClInclude Include="ServerCommunication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReceptionistForm.resx">

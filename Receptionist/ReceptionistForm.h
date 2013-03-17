@@ -47,6 +47,10 @@ namespace Receptionist {
 
 	protected: 
 
+	protected: 
+
+	protected: 
+
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -107,8 +111,12 @@ namespace Receptionist {
 
 						if (formElement->IsType(PCRS::RadioGroupType))
 						{
-							auto section = (RadioGroup^) formElement;
-							int value = section->Value;
+							auto radioGroup = (RadioGroup^) formElement;
+							int value = radioGroup->Value;
+							if (!radioGroup->isGender && value != -1)
+							{
+								value--;
+							}
 							sgValue = value.ToString();
 						}
 						else if (formElement->IsType(PCRS::TextFieldType))
@@ -183,6 +191,10 @@ namespace Receptionist {
 			try
 			{
 				guiParser->Parse("client_information_form.xml");
+				if (guiParser->formName != nullptr)
+				{
+					this->Text = guiParser->formName;
+				}
 
 				maker->MakeFromElementList(guiParser->elements);
 
@@ -255,5 +267,9 @@ namespace Receptionist {
 				panel->SetRow(output_panel, maker->IncRow());
 			}
 		}
-	};
+	private: System::Void maskedTextBox1_MaskInputRejected(System::Object^  sender, System::Windows::Forms::MaskInputRejectedEventArgs^  e) {
+			 }
+private: System::Void maskedTextBox1_Validated(System::Object^  sender, System::EventArgs^  e) {
+		 }
+};
 }

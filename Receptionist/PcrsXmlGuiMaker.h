@@ -48,7 +48,10 @@ public:
 			{
 				if (this->lastControl != nullptr)
 				{
-					panel->SetFlowBreak(this->lastControl, true);
+					Panel^ dummy = gcnew Panel();
+					dummy->Size = System::Drawing::Size(1,20);
+					panel->Controls->Add(dummy);
+					panel->SetFlowBreak(dummy, true);
 				}
 			}
 			else if (element->IsType(SectionType))
@@ -85,6 +88,7 @@ public:
 				}
 				else
 				{
+
 					this->AddRadioGroup(radioGroup);
 				}
 			}
@@ -110,26 +114,6 @@ public:
 		return newPanel;
 	}
 
-	virtual void AddGenderField(RadioGroup^ radioGroup)
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel("Gender");
-		newPanel->Controls->Add(label);
-		ComboBox^ listBox = gcnew ComboBox();
-		listBox->Name = radioGroup->id;
-		listBox->AutoSize = true;
-		listBox->Items->Add("Unspecified");
-		listBox->Items->Add("Male");
-		listBox->Items->Add("Female");
-		listBox->Font = GetTextBoxFont();
-		listBox->Size = GetTextBoxSize();
-		listBox->SelectedIndex = 0;
-		listBox->DataBindings->Add("SelectedIndex", radioGroup, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
-		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceToRight(label, listBox);
-		newPanel->Controls->Add(listBox);
-	}
-
 	TableLayoutPanel^ CreateNewTablePanel() 
 	{
 		TableLayoutPanel^ newPanel = gcnew TableLayoutPanel();
@@ -150,92 +134,9 @@ public:
 		}
 	}
 
-	virtual void AddRadioGroup(RadioGroup^ radioGroup) override
-	{
-		if (radioGroup->isList)
-		{
-			 AddListRadioGroup(radioGroup);
-		}
-		else
-		{
-			 //AddRadioGroup(name, radioGroup);
-		}
-	}
 	
-	virtual void AddListRadioGroup(RadioGroup^ radioGroup)
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(radioGroup->label);
-		label->AutoSize = true;
-		//label->Dock = DockStyle::Fill;
-		newPanel->Controls->Add(label);
-		ComboBox^ listBox = gcnew ComboBox();
-
-		listBox->DataSource = radioGroup->strings;
-		listBox->Width = 300;
-		listBox->Name = radioGroup->id;
-		listBox->DropDownWidth = 450;
-		listBox->DataBindings->Add("SelectedIndex", radioGroup, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
-
-		listBox->Font = textBoxFont;
-		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceUnder(label, listBox);
-		newPanel->Controls->Add(listBox);
-	}
-
-	virtual void AddRadioGroup(String^ name)
-	{
-		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
-		Label^ label = CreateLabel(name);
-		newPanel->Controls->Add(label);
-		int row = 1;
-
-		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
-		{
-			RadioButton^ radioButton = gcnew RadioButton();
-			radioButton->Text = *it;
-			newPanel->Controls->Add(radioButton);
-			newPanel->SetRow(radioButton, row);
-			row++;
-		}
-		newPanel->Controls->Add(newPanel);*/
-	}
-
-	void AddDateTimeControl(DateElement^ date)
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(date->label);
-		// Create a new DateTimePicker control and initialize it.
-		DateTimePicker^ dateTimePicker = gcnew DateTimePicker;
-		dateTimePicker->Name = date->id;
-		dateTimePicker->Size = GetTextBoxSize();
-
-		// Set the MinDate and MaxDate.
-		dateTimePicker->MinDate = DateTime(1800,1,1);
-		dateTimePicker->MaxDate = DateTime::Today;
-
-		// Set the CustomFormat string.
-		//dateTimePicker->CustomFormat = "MMMM dd, yyyy - dddd";
-		dateTimePicker->CustomFormat = "yyyy-MM-dd";
-		dateTimePicker->Format = DateTimePickerFormat::Custom;
-
-		// Show the CheckBox and display the control as an up-down control.
-		//dateTimePicker->ShowCheckBox = true;
-		//dateTimePicker->ShowUpDown = true;
-
-		dateTimePicker->DataBindings->Add("Text", date, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
-		newPanel->Controls->Add(label);
-		PlaceToRight(label, dateTimePicker);
-		newPanel->Controls->Add(dateTimePicker);
-	}
 	
 private:
-	 System::Drawing::Size labelSize;
-	  System::Drawing::Font^ labelFont;
-
-	 System::Drawing::Size textBoxSize;
-	 System::Drawing::Font^ textBoxFont;
-
 	 FlowLayoutPanel^ panel;
 };
 

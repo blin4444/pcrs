@@ -96,6 +96,7 @@
     <ClInclude Include="Section.h" />
     <ClInclude Include="ServerCommunication.h" />
     <ClInclude Include="TextField.h" />
+    <ClInclude Include="TextType.h" />
     <ClInclude Include="XmlGuiMaker.h" />
     <ClInclude Include="XmlGuiParser.h" />
     <ClInclude Include="XmlOptionsParser.h" />
