@@ -132,7 +132,7 @@ public:
 		Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel(name);
 		newPanel->Controls->Add(label);
-		newPanel->SetFlowBreak(label, true);
+		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
 		
 		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)

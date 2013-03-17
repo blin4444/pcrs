@@ -3,6 +3,7 @@ using namespace System::Xml;
 using namespace System::Drawing;
 #include "XmlGuiMaker.h"
 #include "PcrsXmlGuiMaker.h"
+#include "XmlGuiParser.h"
 #include <vector>
 using namespace std;
 
@@ -85,7 +86,7 @@ namespace Receptionist {
 			
 
 			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
-			
+			XmlGuiParser^ parser = gcnew XmlGuiParser();
 		}
 	};
 }
