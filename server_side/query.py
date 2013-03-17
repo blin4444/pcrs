@@ -104,3 +104,26 @@ class Query:
 			print "Unexpected Error when inserting registration option: "+str(err)
 			return False
 	
+		def select_registration_options(self):
+			sql_es = """SELECT * FROM Employment_Situation"""
+			sql_ud = """SELECT * FROM Unemployment_Duration"""
+			sql_ga = """SELECT * FROM Government_Assistance"""
+			sql_rs = """SELECT * FROM Residency_Status"""
+
+			tables = [("Employment Situation", sql_es),
+				("Unemployment Duration", sql_ud),
+				("Government Assistance", sql_ga),
+				("Residency Status", sql_rs)]
+
+			query_list = []
+
+			try:
+				for t in tables:
+					self.cur.execute(t[1])
+					result_set = self.cur.fetchall()
+				for r in result_set:
+					query_list.append((t[0], r[0], r[1]))
+			except Exception, err:
+				print "Unexpected Error when extracting registration options:" + str(err)
+
+			return query_list
