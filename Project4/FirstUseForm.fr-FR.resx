@@ -122,15 +122,40 @@
     <value>9, 11</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 201</value>
+    <value>591, 201</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Si vous n'avez pas utilisez nos kiosques auparavant, vous pourriez obtenir une clé à la réception.</value>
   </data>
+  <data name="button_ok.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 362</value>
+  </data>
+  <data name="label_login.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 251</value>
+  </data>
+  <data name="label_login.Size" type="System.Drawing.Size, System.Drawing">
+    <value>414, 42</value>
+  </data>
+  <data name="label_login.Text" xml:space="preserve">
+    <value>Entrez ta clé si-dessous.</value>
+  </data>
+  <data name="token_entry.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 306</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 251</value>
+  </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 42</value>
+    <value>350, 42</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Entrez ta clé ci-dessous:</value>
+    <value>Vérifiez ta clé, S.V.P.</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label2.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="button_return.Text" xml:space="preserve">
+    <value>Quittez</value>
   </data>
 </root>

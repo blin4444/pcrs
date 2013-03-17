@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ReasonForm.h"
 #include "ServerCommunication.h"
 
@@ -38,9 +39,13 @@ namespace Project4 {
 		}
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Button^  button_ok;
-	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label_login;
+
 	private: System::Windows::Forms::TextBox^  token_entry;
 	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::Button^  button_return;
+	private: System::Windows::Forms::Label^  label2;
+
 
 
 
@@ -64,9 +69,11 @@ namespace Project4 {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(FirstUseForm::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button_ok = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label_login = (gcnew System::Windows::Forms::Label());
 			this->token_entry = (gcnew System::Windows::Forms::TextBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->button_return = (gcnew System::Windows::Forms::Button());
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -82,10 +89,10 @@ namespace Project4 {
 			this->button_ok->UseVisualStyleBackColor = true;
 			this->button_ok->Click += gcnew System::EventHandler(this, &FirstUseForm::button_ok_Click);
 			// 
-			// label2
+			// label_login
 			// 
-			resources->ApplyResources(this->label2, L"label2");
-			this->label2->Name = L"label2";
+			resources->ApplyResources(this->label_login, L"label_login");
+			this->label_login->Name = L"label_login";
 			// 
 			// token_entry
 			// 
@@ -97,11 +104,27 @@ namespace Project4 {
 			// panel1
 			// 
 			resources->ApplyResources(this->panel1, L"panel1");
-			this->panel1->Controls->Add(this->token_entry);
 			this->panel1->Controls->Add(this->label2);
+			this->panel1->Controls->Add(this->button_return);
+			this->panel1->Controls->Add(this->token_entry);
+			this->panel1->Controls->Add(this->label_login);
 			this->panel1->Controls->Add(this->button_ok);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Name = L"panel1";
+			// 
+			// label2
+			// 
+			resources->ApplyResources(this->label2, L"label2");
+			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)), 
+				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->label2->Name = L"label2";
+			// 
+			// button_return
+			// 
+			resources->ApplyResources(this->button_return, L"button_return");
+			this->button_return->Name = L"button_return";
+			this->button_return->UseVisualStyleBackColor = true;
+			this->button_return->Click += gcnew System::EventHandler(this, &FirstUseForm::button_return_Click);
 			// 
 			// FirstUseForm
 			// 
@@ -120,16 +143,9 @@ namespace Project4 {
 
 		}
 #pragma endregion
-	private: System::Void button_ok_Click(System::Object^  sender, System::EventArgs^  e) {
-				 ServerCommunication^ comm = gcnew ServerCommunication();
-				 int r = comm->CheckToken(FirstUseForm::token_entry->Text);
-				 if (r==0) {
-					 FirstUseForm::Visible = false;
-					 ReasonForm ^form2 = gcnew ReasonForm(FirstUseForm::token_entry->Text);
-					 form2->ShowDialog();
-				 }
-			 }
+	private: System::Void button_ok_Click(System::Object^  sender, System::EventArgs^  e);
 private: System::Void token_entry_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		 }
+private: System::Void button_return_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

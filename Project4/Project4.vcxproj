@@ -102,6 +102,9 @@
     <EmbeddedResource Include="FirstUseForm.en-CA.resx">
       <DependentUpon>FirstUseForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FirstUseForm.fr-CA.resx">
+      <DependentUpon>FirstUseForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FirstUseForm.fr-FR.resx">
       <DependentUpon>FirstUseForm.h</DependentUpon>
     </EmbeddedResource>
