@@ -1,27 +1,14 @@
 import SocketServer
-#import BaseHTTPServer, SimpleHTTPServer
+import BaseHTTPServer, SimpleHTTPServer
 #import ssl
 from query import Query
+from form import Form
 
 from datetime import datetime
 from BaseHTTPServer import BaseHTTPRequestHandler
 from StringIO import StringIO
 
-#The HTTPRequest class is taken from Brandon Rhodes
-#http://stackoverflow.com/questions/2115410/does-python-have-a-module-for-parsing-http-requests-and-responses
-class HTTPRequest(BaseHTTPRequestHandler):
-	def __init__(self, request_text):
-		self.rfile = StringIO(request_text)
-		self.raw_requestline = self.rfile.readline()
-		self.error_code = self.error_message = None
-		self.parse_request()
-	def send_error(self, code, message):
-		self.error_code = code
-		self.error_message = message
-
-class MyTCPHandler(SocketServer.BaseRequestHandler):
-	
-	
+class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def sign_in(self, token, reason_id):
 		try:
 			user_id = query.validate_token(token)
@@ -29,25 +16,19 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			if user_id == None:
 				return "No user with token found"
 
-			query.insert_sign_in(user_id, reason_id)
+			query.insert_sign_in(user_id, 1)
 			return str(user_id)
 		
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
 			return "Unknown Database Error"
 	
-	def register(self,last_name, first_name, middle_name, sex, sin, date_of_birth, \
-				street_address, city, province, postal_code, phone, alternate_phone, email):		
-
-		check_duplicate = query.sin_already_exists(sin)
-		if check_duplicate:
-			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
-
-		user_id = query.insert_user_info(last_name, first_name, \
-				middle_name, sex, sin, \
-				street_address, city, province, postal_code, \
-				phone, alternate_phone, email)
-
+	def register(self, id, args, sin):
+		
+		
+		section = form.sectionMap[id]
+		user_id = query.insert_user_info(form.buildQuery(section), args, sin)
+		
 		if user_id == None:
 			return "Failed to input user into the database"
 
@@ -70,81 +51,78 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			value = False
 		return (value, response_data)
 	
-	def validate_sin(self, sin):
-		"""Verifies that the SIN is a nine digit number."""
+	def validate_sin(self, sin):		
 		sin = "".join(sin.split()) # remove whitespace
 		if (len(sin) != 9): return False
-		return sin.isdigit();
-
-	def handle(self):
-		self.data = self.request.recv(2048).strip()
-		print self.data
-
-		request = HTTPRequest(self.data)	
-		response_data = "Test Response"
-		if request.error_code != None:
-			response_data = "Request Data Corrupted: "+request.error_message
-		elif request.path == "/validate/":
-			if 'token' in request.headers:
-				token = request.headers["token"]
+		return sin.isdigit()
+	
+	def do_POST(s):
+		return_code = 200;
+		response_data = ""
+		if s.path == "/validate/":
+			if 'token' in s.headers:
+				token = s.headers["token"]
 				if query.validate_token(token) == None:
 					response_data = "No user with token found"
 				else:	
 					response_data = "User exists in the system"
-			else:
-				response_data = "request must have token parameter in header"
-		elif request.path == "/signin/":
-			if 'token' in request.headers and 'reason_id' \
-			in request.headers:			
-				token = request.headers["token"]
-				reason_id = request.headers["reason_id"]
+		elif s.path == "/signin/":
+			if 'token' in s.headers and 'reason_id' \
+			in s.headers:			
+				token = s.headers["token"]
+				reason_id = s.headers["reason_id"]
 				response_data = self.sign_in(token, int(reason_id))
 			else:
 				response_data = "request must have both token and reason_id in header"
 		
-		elif request.path == "/register/":
+		elif s.path == "/register/":
 			response_data = ""
-			(last_name, response_data) = self.process_param(response_data, "last name", request.headers.get("last_name", False))
-			(first_name, response_data) = self.process_param(response_data, "first name", request.headers.get("first_name", False))
-			
-			middle_name = request.headers.get("middle_name", "")
-
-			(sex, response_data) = self.process_param(response_data, "sex", request.headers.get("sex", False))
-			
-			sin = request.headers.get("sin", "0")
-			if not self.validate_sin(sin):
-				sin = False
-				response_data = response_data + "sin is invalid\n"			
-			#date_of_birth = datetime.strptime(request.headers.get("date_of_birth", "0000-0-0"), "%Y %m %d")
-			date_of_birth = datetime.now()			
-			
-			(street_address, response_data) = self.process_param(response_data, "street address", request.headers.get("street_address", False))
-			(city, response_data) = self.process_param(response_data, "city", request.headers.get("city", False))
-			(province, response_data) = self.process_param(response_data, "province", request.headers.get("province", False))
-			(postal_code, response_data) = self.process_param(response_data, "postal code", request.headers.get("postal_code", False))
-			(phone, response_data) = self.process_param(response_data, "phone", request.headers.get("phone", False))
-				
-			alternate_phone = request.headers.get("alternate_phone", "-")
-			email = request.headers.get("email", "-")
-
-			if last_name and first_name and sex and sin and date_of_birth\
-				 and street_address and city and province and postal_code and phone:
-				response_data = self.register(last_name, first_name, middle_name, sex, sin, date_of_birth, \
-							street_address, city, province, postal_code, phone,\
-							alternate_phone, email) 
+			should_register = True
+			sectionID = s.headers.get("sectionID", False)
+			argumentMap = form.buildArgumentMap()
+			arguments = argumentMap[sectionID]
+			args = list()
+			sin = None
+			for argument in arguments:
+				if argument != "sin":
+					print "Not sin"
+					(value, response_data) = self.process_param(response_data, argument, s.headers.get(argument, False))
+					if not value:
+						should_register = False
+					args.append(value)
+				else:
+					sin = s.headers.get("sin", "0")
+					print "SIN!" + sin
+					if not self.validate_sin(sin):
+						response_data = response_data + "sin is invalid\n"
+						should_register = False;
+					else:					
+						print "is valid"						
+						check_duplicate = query.sin_already_exists(sin)
+						if check_duplicate:
+							response_data = response_data + "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
+							should_register = False;
+						else:
+							args.append(sin)
+			if should_register and sin != None:
+				response_data = self.register(sectionID, args, sin)
+			else:
+				response_data = response_data + "\n Will not register the user"
 		elif request.path == "/list/":
 			response_data = self.list_all()
 		else:
 			response_data = "unknown request"
-		
-		self.request.sendall(response_data)
-		
+		s.send_response(return_code, response_data)
+		s.send_header("Content-type", "text/html")
+		s.end_headers()
+
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
-
-	server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
+	form = Form("client_information_form")
+	server = BaseHTTPServer.HTTPServer((HOST, PORT), CustomHandler)
 	try:
 		server.serve_forever()
 	finally:
 		query.close()
+	server.server_close()
