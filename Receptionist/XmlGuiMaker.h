@@ -62,6 +62,7 @@ public:
 	{
 		maskedTextBox->ValidatingType = String::typeid;
 		maskedTextBox->TextMaskFormat = MaskFormat::ExcludePromptAndLiterals;
+		maskedTextBox->CutCopyMaskFormat = MaskFormat::ExcludePromptAndLiterals;
 		maskedTextBox->MaskInputRejected += gcnew System::Windows::Forms::MaskInputRejectedEventHandler(this, &XmlGuiMaker::maskedTextBox_MaskInputRejected);
 		maskedTextBox->TypeValidationCompleted += gcnew System::Windows::Forms::TypeValidationEventHandler(this, &XmlGuiMaker::maskedTextBox_MaskInputAccepted);
 		//maskedTextBox->Validated += gcnew System::EventHandler(this, &XmlGuiMaker::maskedTextBox_Validated);
