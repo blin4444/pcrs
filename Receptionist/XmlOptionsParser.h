@@ -12,7 +12,7 @@ using namespace std;
 #include "ElementType.h"
 #include "ServerCommunication.h"
 
-#define SERVER_SIDE false
+#define SERVER_SIDE 1
 
 ref class XmlOptionsParser
 {
