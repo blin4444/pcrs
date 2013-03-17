@@ -28,14 +28,14 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			user_id = query.validate_token(token)
 		
 			if user_id == None:
-				return "No user with token found"
+				return "1 - No user with token found"
 
 			query.insert_sign_in(user_id, 1)
 			return str(user_id)
 		
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
-			return "Unknown Database Error"
+			return "2 - Unknown Database Error"
 	
 	def register(self, id, args, sin):
 		
@@ -44,17 +44,17 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		user_id = query.insert_user_info(form.buildQuery(section), args, sin)
 		
 		if user_id == None:
-			return "Failed to input user into the database"
+			return "3 - Failed to input user into the database"
 
 		token = query.generate_token()
 		success = query.insert_user(user_id, token)
 		#success = True
 		if success:				
 			return token 
-		return "Failed to input user info"
+		return "4 - Failed to input user token"
 	
 	def list_all(self):
-		return "Unimplemented";
+		return "5 - Unimplemented";
 
 	def process_param(self, response_data, name, value):
 		print "processing "+name+" "+str(value)
@@ -77,14 +77,14 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		request = HTTPRequest(self.data)	
 		reponse_data = ""
 		if request.error_code != None:
-			response_data = "Request Data Corrupted: "+request.error_message
+			response_data = "10 - Request Data Corrupted: "+request.error_message
 		elif request.path == "/validate/":
 			if 'token' in request.headers:
 				token = request.headers["token"]
 				if query.validate_token(token) == None:
-					response_data = "No user with token found"
+					response_data = "6 - No user with token found"
 				else:	
-					response_data = "User exists in the system"
+					response_data = "0 - User exists in the system"
 		elif request.path == "/signin/":
 			if 'token' in request.headers and 'reason_id' \
 			in request.headers:			
@@ -92,7 +92,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 				reason_id = request.headers["reason_id"]
 				response_data = self.sign_in(token, int(reason_id))
 			else:
-				response_data = "request must have both token and reason_id in header"
+				response_data = "7 - request must have both token and reason_id in header"
 		
 		elif request.path == "/register/":
 			response_data = ""
@@ -126,11 +126,11 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 			else:
-				response_data = response_data + "\n Will not register the user"
+				response_data = "8 - "+ response_data + "\n Will not register the user"
 		elif request.path == "/list/":
 			response_data = self.list_all()
 		else:
-			response_data = "unknown request"
+			response_data = "9 - unknown request"
 		
 		self.request.sendall(response_data)
 
@@ -148,7 +148,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
-	form = Form("client_information_form")
+	form = Form("client_information_form.xml")
 	server = BaseHTTPServer.HTTPServer((HOST, PORT), MyTCPHandler)
 	try:
 		server.serve_forever()
