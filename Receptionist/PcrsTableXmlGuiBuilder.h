@@ -92,7 +92,7 @@ public:
 	{
 		labelFont = gcnew System::Drawing::Font("Segoe UI", 12);
 		labelSize = System::Drawing::Size(120,40);
-		textBoxSize = System::Drawing::Size(130,40);
+		textBoxSize = System::Drawing::Size(140,40);
 		textBoxFont = gcnew System::Drawing::Font("Segoe UI", 11);
 	}
 

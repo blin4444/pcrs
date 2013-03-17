@@ -76,7 +76,6 @@ namespace Receptionist {
 	private:
 	
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("form.xml");
 
 			/*FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
 			panel->Padding = System::Windows::Forms::Padding(24);

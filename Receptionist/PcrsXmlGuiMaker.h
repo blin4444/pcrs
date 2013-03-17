@@ -78,7 +78,14 @@ public:
 				RadioGroup^ radioGroup = (RadioGroup^) element;
 				radioGroup->container = panel;*/
 				RadioGroup^ radioGroup = (RadioGroup^) element;
-				this->AddRadioGroup(element->id, radioGroup->isList);
+				if (radioGroup->isGender)
+				{
+					this->AddGenderField();
+				}
+				else
+				{
+					this->AddRadioGroup(element->label, radioGroup->isList);
+				}
 			}
 			else if (element->IsType(TextFieldType))
 			{
@@ -202,7 +209,7 @@ public:
 		}*/
 		listBox->Font = textBoxFont;
 		listBox->Size = textBoxSize;
-		listBox->SelectedIndex = 0;
+		//listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
