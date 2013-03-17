@@ -246,6 +246,13 @@ namespace Receptionist {
 				message = "One or more of the XML documents describing the form for the receptionist is not well-formed. Please ensure that form.xml is valid XML. " + ex->ToString();
 				caption = "Form Syntax Is Incorrect";
 			}
+			catch (ArgumentNullException^ ex)
+			{
+				isError = true;
+
+				message = "At least one of the elements in an XML file describing the form is missing an attribute. Please check form.xml and/or options.xml." + ex->ToString();
+				caption = "Form Element Missing Attribute";
+			}
 
 			if (isError)
 			{

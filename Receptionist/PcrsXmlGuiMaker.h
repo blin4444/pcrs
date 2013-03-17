@@ -102,6 +102,7 @@ public:
 	virtual Panel^ CreateNewPanel() override
 	{
 		Panel^ newPanel = gcnew Panel();
+		newPanel->Padding = System::Windows::Forms::Padding(20, 0, 20,0);
 		lastControl = newPanel;
 		newPanel->AutoSize = true;
 		panel->Controls->Add(newPanel);
@@ -164,26 +165,20 @@ public:
 	{
 		Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel(radioGroup->label);
+		label->AutoSize = true;
+		//label->Dock = DockStyle::Fill;
 		newPanel->Controls->Add(label);
-		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
 
 		listBox->DataSource = radioGroup->strings;
-		//listBox->AutoSize = true;
 		listBox->Width = 300;
 		listBox->Name = radioGroup->id;
 		listBox->DropDownWidth = 450;
 		listBox->DataBindings->Add("SelectedIndex", radioGroup, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 
-		/*for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
-		{
-			listBox->Items->Add(*it);
-		}*/
 		listBox->Font = textBoxFont;
-		//listBox->Size = textBoxSize;
-		//listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceToRight(label, listBox);
+		PlaceUnder(label, listBox);
 		newPanel->Controls->Add(listBox);
 	}
 
