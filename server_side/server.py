@@ -111,7 +111,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				else:
 					sin = self.headers.get("sin", "0")
 					if not self.validate_sin(sin):
-						response_data = response_data + "sin is invalid\n"
+						response_data = response_data + "SIN is invalid.\n"
 						should_register = False;
 					else:					
 						print "is valid"						
@@ -126,7 +126,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				if not response_data[0].isdigit():
 					response_data = "0 - "+response_data
 			else:
-				response_data = "8 - "+ response_data + "\n Will not register the user"
+				response_data = "8 - "+ response_data + "\n Will not register the user."
 		else:
 			response_data = "9 - Unknown request"
 
