@@ -1,4 +1,5 @@
 #pragma once
+#include "ServerCommunication.h"
 
 namespace Project4 {
 
@@ -15,8 +16,10 @@ namespace Project4 {
 	public ref class ReasonForm : public System::Windows::Forms::Form
 	{
 	public:
-		ReasonForm(void)
+		System::String^ myToken;
+		ReasonForm(System::String^ token)
 		{
+			myToken = token;
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -135,7 +138,10 @@ private: System::Void button4_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void ReasonForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		 }
 private: void CloseFunction(int button_number){
-			 Application::Exit();
+			 ServerCommunication^ comm = gcnew ServerCommunication();
+			 int result = comm->SendNewSession(myToken, button_number);
+			 if (result==200)
+				Application::Exit();
 		 }
 };
 }
