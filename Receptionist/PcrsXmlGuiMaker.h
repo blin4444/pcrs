@@ -2,6 +2,7 @@
 using namespace System::Xml;
 using namespace System::Drawing;
 using namespace System::Windows::Forms;
+using namespace std;
 
 #include "xmlguimaker.h"
 
@@ -115,7 +116,7 @@ public:
 		}
 	}
 
-	virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup, bool isList) override
+	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup, bool isList) override
 	{
 		if (isList)
 		{
@@ -126,10 +127,10 @@ public:
 			 AddRadioGroup(name, radioGroup);
 		}
 	}
-
-	virtual void AddListRadioGroup(String^ name, vector<String^>& radioGroup)
+	*/
+	/*virtual void AddListRadioGroup(String^ name, vector<String^>& radioGroup)
 	{
-		Panel^ newPanel = CreateNewPanel();
+		/*Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel(name);
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
@@ -145,9 +146,9 @@ public:
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
-	}
+	}*/
 
-	virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup)
+	/*virtual void AddRadioGroup(String^ name, vector<String^>& radioGroup)
 	{
 		TableLayoutPanel^ newPanel = CreateNewTablePanel();
 		Label^ label = CreateLabel(name);
@@ -163,16 +164,14 @@ public:
 			row++;
 		}
 		newPanel->Controls->Add(newPanel);
-	}
-
+	}*/
+	
 private:
 	 System::Drawing::Size labelSize;
 	  System::Drawing::Font^ labelFont;
 
 	 System::Drawing::Size textBoxSize;
 	 System::Drawing::Font^ textBoxFont;
-	
-
 
 	 FlowLayoutPanel^ panel;
 };

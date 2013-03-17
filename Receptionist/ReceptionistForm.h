@@ -87,6 +87,7 @@ namespace Receptionist {
 
 			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
 			XmlGuiParser^ parser = gcnew XmlGuiParser();
+			parser->Parse();
 		}
 	};
 }

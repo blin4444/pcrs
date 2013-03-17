@@ -50,6 +50,12 @@
     <ClInclude Include="XmlGuiParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Section.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReceptionistForm.resx">

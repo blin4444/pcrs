@@ -1,7 +1,10 @@
 #pragma once
+using namespace System;
 using namespace System::Xml;
 using namespace System::Drawing;
 using namespace System::Windows::Forms;
+using namespace std;
+#include <vector>
 
 ref class XmlGuiMaker abstract 
 {
@@ -35,7 +38,7 @@ public:
 		return label;
 	}
 
-	virtual void AddRadioGroup(vector<String^>& radioGroup, bool isList) = 0;
+	//virtual void AddRadioGroup(String^ name, std::vector<String^>& radioGroup, bool isList) = 0;
 
 protected:
 	bool isSeparateLines;
