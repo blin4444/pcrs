@@ -1,4 +1,5 @@
 #pragma once
+using namespace System;
 #include "formelement.h"
 #include "ElementType.h"
 ref class TextField :
@@ -19,5 +20,6 @@ public:
 	}
 
 	bool isNumber;
+
 };
 

@@ -103,7 +103,7 @@ public:
 								else if (isDate)
 								{
 									dateElement = gcnew DateElement(id, label);
-									 newElement = dateElement;
+									newElement = dateElement;
 								}
 									
 							}

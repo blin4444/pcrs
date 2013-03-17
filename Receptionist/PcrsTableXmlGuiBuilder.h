@@ -55,7 +55,7 @@ public:
 			{
 
 				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
-				panel->BackColor = Color::Beige;
+				panel->BackColor = Color::White;
 				currentSection = (Section^) element;
 				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
 				guiMaker->MakeFromElementList(currentSection->elements);

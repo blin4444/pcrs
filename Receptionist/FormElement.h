@@ -15,10 +15,15 @@ public:
 
 	String^ id;
 	String^ label; 
-	//String^ style;
-	//String^ type;
 	bool isRequired;
 	String^ placeHolder;
-	
+	String^ value;
+
+	property String^ Value
+    {
+    public:
+        String^ get() { return this->value; }
+        void set(String^ v) { this->value = v; }
+    }
 };
 

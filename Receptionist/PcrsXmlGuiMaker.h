@@ -55,7 +55,7 @@ public:
 			{
 
 				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
-				panel->BackColor = Color::Beige;
+				panel->BackColor = Color::White;
 				currentSection = (Section^) element;
 				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
 				guiMaker->MakeFromElementList(currentSection->elements);
@@ -206,9 +206,11 @@ public:
 	void AddDateTimeControl(DateElement^ date)
 	{
 		Panel^ newPanel = CreateNewPanel();
+		Label^ label = CreateLabel(date->label);
 		// Create a new DateTimePicker control and initialize it.
 		DateTimePicker^ dateTimePicker = gcnew DateTimePicker;
 		dateTimePicker->Name = date->id;
+		dateTimePicker->Size = GetTextBoxSize();
 
 		// Set the MinDate and MaxDate.
 		dateTimePicker->MinDate = DateTime(1800,1,1);
@@ -222,6 +224,8 @@ public:
 		// Show the CheckBox and display the control as an up-down control.
 		//dateTimePicker->ShowCheckBox = true;
 		//dateTimePicker->ShowUpDown = true;
+		newPanel->Controls->Add(label);
+		PlaceToRight(label, dateTimePicker);
 		newPanel->Controls->Add(dateTimePicker);
 	}
 	

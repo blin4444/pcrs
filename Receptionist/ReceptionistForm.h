@@ -64,13 +64,13 @@ namespace Receptionist {
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 21);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1185, 496);
+			this->ClientSize = System::Drawing::Size(1000, 480);
 			this->Font = (gcnew System::Drawing::Font(L"Segoe UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(0)));
 			this->ForeColor = System::Drawing::Color::Black;
 			this->Margin = System::Windows::Forms::Padding(4, 5, 4, 5);
 			this->Name = L"ReceptionistForm";
-			this->Text = L"Receptionist";
+			this->Text = L"Client Information Form";
 			this->Load += gcnew System::EventHandler(this, &ReceptionistForm::ReceptionistForm_Load);
 			this->ResumeLayout(false);
 
@@ -89,9 +89,9 @@ namespace Receptionist {
 			this->Controls->Add(panel);*/
 
 			TableLayoutPanel^ panel = gcnew TableLayoutPanel();
-			panel->Padding = System::Windows::Forms::Padding(24);
+			//panel->Padding = System::Windows::Forms::Padding(24);
 			panel->AutoScroll = true;
-			panel->AutoSize = true;
+			//panel->AutoSize = true;
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
 
@@ -136,16 +136,24 @@ namespace Receptionist {
 			}
 			else
 			{
-				FlowLayoutPanel^ newPanel = gcnew FlowLayoutPanel();
+				Panel^ newPanel = gcnew Panel();
+				newPanel->AutoSize = true;
+				//newPanel->BackColor = Color::Beige;
+				newPanel->Dock = DockStyle::Right;
+				newPanel->Size = System::Drawing::Size(300, 120);
+				newPanel->Anchor = AnchorStyles::Top;
 				Button^ submit = gcnew Button();
-				submit->Anchor = AnchorStyles::Right;
-				submit->AutoSize = true;
+				
+				//submit->Anchor = AnchorStyles::Right;
+				
 				submit->Font = gcnew System::Drawing::Font("Segoe UI", 12);
 				submit->Text = "Submit";
+				//submit->Size = System::Drawing::Size(300, 40);
+				submit->AutoSize = true;
 				newPanel->Controls->Add(submit);
-				
 				panel->Controls->Add(newPanel);
-				panel->SetRow(newPanel, maker->IncRow() + 1);
+				//panel->Controls->Add(submit);
+				panel->SetRow(newPanel, maker->IncRow());
 			}
 		}
 	};

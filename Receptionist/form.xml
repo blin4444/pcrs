@@ -6,7 +6,7 @@
         <input id="last_name" name="Last Name" type="text"/>
         <br/>
         <input id="sin" name="SIN Number" type="number"/>
-        <input id="date_of_birth" name="Birth Date" type="date"/>
+        <input id="date_of_birth" name="Date of Birth" type="date"/>
         <input id="gender" name="Gender" type="gender" />
         <br/>
         <input id="street_address" name="Street Address" type="text"/>
