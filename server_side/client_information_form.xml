@@ -19,7 +19,7 @@
         <input id="email" name="Email" type="text"/>
     </div>
 
-    <div id="2">
+    <div id="Registration_Option">
         <input id="employment_situation" name="Employment Situation" type="integer"/>
         <input id="unemployment_duation" name="Unemployment Duration" type="integer" required="true"/>
         <br/>
@@ -27,7 +27,7 @@
         <input id="residency_status" name="Residency Status" type="integer"/>
     </div>
 
-    <div id="3">
+    <div id="Residency_Status">
         <input id="office_use" name="Office Use" type="integer"/>
     </div>
 </form>
