@@ -20,7 +20,7 @@ class Form:
             self.buildQuery(section)
 
     def buildQuery(self, section):
-        elements = section.findall("./input")
+        elements = section.findall("./*")
         table = section.attrib["id"]
         string = MutableString()
         string += "insert into "
@@ -28,12 +28,13 @@ class Form:
         string2 += "values("
         string += table + "("
         for i in range(len(elements)-1):
-            string += elements[i].attrib['id'] + ", "
-            string2 += "%s, "
-        string += elements[len(elements)-1].attrib['id'] + ") "
-        string2 += "'%s') "
+            if (elements[i].tag != "br"):
+                string += elements[i].attrib['id'] + ", "
+                string2 += "%s, "
+        if (elements[len(elements)-1].tag != "br"):
+            string += elements[len(elements)-1].attrib['id'] + ") "
+            string2 += "'%s') "
         string += string2
-        print string
         return str(string)
 
     def buildArgumentMap(self):
@@ -42,8 +43,8 @@ class Form:
         for section in sections:
             arguments = list()
             mapping[section.attrib["id"]] = arguments
-            fields = section.findall("./input")
+            fields = section.findall("./*")
             for field in fields:
-                arguments.append(field.attrib["id"])
-        print mapping
+                if (field.tag != "br"):
+                    arguments.append(field.attrib["id"])
         return mapping
