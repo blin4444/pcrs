@@ -4,8 +4,8 @@
         <input id="first_name" name="First Name" type="text"/>
         <input id="middle_name" name="Middle Name" type="text" required="true"/>
         <input id="last_name" name="Last Name" type="text"/>
-        <input id="sin" name="SIN Number" type="number"/>
         <br/>
+        <input id="sin" name="SIN Number" type="number"/>
         <input id="date_of_birth" name="Birth Date" type="date"/>
         <input id="gender" name="Gender" type="gender" />
         <br/>

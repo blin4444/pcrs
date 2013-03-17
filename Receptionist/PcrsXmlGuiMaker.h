@@ -115,11 +115,12 @@ public:
 		newPanel->Controls->Add(label);
 		ComboBox^ listBox = gcnew ComboBox();
 		listBox->Name = radioGroup->id;
+		listBox->AutoSize = true;
 		listBox->Items->Add("Unspecified");
 		listBox->Items->Add("Male");
 		listBox->Items->Add("Female");
-		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
+		listBox->Font = GetTextBoxFont();
+		listBox->Size = GetTextBoxSize();
 		listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
