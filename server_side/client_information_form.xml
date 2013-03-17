@@ -21,7 +21,7 @@
 
     <div id="Registration_Option">
         <input id="employment_situation" name="Employment Situation" type="integer"/>
-        <input id="unemployment_duation" name="Unemployment Duration" type="integer" required="true"/>
+        <input id="unemployment_duration" name="Unemployment Duration" type="integer" required="true"/>
         <br/>
         <input id="government_assistance" name="Government Assistance" type="integer" required="true"/>
         <input id="residency_status" name="Residency Status" type="integer"/>
