@@ -1,5 +1,6 @@
 import MySQLdb
 from datetime import datetime
+from words import TokenGenerator
 class Query:
 
 	def __init__(self):
@@ -8,6 +9,7 @@ class Query:
 				passwd = "root",
 				db="PCRS_V3");
 		self.cur = self.db.cursor()
+		self.word = TokenGenerator("wordlist.txt")
 
 	def close(self):
 		self.cur.close()
@@ -23,21 +25,19 @@ class Query:
 		return row
 	
 	def generate_token(self):
-		
-		#temperory generator until we figure out a better way		
-		max_id = 100000
+		token = self.word.get()
 		try:
-			self.cur.execute("""SELECT MAX(id) FROM User""")		
-			max_id = self.cur.fetchone()
-			if max_id != None:
-				max_id = max_id[0]
+			self.cur.execute("""SELECT Count(id) FROM User WHERE token LIKE %s%""", (token))		
+			count = self.cur.fetchone()
+			if count != None:
+				count = count[0]
 		except:
-			max_id = None
+			count = 0
 		
-		if max_id != None:
-			return "token"+str(max_id+1)
+		if count != 0:
+			return token+str(count+1)
 		
-		return "token1"
+		return token
 
 	def sin_already_exists(self, sin):
 		query = """SELECT * FROM User_Info WHERE sin = %s"""
