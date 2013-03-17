@@ -1,5 +1,5 @@
 import SocketServer
-#import BaseHTTPServer, SimpleHTTPServer
+import BaseHTTPServer, SimpleHTTPServer
 #import ssl
 from query import Query
 from form import Form
@@ -149,7 +149,7 @@ if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
 	form = Form("client_information_form")
-	server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
+	server = BaseHTTPServer.HTTPServer((HOST, PORT), MyTCPHandler)
 	try:
 		server.serve_forever()
 	finally:
