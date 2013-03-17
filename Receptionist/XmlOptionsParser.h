@@ -12,6 +12,8 @@ using namespace std;
 #include "ElementType.h"
 #include "ServerCommunication.h"
 
+#define SERVER_SIDE false
+
 ref class XmlOptionsParser
 {
 public:
@@ -23,10 +25,14 @@ public:
 
 	void Parse(String^ file)
 	{
+#if SERVER_SIDE
 		ServerCommunication^ comm = gcnew ServerCommunication();
 		String^ xml = comm->GetXmlFile(file);
 		Console::Write(xml);
 		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(xml));
+#else
+		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("options.xml");
+#endif
 		String^ elementType;
 		String^ sectionId;
 		String^ id;
