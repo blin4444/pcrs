@@ -55,12 +55,12 @@ public:
 			{
 
 				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
-				panel->BackColor = Color::Beige;
+				panel->BackColor = Color::White;
 				currentSection = (Section^) element;
 				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
 				guiMaker->MakeFromElementList(currentSection->elements);
 				panel->AutoSize = true;
-				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 80);
+				panel->Padding = System::Windows::Forms::Padding(30);
 				panel->Dock = DockStyle::Top;
 				//panel->Width = this->panel->Width;
 				this->lastControl = panel;
@@ -78,25 +78,16 @@ public:
 				panel->BackColor = Color::AliceBlue;
 				this->panel->Controls->Add(panel);
 				RadioGroup^ radioGroup = (RadioGroup^) element;
-				radioGroup->container = panel;
 			}
 			else if (element->IsType(TextFieldType))
 			{
-				this->AddField(((TextField^) element)->label);
+				this->AddField((TextField^) element);
 			}
 			NewRow();
 		}
 	}
 
-	void Initialize()
-	{
-		labelFont = gcnew System::Drawing::Font("Segoe UI", 12);
-		labelSize = System::Drawing::Size(120,40);
-		textBoxSize = System::Drawing::Size(140,40);
-		textBoxFont = gcnew System::Drawing::Font("Segoe UI", 11);
-	}
-
-	Panel^ CreateNewPanel()
+	virtual Panel^ CreateNewPanel() override
 	{
 		Panel^ newPanel = gcnew Panel();
 		lastControl = newPanel;
@@ -112,59 +103,6 @@ public:
 		newPanel->AutoSize = true;
 		panel->Controls->Add(newPanel);
 		return newPanel;
-	}
-
-	virtual void AddField(System::String^ text) override
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(text);
-			
-		newPanel->Controls->Add(label);
-		TextBox^ textBox = gcnew TextBox();
-		textBox->Font = textBoxFont;
-		textBox->Size = textBoxSize;
-		PlaceToRight(label, textBox);
-
-		newPanel->Controls->Add(textBox);
-		
-		newPanel->AutoSize = true;
-	}
-
-	virtual void AddGenderField() override
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel("Gender");
-		newPanel->Controls->Add(label);
-		ComboBox^ listBox = gcnew ComboBox();
-		listBox->Items->Add("Unspecified");
-		listBox->Items->Add("Male");
-		listBox->Items->Add("Female");
-		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
-		listBox->SelectedIndex = 0;
-		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceToRight(label, listBox);
-		newPanel->Controls->Add(listBox);
-	}
-
-	virtual Label^ CreateLabel(System::String^ text) override
-	{
-		Label^ label = gcnew Label();
-		label->Font = labelFont;
-		label->Text = text;
-		label->Size = labelSize;
-		label->ForeColor = Color::Gray;
-		label->TextAlign = ContentAlignment::TopRight;
-
-		/*if (isSeparateLines)
-		{
-			label->Size = size;
-		}
-		else
-		{
-			label->Size = labelSize;
-		}*/
-		return label;
 	}
 
 	void NewRow()
@@ -202,6 +140,7 @@ public:
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
+		listBox->DropDownWidth = 250;
 		
 		for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
 		{
@@ -233,7 +172,7 @@ public:
 		newPanel->Controls->Add(newPanel);
 	}*/
 
-	virtual void AddRadioGroup(String^ name, bool isList) override
+	virtual void AddRadioGroup(RadioGroup^ radioGroup) override
 	{
 		/*if (isList)
 		{
@@ -245,7 +184,7 @@ public:
 		}*/
 	}
 
-	virtual void AddRadioGroup(String^ name) override
+	virtual void AddRadioGroup(String^ name)
 	{
 		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
 		Label^ label = CreateLabel(name);
@@ -263,14 +202,15 @@ public:
 		newPanel->Controls->Add(newPanel);*/
 	}
 
+	int IncRow() 
+	{
+		return row++;
+	}
+
+protected:
+	TableLayoutPanel^ panel;
+
 private:
-	 System::Drawing::Size labelSize;
-	  System::Drawing::Font^ labelFont;
-
-	 System::Drawing::Size textBoxSize;
-	 System::Drawing::Font^ textBoxFont;
-
-	 TableLayoutPanel^ panel;
 
 	 int row;
 	 int col;

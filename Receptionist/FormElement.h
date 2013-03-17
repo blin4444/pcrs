@@ -14,10 +14,16 @@ public:
 	virtual bool IsType(PCRS::ElementType type) = 0;
 
 	String^ id;
-	String^ label;
-	//String^ style;
-	//String^ type;
+	String^ label; 
 	bool isRequired;
-	
+	String^ placeHolder;
+	String^ value;
+
+	property String^ Value
+    {
+    public:
+        String^ get() { return this->value; }
+        void set(String^ v) { this->value = v; }
+    }
 };
 

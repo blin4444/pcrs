@@ -4,6 +4,7 @@
 #include "FormElement.h"
 #include "RadioGroup.h"
 #include "TextField.h"
+#include "DateElement.h"
 
 using namespace System::Xml;
 using namespace System::Drawing;
@@ -54,12 +55,12 @@ public:
 			{
 
 				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
-				panel->BackColor = Color::Beige;
+				panel->BackColor = Color::White;
 				currentSection = (Section^) element;
 				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
 				guiMaker->MakeFromElementList(currentSection->elements);
 				panel->AutoSize = true;
-				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 80);
+				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 40);
 				panel->Dock = DockStyle::Top;
 				//panel->Width = this->panel->Width;
 				this->lastControl = panel;
@@ -80,29 +81,25 @@ public:
 				RadioGroup^ radioGroup = (RadioGroup^) element;
 				if (radioGroup->isGender)
 				{
-					this->AddGenderField();
+					this->AddGenderField(radioGroup);
 				}
 				else
 				{
-					this->AddRadioGroup(element->label, radioGroup->isList);
+					this->AddRadioGroup(radioGroup);
 				}
 			}
 			else if (element->IsType(TextFieldType))
 			{
-				this->AddField(((TextField^) element)->label);
+				this->AddField(((TextField^) element));
 			}
-		}
+			else if (element->IsType(DateType))
+			{
+				this->AddDateTimeControl((DateElement^) element);
+			}
+		} 
 	}
 
-	void Initialize()
-	{
-		labelFont = gcnew System::Drawing::Font("Segoe UI", 12);
-		labelSize = System::Drawing::Size(120,40);
-		textBoxSize = System::Drawing::Size(130,40);
-		textBoxFont = gcnew System::Drawing::Font("Segoe UI", 11);
-	}
-
-	Panel^ CreateNewPanel()
+	virtual Panel^ CreateNewPanel() override
 	{
 		Panel^ newPanel = gcnew Panel();
 		lastControl = newPanel;
@@ -111,65 +108,32 @@ public:
 		return newPanel;
 	}
 
-	TableLayoutPanel^ CreateNewTablePanel()
-	{
-		TableLayoutPanel^ newPanel = gcnew TableLayoutPanel();
-		lastControl = newPanel;
-		newPanel->AutoSize = true;
-		panel->Controls->Add(newPanel);
-		return newPanel;
-	}
-
-	virtual void AddField(System::String^ text) override
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(text);
-			
-		newPanel->Controls->Add(label);
-		TextBox^ textBox = gcnew TextBox();
-		textBox->Font = textBoxFont;
-		textBox->Size = textBoxSize;
-		PlaceToRight(label, textBox);
-
-		newPanel->Controls->Add(textBox);
-		
-		newPanel->AutoSize = true;
-	}
-
-	virtual void AddGenderField() override
+	virtual void AddGenderField(RadioGroup^ radioGroup)
 	{
 		Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel("Gender");
 		newPanel->Controls->Add(label);
 		ComboBox^ listBox = gcnew ComboBox();
+		listBox->Name = radioGroup->id;
+		listBox->AutoSize = true;
 		listBox->Items->Add("Unspecified");
 		listBox->Items->Add("Male");
 		listBox->Items->Add("Female");
-		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
+		listBox->Font = GetTextBoxFont();
+		listBox->Size = GetTextBoxSize();
 		listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
 	}
 
-	virtual Label^ CreateLabel(System::String^ text) override
+	TableLayoutPanel^ CreateNewTablePanel() 
 	{
-		Label^ label = gcnew Label();
-		label->Font = labelFont;
-		label->Text = text;
-		label->Size = labelSize;
-		label->ForeColor = Color::Gray;
-		label->TextAlign = ContentAlignment::TopRight;
-		/*if (isSeparateLines)
-		{
-			label->Size = size;
-		}
-		else
-		{
-			label->Size = labelSize;
-		}*/
-		return label;
+		TableLayoutPanel^ newPanel = gcnew TableLayoutPanel();
+		lastControl = newPanel;
+		newPanel->AutoSize = true;
+		panel->Controls->Add(newPanel);
+		return newPanel;
 	}
 
 	virtual void CreateBreak(bool isForce) override
@@ -183,11 +147,11 @@ public:
 		}
 	}
 
-	virtual void AddRadioGroup(String^ name, bool isList) override
+	virtual void AddRadioGroup(RadioGroup^ radioGroup) override
 	{
-		if (isList)
+		if (radioGroup->isList)
 		{
-			 AddListRadioGroup(name);
+			 AddListRadioGroup(radioGroup);
 		}
 		else
 		{
@@ -195,27 +159,33 @@ public:
 		}
 	}
 	
-	virtual void AddListRadioGroup(String^ name)
+	virtual void AddListRadioGroup(RadioGroup^ radioGroup)
 	{
 		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(name);
+		Label^ label = CreateLabel(radioGroup->label);
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
 		
+		listBox->DataSource = radioGroup->strings;
+		//listBox->AutoSize = true;
+		listBox->Width = 300;
+		listBox->Name = radioGroup->id;
+		listBox->DropDownWidth = 450;
+
 		/*for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
 		{
 			listBox->Items->Add(*it);
 		}*/
 		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
+		//listBox->Size = textBoxSize;
 		//listBox->SelectedIndex = 0;
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
 	}
 
-	virtual void AddRadioGroup(String^ name) override
+	virtual void AddRadioGroup(String^ name)
 	{
 		/*TableLayoutPanel^ newPanel = CreateNewTablePanel();
 		Label^ label = CreateLabel(name);
@@ -231,6 +201,32 @@ public:
 			row++;
 		}
 		newPanel->Controls->Add(newPanel);*/
+	}
+
+	void AddDateTimeControl(DateElement^ date)
+	{
+		Panel^ newPanel = CreateNewPanel();
+		Label^ label = CreateLabel(date->label);
+		// Create a new DateTimePicker control and initialize it.
+		DateTimePicker^ dateTimePicker = gcnew DateTimePicker;
+		dateTimePicker->Name = date->id;
+		dateTimePicker->Size = GetTextBoxSize();
+
+		// Set the MinDate and MaxDate.
+		dateTimePicker->MinDate = DateTime(1800,1,1);
+		dateTimePicker->MaxDate = DateTime::Today;
+
+		// Set the CustomFormat string.
+		//dateTimePicker->CustomFormat = "MMMM dd, yyyy - dddd";
+		dateTimePicker->CustomFormat = "yyyy-MM-dd";
+		dateTimePicker->Format = DateTimePickerFormat::Custom;
+
+		// Show the CheckBox and display the control as an up-down control.
+		//dateTimePicker->ShowCheckBox = true;
+		//dateTimePicker->ShowUpDown = true;
+		newPanel->Controls->Add(label);
+		PlaceToRight(label, dateTimePicker);
+		newPanel->Controls->Add(dateTimePicker);
 	}
 	
 private:
