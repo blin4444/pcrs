@@ -3,6 +3,7 @@ import BaseHTTPServer, SimpleHTTPServer
 #import ssl
 from query import Query
 from form import Form
+from xmlgen import options_xml
 
 from datetime import datetime
 from BaseHTTPServer import BaseHTTPRequestHandler
@@ -39,7 +40,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 	
 	def register(self, id, args, sin):
 		
-		
 		section = form.sectionMap[id]
 		user_id = query.insert_user_info(form.buildQuery(section), args, sin)
 		
@@ -53,8 +53,9 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			return token 
 		return "4 - Failed to input user token"
 	
-	def list_all(self):
-		return "5 - Unimplemented";
+	def options(self):
+		options = query.select_registration_options()		
+		return options_xml(options)
 
 	def process_param(self, response_data, name, value):
 		print "processing "+name+" "+str(value)
@@ -126,8 +127,8 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 				response_data = self.register(sectionID, args, sin)
 			else:
 				response_data = "8 - "+ response_data + "\n Will not register the user"
-		elif request.path == "/list/":
-			response_data = self.list_all()
+		elif request.path == "/options/":
+			response_data = self.options()
 		else:
 			response_data = "9 - unknown request"
 		

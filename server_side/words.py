@@ -17,3 +17,4 @@ class TokenGenerator:
 		for i in range(0,3):
 			word = word+self.list[randint(0, self.size-1)]
 		return word
+
