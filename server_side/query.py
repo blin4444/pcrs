@@ -21,13 +21,7 @@ class Query:
 		if row == None:
 			return None
 		return row[0]
-
-
-	def insert_sign_in(self, user_id, reason_id):
-		sql = """INSERT INTO Sign_In (user_id, reason_id, sign_in_time) VALUES (%s, %s, %s)"""
-		self.cur.execute(sql, (user_id, reason_id, datetime.now(),))
-		self.db.commit()
-
+	
 	def generate_token(self):
 		#temperory generator until we figure out a better way		
 		max_id = 100000		
@@ -41,8 +35,32 @@ class Query:
 		
 		if max_id != None:
 			return "user"+str(max_id+1)
+		
+		return "user1"
+
+	def sin_already_exists(self, sin):
+		query = """SELECT * FROM User_Info WHERE sin = %s"""
+		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
+		self.cur.execute(query, (sin))
+		row = self.cur.fetchone()
+		print "does sin already exist?"+str(row)
+		if row != None:
+			self.cur.execute(info_query, (sin))
+			result = self.cur.fetchone()
+			if result == None:
+				token = self.generate_token()			
+				self.insert_user(row[0], token)
+				self.cur.execute(info_query, (sin))
+				result = self.cur.fetchone()		
+			print str(result)
+			return result
 		else:
-			return "user1"
+			return None
+
+	def insert_sign_in(self, user_id, reason_id):
+		sql = """INSERT INTO Sign_In (user_id, reason_id, sign_in_time) VALUES (%s, %s, %s)"""
+		self.cur.execute(sql, (user_id, reason_id, datetime.now(),))
+		self.db.commit()
 
 	def insert_user(self, user_id, token):
 		sql = """INSERT INTO User(id, token) VALUES (%s, %s)"""
@@ -51,7 +69,7 @@ class Query:
 			self.db.commit()	
 			return True
 		except Exception, err:
-			print "Unexpected Error: "+str(err)
+			print "Unexpected Error when inserting user: "+str(err)
 			return False
 	
 	def insert_user_info(self, last_name, first_name, middle_name, sex, sin, date_of_birth,\
@@ -78,25 +96,17 @@ class Query:
 								
 			return user_id
 		except Exception, err:
-			print "Unexpected Error: "+str(err)
+			print "Unexpected Error when inserting user info: "+str(err)
 			return None
 
-	def sin_already_exists(self, sin):
-		query = """SELECT * FROM User_Info WHERE sin = %s"""
-		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
-		self.cur.execute(query, (sin))
-		row = self.cur.fetchone()
-		print "does sin already exist?"+str(row)
-		if row != None:
-			self.cur.execute(info_query, (sin))
-			result = self.cur.fetchone()
-			if result == None:
-				token = self.generate_token()			
-				self.insert_user(row[0], token)
-				self.cur.execute(info_query, (sin))
-				result = self.cur.fetchone()		
-			print str(result)
-			return result
-		else:
-			return None
-
+	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id):
+		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, registration_time)
+			 VALUES(%s, %s, %s, %s, %s, %s)"""
+		try:
+			self.cur.execute(sql, (user_id, es_id, ud_id, ga_id, rs_id, datetime.now()))
+			self.db.commit()
+			return True
+		except Exception, err:
+			print "Unexpected Error when inserting registration option: "+str(err)
+			return False
+	

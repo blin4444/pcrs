@@ -40,7 +40,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 				street_address, city, province, postal_code, phone, alternate_phone, email):		
 
 		check_duplicate = query.sin_already_exists(sin)
-		print "check dup"+str(check_duplicate)
+		
 		if check_duplicate != None:
 			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
 
