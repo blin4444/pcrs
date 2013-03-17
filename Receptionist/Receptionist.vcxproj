@@ -83,6 +83,7 @@
     <ClInclude Include="Break.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="FormElement.h" />
+    <ClInclude Include="ElementType.h" />
     <ClInclude Include="PcrsTableXmlGuiBuilder.h" />
     <ClInclude Include="PcrsXmlGuiMaker.h" />
     <ClInclude Include="RadioGroup.h" />

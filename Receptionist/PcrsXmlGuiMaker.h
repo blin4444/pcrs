@@ -6,6 +6,9 @@ using namespace std;
 
 #include "xmlguimaker.h"
 
+using namespace System;
+#include "FormElement.h"
+
 ref class PcrsXmlGuiMaker :
 public XmlGuiMaker
 {
@@ -25,6 +28,14 @@ public:
 	virtual void SetPanel(FlowLayoutPanel^ panel)
 	{
 		this->panel = panel;
+	}
+
+	void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list)
+	{
+		for each (FormElement^ element in list)
+		{
+			
+		}
 	}
 
 	void Initialize()
