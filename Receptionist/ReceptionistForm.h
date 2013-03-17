@@ -182,12 +182,12 @@ namespace Receptionist {
 							continue;
 						}
 
-						args->Add(gcnew KeyValue(sgId, sgValue));
-
 						if (sgValue == nullptr)
 						{
 							sgValue = "N/A";
 						}
+
+						args->Add(gcnew KeyValue(sgId, sgValue));
 						Console::WriteLine(sgId + ": " + sgValue);
 					}
 					sCom->SubmitUserInfo(args);
