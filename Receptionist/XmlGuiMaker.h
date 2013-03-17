@@ -41,7 +41,7 @@ public:
 		return label;
 	}
 
-	//virtual void AddRadioGroup(String^ name, std::vector<String^>& radioGroup, bool isList) = 0;
+	virtual void AddRadioGroup(String^ name, bool isList) = 0;
 
 protected:
 	bool isSeparateLines;

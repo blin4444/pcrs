@@ -3,6 +3,7 @@ using namespace System::Xml;
 using namespace System::Drawing;
 #include "XmlGuiMaker.h"
 #include "PcrsXmlGuiMaker.h"
+#include "PcrsTableXmlGuiBuilder.h"
 #include "XmlGuiParser.h"
 #include <vector>
 using namespace std;
@@ -77,13 +78,21 @@ namespace Receptionist {
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("form.xml");
 
-			FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+			/*FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
 			panel->Padding = System::Windows::Forms::Padding(24);
 			panel->AutoScroll = true;
+			panel->AutoSize = true;
+			panel->Dock = DockStyle::Fill;
+			this->Controls->Add(panel);*/
+
+			TableLayoutPanel^ panel = gcnew TableLayoutPanel();
+			panel->Padding = System::Windows::Forms::Padding(24);
+			panel->AutoScroll = true;
+			panel->AutoSize = true;
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
 
-			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
+			XmlGuiMaker^ maker = gcnew PcrsTableXmlGuiMaker(panel);
 			XmlGuiParser^ parser = gcnew XmlGuiParser();
 			parser->Parse();
 

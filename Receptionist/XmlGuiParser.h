@@ -37,6 +37,7 @@ public:
 		FormElement^ newElement;
 
 		elements = gcnew System::Collections::Generic::List<FormElement^>();
+		radioGroups = gcnew System::Collections::Generic::Dictionary<String^, FormElement^>();
 
 		try {
 			while (reader->Read()) 
@@ -86,6 +87,7 @@ public:
 										RadioGroup^ radioGroup = gcnew RadioGroup(id, label);
 										radioGroup->isList = isList;
 										newElement = radioGroup;
+										radioGroups->Add(id, radioGroup);
 									}
 							
 									
@@ -142,6 +144,6 @@ public:
 
 	System::Collections::Generic::List<FormElement^>^ elements;
 
-	System::Collections::Generic::KeyValuePair<String^, FormElement^>^ deferredElements;
+	System::Collections::Generic::Dictionary<String^, FormElement^>^ radioGroups;
 };
 

@@ -11,6 +11,9 @@ public:
 		this->label = label;
 		this->isRequired = false;
 		this->isList = false;
+		this->container = nullptr;
+		this->comboBox = nullptr;
+		this->isGender = false;
 	}
 
 	virtual bool IsType(PCRS::ElementType type) override
@@ -19,6 +22,8 @@ public:
 	}
 
 	bool isList;
-	System::Windows::Forms::ContainerControl^ container;
+	bool isGender;
+	System::Windows::Forms::TableLayoutPanel^ container;
+	System::Windows::Forms::ComboBox^ comboBox;
 };
 
