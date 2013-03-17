@@ -83,22 +83,22 @@ namespace Receptionist {
 
 		XmlGuiParser^ guiParser;
 
-		void GetData(System::Collections::Generic::List<FormElement^>^ elements)
+		void GetData(String^ id, System::Collections::Generic::List<FormElement^>^ elements)
 		{
 			bool isRequired;
-			String^ id;
+			String^ sgId;
 			String^ sgValue;
 
 			for each (FormElement^ formElement in elements)
 			{
 				sgValue = nullptr;
 				isRequired = formElement->isRequired;
-				id = formElement->id;
+				sgId = formElement->id;
 
 				if (formElement->IsType(PCRS::SectionType))
 				{
 					auto section = (Section^) formElement;
-					GetData(section->elements);
+					GetData(section->id, section->elements);
 				}
 				else if (formElement->IsType(PCRS::RadioGroupType))
 				{
@@ -125,14 +125,14 @@ namespace Receptionist {
 				{
 					sgValue = "N/A";
 				}
-				Console::WriteLine(id + ": " + sgValue);
+				Console::WriteLine(sgId + ": " + sgValue);
 
 			}
 		}
 	
 		System::Void btnSubmit_Click(System::Object^  sender, System::EventArgs^  e)
 		{
-			GetData(guiParser->elements);
+			GetData("", guiParser->elements);
 		}
 
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
