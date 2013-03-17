@@ -62,6 +62,11 @@ CREATE TABLE IF NOT EXISTS Registration_Option(
 	PRIMARY KEY(user_id, registration_time)
 );
 
+CREATE TABLE IF NOT EXISTS Office_Use(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	text VARCHAR(255)
+);
+
 INSERT INTO Employment_Situation(text) VALUES('I am unemployed.');
 INSERT INTO Employment_Situation(text) VALUES('I am working 20 hours or less and want to work more.');
 INSERT INTO Employment_Situation(text) VALUES('I am must leave my job for medical reason.');
@@ -83,3 +88,6 @@ INSERT INTO Residency_Status(text) VALUES('I am a convention refugee.');
 INSERT INTO Residency_Status(text) VALUES('I am a permanent resident of Canada.');
 INSERT INTO Residency_Status(text) VALUES('I do not have a Social Insurance Number.');
 
+INSERT INTO Office_Use(text) VALUES('Self Serve');
+INSERT INTO Office_Use(text) VALUES('Non-Case Managed');
+INSERT INTO Office_Use(text) VALUES('Case Managed');

@@ -39,7 +39,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		return "4 - Failed to input user token"
 	
 	def options(self):
-		options = query.select_registration_options()		
+		options = query.select_registration_options()
 		return options_xml(options)
 
 	def process_param(self, response_data, name, value):
@@ -69,6 +69,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		
 		elif self.path == "/getxml/":
 			file = self.headers.get("file", False)
+			f = None
 			try:
 				if file == "remote_generated_xml":
 					response_data = self.options()
@@ -78,9 +79,9 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 					f.close()
 			except Exception, err:
 				response_data = "5 - Xml request failed, file not found"
-				f.close()
-				
-		
+				if f != None:
+					f.close()
+						
 
 		elif self.path == "/signin/":
 			if 'token' in self.headers and 'reason_id' \
