@@ -133,16 +133,16 @@ namespace Project4 {
 		}
 #pragma endregion
 	private: System::Void button_EN_Click(System::Object^  sender, System::EventArgs^  e) {
-				 WelcomeForm::Visible = false;
 				 Thread::CurrentThread->CurrentUICulture = gcnew CultureInfo("en-CA");
 				 FirstUseForm ^next_form = gcnew FirstUseForm();
 				 next_form->ShowDialog();
+				 WelcomeForm::Visible = false;
 			 }
 private: System::Void button_FR_Click(System::Object^  sender, System::EventArgs^  e) {
-			WelcomeForm::Visible = false;
 			Thread::CurrentThread->CurrentUICulture = gcnew CultureInfo("fr-FR");
 			FirstUseForm ^next_form = gcnew FirstUseForm();
 			next_form->ShowDialog();
+			WelcomeForm::Visible = false;
 		 }
 };
 }
