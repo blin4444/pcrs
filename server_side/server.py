@@ -45,7 +45,10 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def process_param(self, response_data, name, value):
 		print "processing "+name+" "+str(value)
 		if value and value.strip() != "":
-			value = value.strip()
+			if (name == "Postal Code"): # I am SO SORRY!!
+				value = "".join(value.strip().split())
+			else:
+				value = value.strip()
 		else:
 			response_data = response_data + name+ " is empty.\n"
 			value = False
@@ -103,6 +106,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			args = list()
 
 			sin = self.headers.get("sin", "0")
+			sin = "".join(sin.split())
 			check_duplicate = query.sin_already_exists(sin)
 			if check_duplicate:
 				response_data = response_data + \
