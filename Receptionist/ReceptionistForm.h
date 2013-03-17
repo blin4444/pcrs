@@ -1,6 +1,8 @@
 #pragma once
 using namespace System::Xml;
 using namespace System::Drawing;
+#include "XmlGuiMaker.h"
+#include "PcrsXmlGuiMaker.h"
 
 namespace Receptionist {
 
@@ -52,12 +54,14 @@ namespace Receptionist {
 		{
 			this->SuspendLayout();
 			// 
-			// Receptionist
+			// ReceptionistForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(790, 307);
-			this->Name = L"Receptionist";
+			this->ForeColor = System::Drawing::Color::Black;
+			this->Name = L"ReceptionistForm";
 			this->Text = L"Receptionist";
 			this->Load += gcnew System::EventHandler(this, &ReceptionistForm::ReceptionistForm_Load);
 			this->ResumeLayout(false);
@@ -67,61 +71,87 @@ namespace Receptionist {
 	
 	private:
 		int currentRow;
+		int currentCol;
+		
+		Control^ lastControl;
+		bool isSeparateLines;
 
-		void AddField(TableLayoutPanel^ panel, System::String^ text)
+		
+
+		
+
+		void AddFieldToFlowLayout()
 		{
-			using namespace System::Drawing;
-			System::Drawing::Font^ textFont = gcnew System::Drawing::Font("Arial", 24);
-			System::Drawing::Font^ labelFont = gcnew System::Drawing::Font("Segoe UI", 24);
-			System::Drawing::Size size = System::Drawing::Size(400,40);
-			Label^ label = gcnew Label();
-			label->Size = size;
-			label->Text = text;
-			label->Font = labelFont;
 			
-			panel->Controls->Add(label);
-			panel->SetRow(label, currentRow);
-			panel->SetColumn(label, 0);
-			TextBox^ textBox = gcnew TextBox();
-			textBox->Font = textFont;
-			//textBox->Size = size;
-			textBox->Dock = DockStyle::Fill;
-			//textBox->Text = text;
-			panel->Controls->Add(textBox);
-			panel->SetColumn(textBox, 1);
-			panel->SetRow(textBox, currentRow);
-			
-			//panel->SetFlowBreak(textBox, true);
 		}
 	
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("form.xml");
 		
-			TableLayoutPanel^ panel = gcnew TableLayoutPanel();
+			/*TableLayoutPanel^ panel = gcnew TableLayoutPanel();
+			panel->AutoScroll = true;
+			panel->Dock = DockStyle::Fill;*/
+			isSeparateLines = false;
+
+			FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
 			panel->AutoScroll = true;
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
 
 			currentRow = 0;
+			currentCol = 0;
 
 			String^ id;
 			String^ elementType;
+			String^ type;
+			XmlGuiMaker^ maker = gcnew PcrsXmlGuiMaker(panel);
 			while (reader->Read()) 
 			{
 				switch (reader->NodeType) 
 				{
 					case XmlNodeType::Element: // The node is an element.
 						id = reader->GetAttribute("id");
+						type = reader->GetAttribute("type");
 						elementType = reader->Name;
 						Console::Write("ELEMENT <" + elementType + id);
 						Console::WriteLine(">");
-						if (elementType == "Field")
+						if (elementType == "Section")
 						{
-							AddField(panel, id);
+							if (type != nullptr)
+							{
+								isSeparateLines = type->Contains("separate");
+							}
 						}
-						else if (elementType == "Break")
+						else if (elementType == "Field")
+						{
+							if (id != nullptr)
+							{
+								if (id == "Gender")
+								{
+									maker->AddGenderField();
+								}
+								else
+								{
+									maker->AddField(id);
+								}
+								if (isSeparateLines)
+								{
+									panel->SetFlowBreak(lastControl, true);
+								}
+							}
+							//Ignoring fields with no ID
+						}
+						else if (elementType == "br")
 						{
 							currentRow++;
+							currentCol = 0;
+							if (lastControl != nullptr)
+							{
+								if (!isSeparateLines)
+								{
+									panel->SetFlowBreak(lastControl, true);
+								}
+							}
 						}
 						break;
 					case XmlNodeType::Text: //Display the text in each element.

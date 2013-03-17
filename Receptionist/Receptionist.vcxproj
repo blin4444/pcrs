@@ -79,6 +79,8 @@
     <ClCompile Include="ReceptionistForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PcrsTableXmlGuiBuilder.h" />
+    <ClInclude Include="PcrsXmlGuiMaker.h" />
     <ClInclude Include="ReceptionistForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
