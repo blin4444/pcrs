@@ -45,7 +45,10 @@ public:
 		{
 			if (element->IsType(BreakType))
 			{
-				panel->SetFlowBreak(this->lastControl, true);
+				if (this->lastControl != nullptr)
+				{
+					panel->SetFlowBreak(this->lastControl, true);
+				}
 			}
 			else if (element->IsType(SectionType))
 			{
@@ -57,7 +60,8 @@ public:
 				guiMaker->MakeFromElementList(currentSection->elements);
 				panel->AutoSize = true;
 				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 80);
-				panel->Dock = DockStyle::Fill;
+				panel->Dock = DockStyle::Top;
+				//panel->Width = this->panel->Width;
 				this->lastControl = panel;
 				this->panel->Controls->Add(panel);
 				if (this->lastControl != nullptr)
@@ -67,11 +71,12 @@ public:
 			}
 			else if (element->IsType(RadioGroupType))
 			{
-				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				//RadioGroup^ radioGroup = (RadioGroup^) element;
+				TableLayoutPanel^ panel = gcnew TableLayoutPanel();
 				panel->AutoSize = true;
 				this->panel->Controls->Add(panel);
 				RadioGroup^ radioGroup = (RadioGroup^) element;
-				//radioGroup->container = panel;
+				radioGroup->container = panel;
 			}
 			else if (element->IsType(TextFieldType))
 			{
