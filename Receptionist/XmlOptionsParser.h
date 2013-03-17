@@ -22,7 +22,8 @@ public:
 
 	void Parse(String^ file)
 	{
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(file);
+		ServerCommunication^ comm = gcnew ServerCommunication();
+		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(comm->GetXmlFile(file)));
 		String^ elementType;
 		String^ sectionId;
 		String^ id;

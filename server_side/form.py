@@ -12,6 +12,7 @@ class Form:
     def readXML(self, file):
         f = open(file, "r")
         string = f.read()
+        f.close()
         return ET.fromstring(string)
 
     def printSections(self):
