@@ -19,25 +19,19 @@ class Form:
         for section in sections:
             self.buildQuery(section)
 
-    def buildQuery(self, element):
-        columns = element.findall("./*")
-        table = element.attrib["table"]
+    def buildQuery(self, section):
+        elements = section.findall("./*")
+        table = section.attrib["id"]
         string = MutableString()
         string += "insert into "
         string2 = MutableString()
         string2 += "values("
         string += table + "("
-        for i in range(len(columns)-1):
-            string += columns[i].attrib['column'] + ", "
-            if columns[i].attrib['type'] != "integer":
-                string2 += "%s, "
-            else:
-                string2 += "%s, "
+        for i in range(len(elements)-1):
+            string += elements[i].attrib['column'] + ", "
+            string2 += "%s, "
         string += columns[len(columns)-1].attrib['column'] + ") "
-        if columns[len(columns)-1].attrib['type'] != "integer":
-            string2 += "%s) "
-        else:
-            string2 += "%s)"
+        string2 += "'%s') "
         string += string2
         print string
         return str(string)
@@ -58,15 +52,15 @@ class Form:
         mapping = dict()
         for section in sections:
             arguments = list()
-            mapping[section.attrib['id']] = arguments
+            mapping[section.attrib["id"]] = arguments
             fields = section.findall("./*")
             for field in fields:
-                arguments.append(field.attrib["column"])
+                arguments.append(field.attrib["id"])
         print mapping
         return mapping
 
 if __name__ == "__main__":
-    xml = Form("form.xml")
+    xml = Form("client_information_form.xml")
     xml.printSections()
     xml.buildClientForm()
     xml.buildArgumentMap()
