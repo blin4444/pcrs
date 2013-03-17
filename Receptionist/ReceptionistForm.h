@@ -155,12 +155,13 @@ namespace Receptionist {
 			switch(resultCode)
 			{
 			case 0:
-				ReceptionistForm::ForeColor = Color::Green;
-				ReceptionistForm::output->Text = "Success! User token is: " + result;
+				ReceptionistForm::output->ForeColor = Color::Green;
+				ReceptionistForm::output->Text = "Success! User token is: " + result->Substring(4);
 				break;
 			default:
+				ReceptionistForm::output->ForeColor = Color::Red;
 				ReceptionistForm::output->Text = result;
-				ReceptionistForm::ForeColor = Color::Red;
+				ReceptionistForm::output->Text = "Error message is: " + result->Substring(4);
 				break;
 			}
 		}
@@ -255,12 +256,13 @@ namespace Receptionist {
 
 				Label^ output_text = gcnew Label();
 				output_text->Text = "";
+				output_text->Size = System::Drawing::Size(500, 310);
 				output_text->Font = gcnew System::Drawing::Font("Segoe UI", 12);
 				output_text->Anchor = AnchorStyles::Right;
 				this->output = output_text;
 
 				Panel^ output_panel = gcnew Panel();
-				output_panel->Size = System::Drawing::Size(100, 120);
+				output_panel->Size = System::Drawing::Size(500, 320);
 				output_panel->Controls->Add(output_text);
 				output_panel->Anchor = AnchorStyles::Top;
 				panel->Controls->Add(output_panel);
