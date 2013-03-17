@@ -64,10 +64,10 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				if query.validate_token(token) == None:
 					response_data = "1 - No token found when user tries to sign in"
 				else:	
-<<<<<<< HEAD
+
 					response_data = "0 - Success"
-=======
-					response_data = "User exists in the system"
+
+					response_data = "1 - User exists in the system"
 					return_code = 200
 		
 		elif s.path == "/getxml/":
@@ -77,12 +77,11 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 					response_data = s.options()
 				else:
 					response_data = str(open(file).read())
-			except:
-				Exception, err:
+			except Exception, err:
 				print "Xml request failed, file not found"
 				response_data = "Xml request failed, file not found"
 		
->>>>>>> b215d266ac713e1b3f34d655d786b7dc7bc73c93
+
 		elif s.path == "/signin/":
 			if 'token' in s.headers and 'reason_id' \
 			in s.headers:			
@@ -126,7 +125,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			else:
 				response_data = "8 - "+ response_data + "\n Will not register the user"
 		else:
-			response_data = "unknown request"
+			response_data = "1 - Unknown request"
 
 		s.send_response(200)
 		s.send_header("Content-type", "text/html")
