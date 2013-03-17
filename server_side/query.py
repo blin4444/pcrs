@@ -121,8 +121,8 @@ class Query:
 			for t in tables:
 				self.cur.execute(t[1])
 				result_set = self.cur.fetchall()
-			for r in result_set:
-				query_list.append((t[0], r[0], r[1]))
+				for r in result_set:
+					query_list.append((t[0], r[0], r[1]))
 		except Exception, err:
 			print "Unexpected Error when extracting registration options:" + str(err)
 
