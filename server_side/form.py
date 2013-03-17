@@ -7,7 +7,7 @@ class Form:
         self.root = self.readXML(file)
         self.sectionMap = dict()
         for section in self.root.findall("./*"):
-            self.sectionMap[section.attrib["id"]] = section.findall("./*")
+            self.sectionMap[section.attrib["id"]] = section
 
     def readXML(self, file):
         f = open(file, "r")
@@ -30,17 +30,17 @@ class Form:
         for i in range(len(columns)-1):
             string += columns[i].attrib['column'] + ", "
             if columns[i].attrib['type'] != "integer":
-                string2 += "'%s', "
+                string2 += "%s, "
             else:
                 string2 += "%s, "
         string += columns[len(columns)-1].attrib['column'] + ") "
         if columns[len(columns)-1].attrib['type'] != "integer":
-            string2 += "'%s') "
+            string2 += "%s) "
         else:
             string2 += "%s)"
         string += string2
         print string
-        return string
+        return str(string)
 
     def buildClientForm(self):
         sections = self.root.findall("./*")
@@ -58,10 +58,10 @@ class Form:
         mapping = dict()
         for section in sections:
             arguments = list()
-            mapping[section.attrib["id"]] = arguments
+            mapping[section.attrib['id']] = arguments
             fields = section.findall("./*")
             for field in fields:
-                arguments.append(field.attrib["id"])
+                arguments.append(field.attrib["column"])
         print mapping
         return mapping
 

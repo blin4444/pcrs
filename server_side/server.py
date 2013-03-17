@@ -37,16 +37,12 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			print "Unexpected Error: "+str(err)
 			return "Unknown Database Error"
 	
-	def register(self, id, args):
-		check_duplicate = query.sin_already_exists(sin)
-		if check_duplicate:
-			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
+	def register(self, id, args, sin):
+		
 		
 		section = form.sectionMap[id]
-		insert_user_info(self, buildQuery(section), args)
+		user_id = query.insert_user_info(form.buildQuery(section), args, sin)
 		
-		user_id = query.insert_user_info()
-
 		if user_id == None:
 			return "Failed to input user into the database"
 
@@ -70,8 +66,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		return (value, response_data)
 	
 	def validate_sin(self, sin):		
-		def validate_sin(self, sin):
-		"""Verifies that the SIN is a nine digit number."""
 		sin = "".join(sin.split()) # remove whitespace
 		if (len(sin) != 9): return False
 		return sin.isdigit(); 
@@ -102,21 +96,37 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		
 		elif request.path == "/register/":
 			response_data = ""
+			should_register = True
 			sectionID = request.headers.get("sectionID", False)
 			argumentMap = form.buildArgumentMap()
 			arguments = argumentMap[sectionID]
 			args = list()
-			for argument in arguments
-				if argument != sin:
-					(value, response_data) = self.process_param(response_data, "last name", request.headers.get("last_name", False))
+			sin = None
+			for argument in arguments:
+				if argument != "sin":
+					print "Not sin"
+					(value, response_data) = self.process_param(response_data, argument, request.headers.get(argument, False))
+					if not value:
+						should_register = False
 					args.append(value)
 				else:
 					sin = request.headers.get("sin", "0")
+					print "SIN!" + sin
 					if not self.validate_sin(sin):
-						sin = False
 						response_data = response_data + "sin is invalid\n"
-			
-			response_data = self.register(sectionID, args) 
+						should_register = False;
+					else:					
+						print "is valid"						
+						check_duplicate = query.sin_already_exists(sin)
+						if check_duplicate:
+							response_data = response_data + "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
+							should_register = False;
+						else:
+							args.append(sin)
+			if should_register and sin != None:
+				response_data = self.register(sectionID, args, sin)
+			else:
+				response_data = response_data + "\n Will not register the user"
 		elif request.path == "/list/":
 			response_data = self.list_all()
 		else:
@@ -138,7 +148,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
-	form = Form("form.xml")
+	form = Form("client_information_form")
 	server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
 	try:
 		server.serve_forever()

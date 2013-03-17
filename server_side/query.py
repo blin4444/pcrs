@@ -23,8 +23,9 @@ class Query:
 		return row[0]
 	
 	def generate_token(self):
+		
 		#temperory generator until we figure out a better way		
-		max_id = 100000		
+		max_id = 100000
 		try:
 			self.cur.execute("""SELECT MAX(id) FROM User""")		
 			max_id = self.cur.fetchone()
@@ -34,9 +35,9 @@ class Query:
 			max_id = None
 		
 		if max_id != None:
-			return "user"+str(max_id+1)
+			return "token"+str(max_id+1)
 		
-		return "user1"
+		return "token1"
 
 	def sin_already_exists(self, sin):
 		query = """SELECT * FROM User_Info WHERE sin = %s"""
@@ -72,32 +73,25 @@ class Query:
 			print "Unexpected Error when inserting user: "+str(err)
 			return False
 	
-	def insert_user_info(self, last_name, first_name, middle_name, sex, sin, date_of_birth,\
-			street_address, city, province, postal_code, \
-			phone, alternate_phone, email):
-		sql = """INSERT INTO User_Info(last_name, first_name, middle_name, gender, sin,
-			date_of_birth, street_address, city, province, postal_code, phone, 
-			alternate_phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-		
-		query = """SELECT id FROM User_Info WHERE sin=%s"""
-		try:
-			self.cur.execute(sql, (last_name, first_name, middle_name, sex, \
-					sin, date_of_birth, street_address, city, province, \
-					postal_code, phone, alternate_phone, email))
-			
-			self.db.commit()
-			self.cur.execute(query, (sin))
-
-			user_id = self.cur.fetchone()
-			if user_id != None:
-				user_id = user_id[0]
-			if user_id == None:
-				return None
-								
-			return user_id
-		except Exception, err:
-			print "Unexpected Error when inserting user info: "+str(err)
-			return None
+	def insert_user_info(self, queryTemplate, args, sin):
+	        sql = queryTemplate
+	        query = """SELECT id FROM User_Info WHERE sin=%s"""
+	        try:
+		    print str(tuple(args))
+	            self.cur.execute(sql, tuple(args))
+	            self.db.commit()
+	            self.cur.execute(query, (sin))
+	
+	            user_id = self.cur.fetchone()
+	            if user_id != None:
+	                user_id = user_id[0]
+	            if user_id == None:
+	                return None
+                                
+	            return user_id
+	        except Exception, err:
+	            print "Unexpected Error: "+str(err)
+	            return None
 
 	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id):
 		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, registration_time)
