@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ReceptionistForm.cpp" />
+    <ClCompile Include="ServerCommunication.cpp" />
     <ClCompile Include="TextField.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +92,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Section.h" />
+    <ClInclude Include="ServerCommunication.h" />
     <ClInclude Include="TextField.h" />
     <ClInclude Include="XmlGuiMaker.h" />
     <ClInclude Include="XmlGuiParser.h" />
