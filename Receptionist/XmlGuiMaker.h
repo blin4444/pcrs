@@ -14,7 +14,7 @@ public:
 
 	virtual void Initialize()
 	{
-		this->InitFontsSizes();
+		InitFontsSizes();
 	}
 
 	virtual void InitFontsSizes()
@@ -26,34 +26,35 @@ public:
 	}
 
 	virtual void MakeFromElementList(System::Collections::Generic::List<FormElement^>^ list) = 0;
-	
-	virtual void AddField(System::String^ text) = 0;
 
-	Panel^ CreateNewPanel(Panel^ panel)
+	virtual Panel^ CreateNewPanel() = 0;
+
+	virtual void AddField(System::String^ text)
 	{
-		Panel^ newPanel = gcnew Panel();
-		lastControl = newPanel;
+		Panel^ newPanel = CreateNewPanel();
+		Label^ label = CreateLabel(text);
+			
+		newPanel->Controls->Add(label);
+		TextBox^ textBox = gcnew TextBox();
+		textBox->Font = ((XmlGuiMaker^) this)->GetTextBoxFont();
+		textBox->Size = ((XmlGuiMaker^) this)->GetTextBoxSize();
+		PlaceToRight(label, textBox);
+
+		newPanel->Controls->Add(textBox);
+		
 		newPanel->AutoSize = true;
-		panel->Controls->Add(newPanel);
-		return newPanel;
 	}
 
-	virtual void AddGenderField(Panel^ panel, RadioGroup^ radioGroup)
+	virtual Label^ CreateLabel(System::String^ text)
 	{
-		Panel^ newPanel = CreateNewPanel(panel);
-		Label^ label = CreateLabel("Gender");
-		newPanel->Controls->Add(label);
-		ComboBox^ listBox = gcnew ComboBox();
-		listBox->Name = radioGroup->id;
-		listBox->Items->Add("Unspecified");
-		listBox->Items->Add("Male");
-		listBox->Items->Add("Female");
-		listBox->Font = textBoxFont;
-		listBox->Size = textBoxSize;
-		listBox->SelectedIndex = 0;
-		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
-		PlaceToRight(label, listBox);
-		newPanel->Controls->Add(listBox);
+		Label^ label = gcnew Label();
+		label->Font = ((XmlGuiMaker^) this)->GetLabelFont();
+		label->Text = text;
+		label->Size =  ((XmlGuiMaker^) this)->GetLabelSize();
+		label->ForeColor = Color::Gray;
+		label->TextAlign = ContentAlignment::TopRight;
+
+		return label;
 	}
 
 	virtual void SetSeparateLines(bool isSeparateLines)
@@ -73,21 +74,42 @@ public:
 		right->SetBounds(left->Bounds.Width + 10,0, right->Bounds.Width, right->Bounds.Height);
 	}
 
-	virtual Label^ CreateLabel(System::String^ text)
+	/*virtual Label^ CreateLabel(System::String^ text)
 	{
 		Label^ label = gcnew Label();
 		label->Text = text;
 		return label;
-	}
+	}*/
 
 	virtual void AddRadioGroup(RadioGroup^ radioGroup) = 0;
+
+	System::Drawing::Size GetTextBoxSize()
+	{
+		return textBoxSize;
+	}
+
+	System::Drawing::Size GetLabelSize()
+	{
+		return labelSize;
+	}
+
+	System::Drawing::Font^ GetTextBoxFont()
+	{
+		return textBoxFont;
+	}
+
+	System::Drawing::Font^ GetLabelFont()
+	{
+		return labelFont;
+	}	
 
 protected:
 	bool isSeparateLines;
 	Control^ lastControl;
 
+private:
 	System::Drawing::Size textBoxSize;
 	System::Drawing::Font^ textBoxFont;
 	System::Drawing::Size labelSize;
-	  System::Drawing::Font^ labelFont;
+	System::Drawing::Font^ labelFont;
 };

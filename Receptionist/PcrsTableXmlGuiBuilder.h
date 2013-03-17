@@ -87,7 +87,7 @@ public:
 		}
 	}
 
-	Panel^ CreateNewPanel()
+	virtual Panel^ CreateNewPanel() override
 	{
 		Panel^ newPanel = gcnew Panel();
 		lastControl = newPanel;
@@ -103,42 +103,6 @@ public:
 		newPanel->AutoSize = true;
 		panel->Controls->Add(newPanel);
 		return newPanel;
-	}
-
-	virtual void AddField(System::String^ text) override
-	{
-		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(text);
-			
-		newPanel->Controls->Add(label);
-		TextBox^ textBox = gcnew TextBox();
-		textBox->Font = textBoxFont;
-		textBox->Size = textBoxSize;
-		PlaceToRight(label, textBox);
-
-		newPanel->Controls->Add(textBox);
-		
-		newPanel->AutoSize = true;
-	}
-
-	virtual Label^ CreateLabel(System::String^ text) override
-	{
-		Label^ label = gcnew Label();
-		label->Font = labelFont;
-		label->Text = text;
-		label->Size = labelSize;
-		label->ForeColor = Color::Gray;
-		label->TextAlign = ContentAlignment::TopRight;
-
-		/*if (isSeparateLines)
-		{
-			label->Size = size;
-		}
-		else
-		{
-			label->Size = labelSize;
-		}*/
-		return label;
 	}
 
 	void NewRow()

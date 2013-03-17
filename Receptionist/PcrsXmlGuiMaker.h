@@ -81,7 +81,7 @@ public:
 				RadioGroup^ radioGroup = (RadioGroup^) element;
 				if (radioGroup->isGender)
 				{
-					this->AddGenderField(this->panel, radioGroup);
+					this->AddGenderField(radioGroup);
 				}
 				else
 				{
@@ -99,6 +99,33 @@ public:
 		} 
 	}
 
+	virtual Panel^ CreateNewPanel() override
+	{
+		Panel^ newPanel = gcnew Panel();
+		lastControl = newPanel;
+		newPanel->AutoSize = true;
+		panel->Controls->Add(newPanel);
+		return newPanel;
+	}
+
+	virtual void AddGenderField(RadioGroup^ radioGroup)
+	{
+		Panel^ newPanel = CreateNewPanel();
+		Label^ label = CreateLabel("Gender");
+		newPanel->Controls->Add(label);
+		ComboBox^ listBox = gcnew ComboBox();
+		listBox->Name = radioGroup->id;
+		listBox->Items->Add("Unspecified");
+		listBox->Items->Add("Male");
+		listBox->Items->Add("Female");
+		listBox->Font = textBoxFont;
+		listBox->Size = textBoxSize;
+		listBox->SelectedIndex = 0;
+		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
+		PlaceToRight(label, listBox);
+		newPanel->Controls->Add(listBox);
+	}
+
 	TableLayoutPanel^ CreateNewTablePanel() 
 	{
 		TableLayoutPanel^ newPanel = gcnew TableLayoutPanel();
@@ -106,41 +133,6 @@ public:
 		newPanel->AutoSize = true;
 		panel->Controls->Add(newPanel);
 		return newPanel;
-	}
-
-	virtual void AddField(System::String^ text) override
-	{
-		Panel^ newPanel = CreateNewPanel(panel);
-		Label^ label = CreateLabel(text);
-			
-		newPanel->Controls->Add(label);
-		TextBox^ textBox = gcnew TextBox();
-		textBox->Font = textBoxFont;
-		textBox->Size = textBoxSize;
-		PlaceToRight(label, textBox);
-
-		newPanel->Controls->Add(textBox);
-		
-		newPanel->AutoSize = true;
-	}
-
-	virtual Label^ CreateLabel(System::String^ text) override
-	{
-		Label^ label = gcnew Label();
-		label->Font = labelFont;
-		label->Text = text;
-		label->Size = labelSize;
-		label->ForeColor = Color::Gray;
-		label->TextAlign = ContentAlignment::TopRight;
-		/*if (isSeparateLines)
-		{
-			label->Size = size;
-		}
-		else
-		{
-			label->Size = labelSize;
-		}*/
-		return label;
 	}
 
 	virtual void CreateBreak(bool isForce) override
@@ -168,7 +160,7 @@ public:
 	
 	virtual void AddListRadioGroup(RadioGroup^ radioGroup)
 	{
-		Panel^ newPanel = CreateNewPanel(panel);
+		Panel^ newPanel = CreateNewPanel();
 		Label^ label = CreateLabel(radioGroup->label);
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
@@ -212,23 +204,23 @@ public:
 
 	void AddDateTimeControl(DateElement^ date)
 	{
-		Panel^ newPanel = CreateNewPanel(panel);
+		Panel^ newPanel = CreateNewPanel();
 		// Create a new DateTimePicker control and initialize it.
 		DateTimePicker^ dateTimePicker = gcnew DateTimePicker;
 		dateTimePicker->Name = date->id;
 
 		// Set the MinDate and MaxDate.
-		dateTimePicker->MinDate = DateTime(1985,6,20);
+		dateTimePicker->MinDate = DateTime(1800,1,1);
 		dateTimePicker->MaxDate = DateTime::Today;
 
 		// Set the CustomFormat string.
 		//dateTimePicker->CustomFormat = "MMMM dd, yyyy - dddd";
-		dateTimePicker->CustomFormat = "yyyy-mm-dd";
+		dateTimePicker->CustomFormat = "yyyy-MM-dd";
 		dateTimePicker->Format = DateTimePickerFormat::Custom;
 
 		// Show the CheckBox and display the control as an up-down control.
-		dateTimePicker->ShowCheckBox = true;
-		dateTimePicker->ShowUpDown = true;
+		//dateTimePicker->ShowCheckBox = true;
+		//dateTimePicker->ShowUpDown = true;
 		newPanel->Controls->Add(dateTimePicker);
 	}
 	
