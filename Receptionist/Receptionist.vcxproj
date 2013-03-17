@@ -77,12 +77,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ReceptionistForm.cpp" />
+    <ClCompile Include="TextField.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Break.h" />
+    <ClInclude Include="Document.h" />
+    <ClInclude Include="FormElement.h" />
+    <ClInclude Include="PcrsTableXmlGuiBuilder.h" />
+    <ClInclude Include="PcrsXmlGuiMaker.h" />
+    <ClInclude Include="RadioGroup.h" />
     <ClInclude Include="ReceptionistForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Section.h" />
+    <ClInclude Include="TextField.h" />
     <ClInclude Include="XmlGuiMaker.h" />
+    <ClInclude Include="XmlGuiParser.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReceptionistForm.resx">

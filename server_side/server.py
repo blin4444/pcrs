@@ -75,7 +75,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				reason_id = s.headers["reason_id"]
 				response_data = self.sign_in(token, int(reason_id))
 			else:
-				response_data = "request must have both token and reason_id in header"
+				response_data = "7 - request must have both token and reason_id in header"
 				return_code = 404
 		
 		elif s.path == "/register/":
@@ -115,7 +115,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		elif request.path == "/list/":
 			response_data = self.list_all()
 		else:
-			response_data = "unknown request"
+			response_data = "9 - unknown request"
 			return_code = 404
 		s.send_response(return_code, response_data)
 		s.send_header("Content-type", "text/html")

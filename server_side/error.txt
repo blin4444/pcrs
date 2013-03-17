@@ -1,0 +1,13 @@
+0 - Success
+1 - No token found when user tries to sign in
+2 - Database error when user tries to sign in
+3 - Database error when trying to enter user info
+4 - Database error when trying to enter user token
+5 - Unimplemented Request
+6 - No token found when trying to validate token
+7 - No token or no reason in request to sign in
+8 - Registration form invalid
+9 - Unknown Request
+10 - Error in request
+11 - User with duplicate SIN is found in the system while registering
+12 - Entered invalid SIN during registration
