@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Break.h" />
+    <ClInclude Include="DateElement.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="FormElement.h" />
     <ClInclude Include="ElementType.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="TextField.h" />
     <ClInclude Include="XmlGuiMaker.h" />
     <ClInclude Include="XmlGuiParser.h" />
+    <ClInclude Include="XmlOptionsParser.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ReceptionistForm.resx">

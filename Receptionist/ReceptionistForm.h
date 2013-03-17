@@ -7,6 +7,7 @@ using namespace System::Drawing;
 #include "XmlGuiParser.h"
 #include "XmlOptionsParser.h"
 #include <vector>
+#include "ServerCommunication.h"
 using namespace std;
 
 namespace Receptionist {
@@ -17,7 +18,7 @@ namespace Receptionist {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	
+
 	/// <summary>
 	/// Summary for Receptionist
 	/// </summary>
@@ -78,61 +79,125 @@ namespace Receptionist {
 
 		}
 #pragma endregion
-	
+
 	private:
 
 		XmlGuiParser^ guiParser;
 
-		void GetData(String^ id, System::Collections::Generic::List<FormElement^>^ elements)
+		/*void GetData(String^ id, System::Collections::Generic::List<FormElement^>^ elements)
 		{
 			bool isRequired;
 			String^ sgId;
 			String^ sgValue;
 
-			for each (FormElement^ formElement in elements)
+			if (id != "")
 			{
-				sgValue = nullptr;
-				isRequired = formElement->isRequired;
-				sgId = formElement->id;
+				Collections::Generic::List<KeyValue^>^ args = gcnew Collections::Generic::List<KeyValue^>();
+				args->Add(gcnew KeyValue("sectionID", id));
 
-				if (formElement->IsType(PCRS::SectionType))
+				for each (FormElement^ formElement in elements)
 				{
-					auto section = (Section^) formElement;
-					GetData(section->id, section->elements);
-				}
-				else if (formElement->IsType(PCRS::RadioGroupType))
-				{
-					auto section = (RadioGroup^) formElement;
-					int value = section->Value;
-					sgValue = value.ToString();
-				}
-				else if (formElement->IsType(PCRS::TextFieldType))
-				{
-					auto textField = (TextField^) formElement;
-					sgValue = textField->Value;
-				}
-				else if (formElement->IsType(PCRS::DateType))
-				{
-					auto date = (DateElement^) formElement;
-					sgValue = date->Value;
-				}
-				else if (formElement->IsType(PCRS::BreakType))
-				{
-					continue;
-				}
+					sgValue = nullptr;
+					isRequired = formElement->isRequired;
+					sgId = formElement->id;
 
-				if (sgValue == nullptr)
-				{
-					sgValue = "N/A";
-				}
-				Console::WriteLine(sgId + ": " + sgValue);
+					if (formElement->IsType(PCRS::SectionType))
+					{
+						auto section = (Section^) formElement;
+						GetData(section->id, section->elements);
+					}
+					else if (formElement->IsType(PCRS::RadioGroupType))
+					{
+						auto section = (RadioGroup^) formElement;
+						int value = section->Value;
+						sgValue = value.ToString();
+					}
+					else if (formElement->IsType(PCRS::TextFieldType))
+					{
+						auto textField = (TextField^) formElement;
+						sgValue = textField->Value;
+					}
+					else if (formElement->IsType(PCRS::DateType))
+					{
+						auto date = (DateElement^) formElement;
+						sgValue = date->Value;
 
+					}
+					else if (formElement->IsType(PCRS::BreakType))
+					{
+						continue;
+					}
+
+					if (!formElement->IsType(PCRS::SectionType))
+						args->Add(gcnew KeyValue(sgId, sgValue));
+
+					if (sgValue == nullptr)
+					{
+						sgValue = "N/A";
+					}
+					Console::WriteLine(sgId + ": " + sgValue);
+				}
+			}
+
+		}*/
+
+		void GetData()
+		{
+			bool isRequired;
+			String^ sgId;
+			String^ sgValue;
+			ServerCommunication^ sCom = gcnew ServerCommunication();
+			for each (FormElement^ rootFormElement in guiParser->elements)
+			{
+				if (rootFormElement->IsType(PCRS::SectionType))
+				{
+					Collections::Generic::List<KeyValue^>^ args = gcnew Collections::Generic::List<KeyValue^>();
+					args->Add(gcnew KeyValue("sectionID", rootFormElement->id));
+					auto section = (Section^) rootFormElement;
+					for each (FormElement^ formElement in section->elements)
+					{
+						sgValue = nullptr;
+						isRequired = formElement->isRequired;
+						sgId = formElement->id;
+
+						if (formElement->IsType(PCRS::RadioGroupType))
+						{
+							auto section = (RadioGroup^) formElement;
+							int value = section->Value;
+							sgValue = value.ToString();
+						}
+						else if (formElement->IsType(PCRS::TextFieldType))
+						{
+							auto textField = (TextField^) formElement;
+							sgValue = textField->Value;
+						}
+						else if (formElement->IsType(PCRS::DateType))
+						{
+							auto date = (DateElement^) formElement;
+							sgValue = date->Value;
+
+						}
+						else if (formElement->IsType(PCRS::BreakType))
+						{
+							continue;
+						}
+
+						args->Add(gcnew KeyValue(sgId, sgValue));
+
+						if (sgValue == nullptr)
+						{
+							sgValue = "N/A";
+						}
+						Console::WriteLine(sgId + ": " + sgValue);
+					}
+					sCom->SubmitUserInfo(args);
+				}
 			}
 		}
-	
+
 		System::Void btnSubmit_Click(System::Object^  sender, System::EventArgs^  e)
 		{
-			GetData("", guiParser->elements);
+			GetData();
 		}
 
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -163,13 +228,13 @@ namespace Receptionist {
 				guiParser->Parse("form.xml");
 
 				maker->MakeFromElementList(guiParser->elements);
-	
+
 				optionsParser->Parse("options.xml");
 			}
 			catch (System::IO::FileNotFoundException^ ex)
 			{
 				isError = true;
-				
+
 				message = "An XML document describing the form for the receptionist could not be found. Please ensure that there is a form.xml and options.xml file in the program folder. " + ex->ToString();
 				caption = "Could Not Retrieve Form";
 
@@ -177,7 +242,7 @@ namespace Receptionist {
 			catch (XmlException^ ex)
 			{
 				isError = true;
-				
+
 				message = "One or more of the XML documents describing the form for the receptionist is not well-formed. Please ensure that form.xml is valid XML. " + ex->ToString();
 				caption = "Form Syntax Is Incorrect";
 			}
@@ -199,9 +264,9 @@ namespace Receptionist {
 				newPanel->Size = System::Drawing::Size(300, 120);
 				newPanel->Anchor = AnchorStyles::Top;
 				Button^ submit = gcnew Button();
-				
+
 				//submit->Anchor = AnchorStyles::Right;
-				
+
 				submit->Font = gcnew System::Drawing::Font("Segoe UI", 12);
 				submit->Text = "Submit";
 				//submit->Size = System::Drawing::Size(300, 40);
@@ -215,5 +280,5 @@ namespace Receptionist {
 		}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 			 }
-};
+	};
 }

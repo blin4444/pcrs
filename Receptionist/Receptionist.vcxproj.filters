@@ -62,6 +62,12 @@
     <ClInclude Include="ElementType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XmlOptionsParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DateElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ServerCommunication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
