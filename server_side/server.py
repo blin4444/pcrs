@@ -106,7 +106,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			check_duplicate = query.sin_already_exists(sin)
 			if check_duplicate:
 				response_data = response_data + \
-						"User with this SIN already existself. Here is the related info: "\
+						"User with this SIN already exists. Here is the related info: "\
 						+str(check_duplicate)
 				should_register = False;
 			
@@ -124,7 +124,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 						args.append(sin)
 					else:									
 						args.append(sin)
-			
+	
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 				if not response_data[0].isdigit():

@@ -56,7 +56,7 @@ class Query:
 			print str(result)
 			return "\nName: "+result[0]+" "+result[1]+\
 				"\nDate of Birth: "+str(result[2])+\
-				"\nSIN: "+result[3]+"\ntoken: "+ result[4]
+				"\nSIN: "+result[3]+"\ntoken: "+ result[4] + "\n"
 		else:
 			return None
 
