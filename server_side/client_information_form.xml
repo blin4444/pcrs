@@ -20,14 +20,14 @@
     </div>
 
     <div id="Registration_Option">
-        <input id="employment_situation" name="Employment Situation" type="integer"/>
-        <input id="unemployment_duration" name="Unemployment Duration" type="integer" required="true"/>
+        <input id="employment_situation" name="Employment Situation" type="list"/>
+        <input id="unemployment_duration" name="Unemployment Duration" type="list" required="true"/>
         <br/>
-        <input id="government_assistance" name="Government Assistance" type="integer" required="true"/>
-        <input id="residency_status" name="Residency Status" type="integer"/>
+        <input id="government_assistance" name="Government Assistance" type="list" required="true"/>
+        <input id="residency_status" name="Residency Status" type="list"/>
     </div>
 
     <div id="Residency_Status">
-        <input id="office_use" name="Office Use" type="integer"/>
+        <input id="office_use" name="Office Use" type="list"/>
     </div>
 </form>
