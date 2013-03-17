@@ -182,12 +182,12 @@ namespace Receptionist {
 							continue;
 						}
 
-						args->Add(gcnew KeyValue(sgId, sgValue));
-
 						if (sgValue == nullptr)
 						{
 							sgValue = "N/A";
 						}
+
+						args->Add(gcnew KeyValue(sgId, sgValue));
 						Console::WriteLine(sgId + ": " + sgValue);
 					}
 					sCom->SubmitUserInfo(args);
@@ -281,7 +281,6 @@ namespace Receptionist {
 				submit->Click += gcnew System::EventHandler(this, &ReceptionistForm::btnSubmit_Click);
 				newPanel->Controls->Add(submit);
 				panel->Controls->Add(newPanel);
-				//panel->Controls->Add(submit);
 				panel->SetRow(newPanel, maker->IncRow());
 			}
 		}

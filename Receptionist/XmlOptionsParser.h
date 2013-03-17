@@ -10,6 +10,7 @@ using namespace std;
 #include "RadioGroup.h"
 #include "Break.h"
 #include "ElementType.h"
+#include "ServerCommunication.h"
 
 ref class XmlOptionsParser
 {
@@ -23,7 +24,9 @@ public:
 	void Parse(String^ file)
 	{
 		ServerCommunication^ comm = gcnew ServerCommunication();
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(comm->GetXmlFile(file)));
+		String^ xml = comm->GetXmlFile(file);
+		Console::Write(xml);
+		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(xml));
 		String^ elementType;
 		String^ sectionId;
 		String^ id;
@@ -31,7 +34,7 @@ public:
 		String^ type;
 		RadioGroup^ radioGroup;
 
-		try {
+
 			while (reader->Read()) 
 			{
 
@@ -78,10 +81,7 @@ public:
 						break;
 				}
 			}
-		}
-		catch (XmlException^ ex)
-		{
-		}
+
 	}
 
 	System::Collections::Generic::Dictionary<String^, FormElement^>^ radioGroups;

@@ -109,11 +109,13 @@ class Query:
 		sql_ud = """SELECT * FROM Unemployment_Duration"""
 		sql_ga = """SELECT * FROM Government_Assistance"""
 		sql_rs = """SELECT * FROM Residency_Status"""
+		sql_ou = """SELECT * FROM Office_Use"""
 
-		tables = [("employement_situation", sql_es),
+		tables = [("employment_situation", sql_es),
 		("unemployment_duration", sql_ud),
 		("government_assistance", sql_ga),
-		("residency_status", sql_rs)]
+		("residency_status", sql_rs),
+                ("office_use", sql_ou)]
 
 		query_list = []
 

@@ -2,11 +2,11 @@
 <form>
     <div id="User_Info">
         <input id="first_name" name="First Name" type="text"/>
-        <input id="middle_name" name="Middle Name" type="text" required="true"/>
+        <input id="middle_name" name="Middle Name" type="text" placeholder="n/a"/>
         <input id="last_name" name="Last Name" type="text"/>
         <br/>
         <input id="sin" name="SIN Number" type="number"/>
-        <input id="date_of_birth" name="Birth Date" type="text"/>
+        <input id="date_of_birth" name="Birth Date" type="date"/>
         <input id="gender" name="Gender" type="gender" />
         <br/>
         <input id="street_address" name="Street Address" type="text"/>
@@ -15,15 +15,15 @@
         <input id="postal_code" name="Postal Code" type="text"/>
         <br/>
         <input id="phone" name="Phone Number" type="text"/>
-        <input id="alternate_phone" name="Alternate Phone Number" type="text" required="true"/>
+        <input id="alternate_phone" name="Alternate Phone Number" type="text" placeholder="n/a"/>
         <input id="email" name="Email" type="text"/>
     </div>
 
     <div id="Registration_Option">
         <input id="employment_situation" name="Employment Situation" type="list"/>
-        <input id="unemployment_duration" name="Unemployment Duration" type="list" required="true"/>
+        <input id="unemployment_duration" name="Unemployment Duration" type="list" placeholder="n/a"/>
         <br/>
-        <input id="government_assistance" name="Government Assistance" type="list" required="true"/>
+        <input id="government_assistance" name="Government Assistance" type="list" placeholder="n/a"/>
         <input id="residency_status" name="Residency Status" type="list"/>
     </div>
 
