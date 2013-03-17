@@ -11,6 +11,7 @@ public:
 		this->label = label;
 		this->isRequired = false;
 		this->isList = false;
+		this->container = nullptr;
 	}
 
 	virtual bool IsType(PCRS::ElementType type) override
@@ -19,6 +20,6 @@ public:
 	}
 
 	bool isList;
-	System::Windows::Forms::ContainerControl^ container;
+	System::Windows::Forms::TableLayoutPanel^ container;
 };
 

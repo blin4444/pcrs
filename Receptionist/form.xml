@@ -20,10 +20,10 @@
     </div>
 
     <div id="2">
-        <input id="employment_situation" name="Employment Situation" type="integer"/>
-        <input id="unemployment_duation" name="Unemployment Duration" type="integer" required="true"/>
+        <input id="employment_situation" name="Employment Situation" type="radiogroup" />
+        <input id="unemployment_duation" name="Unemployment Duration" type="radiogroup" required="true"/>
         <br/>
-        <input id="government_assistance" name="Government Assistance" type="integer" required="true"/>
+        <input id="government_assistance" name="Government Assistance" type="radiogroup" required="true"/>
         <input id="residency_status" name="Residency Status" type="integer"/>
     </div>
 
