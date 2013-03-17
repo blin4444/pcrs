@@ -19,5 +19,6 @@ public:
 	}
 
 	bool isList;
+	System::Windows::Forms::ContainerControl^ container;
 };
 

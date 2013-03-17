@@ -45,19 +45,33 @@ public:
 		{
 			if (element->IsType(BreakType))
 			{
+				panel->SetFlowBreak(this->lastControl, true);
 			}
 			else if (element->IsType(SectionType))
 			{
+
 				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				panel->BackColor = Color::Beige;
 				currentSection = (Section^) element;
 				PcrsXmlGuiMaker^ guiMaker = gcnew PcrsXmlGuiMaker(panel);
-				MakeFromElementList(currentSection->elements);
+				guiMaker->MakeFromElementList(currentSection->elements);
 				panel->AutoSize = true;
+				panel->Padding = System::Windows::Forms::Padding(30, 30, 30, 80);
+				panel->Dock = DockStyle::Fill;
+				this->lastControl = panel;
 				this->panel->Controls->Add(panel);
-
+				if (this->lastControl != nullptr)
+				{
+					panel->SetFlowBreak(this->lastControl, true);
+				}
 			}
 			else if (element->IsType(RadioGroupType))
 			{
+				FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+				panel->AutoSize = true;
+				this->panel->Controls->Add(panel);
+				RadioGroup^ radioGroup = (RadioGroup^) element;
+				//radioGroup->container = panel;
 			}
 			else if (element->IsType(TextFieldType))
 			{

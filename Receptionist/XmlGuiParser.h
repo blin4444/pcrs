@@ -34,12 +34,14 @@ public:
 		String^ type;
 		String^ required;
 		TextField^ textField;
+		FormElement^ newElement;
 
 		elements = gcnew System::Collections::Generic::List<FormElement^>();
 
 		try {
 			while (reader->Read()) 
 			{
+				newElement = nullptr;
 				switch (reader->NodeType) 
 				{
 					case XmlNodeType::Element: // The node is an element.
@@ -63,12 +65,13 @@ public:
 								type = reader->GetAttribute("type");
 								if (type != nullptr)
 								{
-									FormElement^ newElement;
+									
 
 									bool isText = type == "text" || type == "string";
 									bool isNumber = type == "number" || type == "integer";
 									bool isRadio = type == "radio";
 									bool isList = type == "list";
+									bool isGender = type == "gender";
 									if (isText || isNumber)
 									{
 										textField = gcnew TextField(id, label);
@@ -78,24 +81,14 @@ public:
 									else if (type == "checkbox")
 									{
 									}
-									else if (isRadio || isList)
+									else if (isRadio || isList || isGender)
 									{
 										RadioGroup^ radioGroup = gcnew RadioGroup(id, label);
 										radioGroup->isList = isList;
 										newElement = radioGroup;
 									}
 							
-									if (newElement != nullptr)
-									{
-										if (currentSection != nullptr)
-										{
-											currentSection->elements->Add(newElement);
-										}
-										else
-										{
-											elements->Add(newElement);
-										}
-									}
+									
 								}
 							}
 							//Ignoring fields with no ID
@@ -105,7 +98,7 @@ public:
 						}
 						else if (elementType == "br")
 						{
-							elements->Add(gcnew Break());
+							newElement = gcnew Break();
 						}
 						break;
 					case XmlNodeType::Text: //Display the text in each element.
@@ -124,6 +117,18 @@ public:
 						Console::Write("END </" + reader->Name);
 						Console::WriteLine(">");
 						break;
+				}
+
+				if (newElement != nullptr)
+				{
+					if (currentSection != nullptr)
+					{
+						currentSection->elements->Add(newElement);
+					}
+					else
+					{
+						elements->Add(newElement);
+					}
 				}
 			}
 		}
