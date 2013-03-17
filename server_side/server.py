@@ -18,7 +18,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				return "1 - No user with token found"
 
 			query.insert_sign_in(user_id, 1)
-			return str(user_id)
+			return "0 - Success"
 
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
@@ -57,26 +57,22 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		return sin.isdigit()
 	
 	def do_POST(s):
-		return_code = 200;
 		response_data = ""
 		if s.path == "/validate/":
 			if 'token' in s.headers:
 				token = s.headers["token"]
 				if query.validate_token(token) == None:
-					response_data = "No token found when user tries to sign in"
-					return_code = 200
+					response_data = "1 - No token found when user tries to sign in"
 				else:	
-					response_data = "User exists in the system"
-					return_code = 200
+					response_data = "0 - Success"
 		elif s.path == "/signin/":
 			if 'token' in s.headers and 'reason_id' \
 			in s.headers:			
 				token = s.headers["token"]
 				reason_id = s.headers["reason_id"]
-				response_data = s.sign_in(token, int(reason_id))
+				response_data = self.sign_in(token, int(reason_id))
 			else:
-				response_data = "request must have both token and reason_id in header"
-				return_code = 404
+				response_data = "2 - request must have both token and reason_id in header"
 		
 		elif s.path == "/register/":
 			response_data = ""
@@ -89,14 +85,14 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			for argument in arguments:
 				if argument != "sin":
 					print "Not sin"
-					(value, response_data) = s.process_param(response_data, argument, s.headers.get(argument, False))
+					(value, response_data) = self.process_param(response_data, argument, s.headers.get(argument, False))
 					if not value:
 						should_register = False
 					args.append(value)
 				else:
 					sin = s.headers.get("sin", "0")
 					print "SIN!" + sin
-					if not s.validate_sin(sin):
+					if not self.validate_sin(sin):
 						response_data = response_data + "sin is invalid\n"
 						should_register = False;
 					else:					
@@ -108,16 +104,15 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 						else:
 							args.append(sin)
 			if should_register and sin != None:
-				response_data = s.register(sectionID, args, sin)
+				response_data = self.register(sectionID, args, sin)
 			else:
 				response_data = "8 - "+ response_data + "\n Will not register the user"
 		elif s.path == "/options/":
 			response_data = s.options()
 		else:
 			response_data = "unknown request"
-			return_code = 404
 
-		s.send_response(return_code, response_data)
+		s.send_response(200)
 		s.send_header("Content-type", "text/html")
 		s.end_headers()
 		s.wfile.write(response_data)
