@@ -21,8 +21,8 @@ public:
 	virtual void InitFontsSizes()
 	{
 		labelFont = gcnew System::Drawing::Font("Segoe UI", 12);
-		labelSize = System::Drawing::Size(120, 40);
-		textBoxSize = System::Drawing::Size(140, 40);
+		labelSize = System::Drawing::Size(120,40);
+		textBoxSize = System::Drawing::Size(170,40);
 		textBoxFont = gcnew System::Drawing::Font("Segoe UI", 11);
 	}
 
@@ -33,6 +33,7 @@ public:
 	virtual void AddField(TextField^ textField)
 	{
 		Panel^ newPanel = CreateNewPanel();
+		
 		Label^ label = CreateLabel(textField->label);
 			
 		newPanel->Controls->Add(label);
@@ -54,7 +55,7 @@ public:
 		label->Text = text;
 		label->Size =  ((XmlGuiMaker^) this)->GetLabelSize();
 		label->ForeColor = Color::Gray;
-		label->TextAlign = ContentAlignment::TopRight;
+		label->TextAlign = ContentAlignment::TopLeft;
 
 		return label;
 	}
@@ -74,6 +75,11 @@ public:
 	virtual void PlaceToRight(Control^ left, Control^ right) 
 	{
 		right->SetBounds(left->Bounds.Width + 10,0, right->Bounds.Width, right->Bounds.Height);
+	}
+
+	virtual void PlaceUnder(Control^ top, Control^ bottom) 
+	{
+		bottom->SetBounds(0, top->Bounds.Height + 10, bottom->Bounds.Width, bottom->Bounds.Height);
 	}
 
 	/*virtual Label^ CreateLabel(System::String^ text)
