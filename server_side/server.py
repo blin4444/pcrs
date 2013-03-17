@@ -68,6 +68,14 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				else:	
 					response_data = "User exists in the system"
 					return_code = 200
+		
+		elif s.path == "/getxml/":
+			file = headers.get("file", False)
+			if s.file == "remote_generated_xml":
+				response_data = s.options()
+			else:
+				response_data = str(open(file).read())
+		
 		elif s.path == "/signin/":
 			if 'token' in s.headers and 'reason_id' \
 			in s.headers:			
@@ -111,8 +119,6 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				response_data = s.register(sectionID, args, sin)
 			else:
 				response_data = "8 - "+ response_data + "\n Will not register the user"
-		elif s.path == "/options/":
-			response_data = s.options()
 		else:
 			response_data = "unknown request"
 			return_code = 404
