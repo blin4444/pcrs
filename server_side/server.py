@@ -120,6 +120,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		s.send_response(return_code, response_data)
 		s.send_header("Content-type", "text/html")
 		s.end_headers()
+		s.wfile.write(response_data)
 
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
