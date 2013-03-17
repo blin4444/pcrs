@@ -1,6 +1,5 @@
 import MySQLdb
 from datetime import datetime
-from words import TokenGenerator
 class Query:
 
 	def __init__(self):
@@ -9,7 +8,6 @@ class Query:
 				passwd = "root",
 				db="PCRS_V3");
 		self.cur = self.db.cursor()
-		self.words = TokenGenerator("wordlist.txt")
 
 	def close(self):
 		self.cur.close()
@@ -17,28 +15,29 @@ class Query:
 
 	def validate_token(self, token_string):
 		query = """SELECT id FROM User where token=%s"""
-		self.cur.execute(query, (token_string))		
+		self.cur.execute(query, (token_string))	
 		row = self.cur.fetchone()
 			
-		if row == None:
-			return None
-		return row[0]
+		if row != None:
+			row = row[0]
+		return row
 	
 	def generate_token(self):
-		word_candidates = self.words.get();
-
+		
+		#temperory generator until we figure out a better way		
+		max_id = 100000
 		try:
-			self.cur.execute("""SELECT Count(id) FROM User WHERE token LIKE %s%""", (word_candidates))		
-			count = self.cur.fetchone()
-			if count != None:
-				count = count[0]
+			self.cur.execute("""SELECT MAX(id) FROM User""")		
+			max_id = self.cur.fetchone()
+			if max_id != None:
+				max_id = max_id[0]
 		except:
-			count = 0
+			max_id = None
 		
-		if count != 0:
-			return word_candidates+str(count+1)
+		if max_id != None:
+			return "token"+str(max_id+1)
 		
-		return word_candidates
+		return "token1"
 
 	def sin_already_exists(self, sin):
 		query = """SELECT * FROM User_Info WHERE sin = %s"""
@@ -105,30 +104,3 @@ class Query:
 			print "Unexpected Error when inserting registration option: "+str(err)
 			return False
 	
-	def select_registration_options(self):
-		sql_es = """SELECT * FROM Employment_Situation"""
-		sql_ud = """SELECT * FROM Unemployment_Duration"""
-		sql_ga = """SELECT * FROM Government_Assistance"""
-		sql_rs = """SELECT * FROM Residency_Status"""
-		
-		tables = [("Employment Situation", sql_es), 
-				("Unemployment Duration", sql_ud), 
-				("Government Assistance", sql_ga), 
-				("Residency Status", sql_rs)]
-
-		query_list = []
-
-		try:
-			for t in tables:
-				self.cur.execute(t[1])
-				result_set = self.cur.fetchall()
-				for r in result_set:
-					query_list.append((t[0], r[0], r[1]))
-		except Exception, err:
-			print "Unexpected Error when extracting registration options:" + str(err)
-
-		return query_list
-
-
-
-
