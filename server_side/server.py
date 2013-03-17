@@ -101,28 +101,30 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			argumentMap = form.buildArgumentMap()
 			arguments = argumentMap[sectionID]
 			args = list()
-			sin = None
-			for argument in arguments:
-				if argument[0] != "sin":
-					(value, response_data) = self.process_param(response_data, \
+
+			sin = self.headers.get("sin", "0")
+			check_duplicate = query.sin_already_exists(sin)
+			if check_duplicate:
+				response_data = response_data + \
+						"User with this SIN already existself. Here is the related info: "\
+						+str(check_duplicate)
+				should_register = False;
+			
+			else:
+				for argument in arguments:
+					if argument[0] != "sin":
+						(value, response_data) = self.process_param(response_data, \
 								argument[1], self.headers.get(argument[0], False))
-					if not value:
-						should_register = False
-					args.append(value)
-				else:
-					sin = self.headers.get("sin", "0")
-					if not self.validate_sin(sin):
+						if not value:
+							should_register = False
+						args.append(value)
+					elif not self.validate_sin(sin):
 						response_data = response_data + "SIN is invalid.\n"
 						should_register = False;
+						args.append(sin)
 					else:									
-						check_duplicate = query.sin_already_exists(sin)
-						if check_duplicate:
-							response_data = response_data + \
-									"User with this SIN already existself. Here is the related info: "\
-									+str(check_duplicate)
-							should_register = False;
-						else:
-							args.append(sin)
+						args.append(sin)
+			
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 				if not response_data[0].isdigit():
