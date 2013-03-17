@@ -52,6 +52,16 @@ CREATE TABLE IF NOT EXISTS Residency_Status(
 	text VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS Registration_Option(
+	user_id INT NOT NULL,
+	es_id INT,
+	ud_id INT,
+	ga_id INT,
+	rs_id INT,
+	registration_time DATETIME NOT NULL,
+	PRIMARY KEY(user_id, registration_time)
+);
+
 INSERT INTO Employment_Situation(text) VALUES('I am unemployed.');
 INSERT INTO Employment_Situation(text) VALUES('I am working 20 hours or less and want to work more.');
 INSERT INTO Employment_Situation(text) VALUES('I am must leave my job for medical reason.');
