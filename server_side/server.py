@@ -2,6 +2,7 @@ import SocketServer
 #import BaseHTTPServer, SimpleHTTPServer
 #import ssl
 from query import Query
+from form import Form
 
 from datetime import datetime
 from BaseHTTPServer import BaseHTTPRequestHandler
@@ -29,25 +30,22 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			if user_id == None:
 				return "No user with token found"
 
-			query.insert_sign_in(user_id, reason_id)
+			query.insert_sign_in(user_id, 1)
 			return str(user_id)
 		
 		except Exception, err:
 			print "Unexpected Error: "+str(err)
 			return "Unknown Database Error"
 	
-	def register(self,last_name, first_name, middle_name, sex, sin, date_of_birth, \
-				street_address, city, province, postal_code, phone, alternate_phone, email):		
-
+	def register(self, id, args):
 		check_duplicate = query.sin_already_exists(sin)
-		
-		if check_duplicate != None:
+		if check_duplicate:
 			return "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
-
-		user_id = query.insert_user_info(last_name, first_name, \
-				middle_name, sex, sin, date_of_birth, \
-				street_address, city, province, postal_code, \
-				phone, alternate_phone, email)
+		
+		section = form.sectionMap[id]
+		insert_user_info(self, buildQuery(section), args)
+		
+		user_id = query.insert_user_info()
 
 		if user_id == None:
 			return "Failed to input user into the database"
@@ -71,18 +69,19 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			value = False
 		return (value, response_data)
 	
-	def validate_sin(self, sin):
+	def validate_sin(self, sin):		
+		def validate_sin(self, sin):
 		"""Verifies that the SIN is a nine digit number."""
 		sin = "".join(sin.split()) # remove whitespace
 		if (len(sin) != 9): return False
-		return sin.isdigit();
+		return sin.isdigit(); 
 
 	def handle(self):
 		self.data = self.request.recv(2048).strip()
 		print self.data
 
 		request = HTTPRequest(self.data)	
-		response_data = "Test Response"
+		reponse_data = ""
 		if request.error_code != None:
 			response_data = "Request Data Corrupted: "+request.error_message
 		elif request.path == "/validate/":
@@ -92,8 +91,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 					response_data = "No user with token found"
 				else:	
 					response_data = "User exists in the system"
-			else:
-				response_data = "request must have token parameter in header"
 		elif request.path == "/signin/":
 			if 'token' in request.headers and 'reason_id' \
 			in request.headers:			
@@ -105,45 +102,43 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 		
 		elif request.path == "/register/":
 			response_data = ""
-			(last_name, response_data) = self.process_param(response_data, "last name", request.headers.get("last_name", False))
-			(first_name, response_data) = self.process_param(response_data, "first name", request.headers.get("first_name", False))
+			sectionID = request.headers.get("sectionID", False)
+			argumentMap = form.buildArgumentMap()
+			arguments = argumentMap[sectionID]
+			args = list()
+			for argument in arguments
+				if argument != sin:
+					(value, response_data) = self.process_param(response_data, "last name", request.headers.get("last_name", False))
+					args.append(value)
+				else:
+					sin = request.headers.get("sin", "0")
+					if not self.validate_sin(sin):
+						sin = False
+						response_data = response_data + "sin is invalid\n"
 			
-			middle_name = request.headers.get("middle_name", "")
-
-			(sex, response_data) = self.process_param(response_data, "sex", request.headers.get("sex", False))
-			
-			sin = request.headers.get("sin", "0")
-			if not self.validate_sin(sin):
-				sin = False
-				response_data = response_data + "sin is invalid\n"			
-			#date_of_birth = datetime.strptime(request.headers.get("date_of_birth", "0000-0-0"), "%Y %m %d")
-			date_of_birth = datetime.now()			
-			
-			(street_address, response_data) = self.process_param(response_data, "street address", request.headers.get("street_address", False))
-			(city, response_data) = self.process_param(response_data, "city", request.headers.get("city", False))
-			(province, response_data) = self.process_param(response_data, "province", request.headers.get("province", False))
-			(postal_code, response_data) = self.process_param(response_data, "postal code", request.headers.get("postal_code", False))
-			(phone, response_data) = self.process_param(response_data, "phone", request.headers.get("phone", False))
-				
-			alternate_phone = request.headers.get("alternate_phone", "-")
-			email = request.headers.get("email", "-")
-
-			if last_name and first_name and sex and sin and date_of_birth\
-				 and street_address and city and province and postal_code and phone:
-				response_data = self.register(last_name, first_name, middle_name, sex, sin, date_of_birth, \
-							street_address, city, province, postal_code, phone,\
-							alternate_phone, email) 
+			response_data = self.register(sectionID, args) 
 		elif request.path == "/list/":
 			response_data = self.list_all()
 		else:
 			response_data = "unknown request"
 		
 		self.request.sendall(response_data)
-		
+
+	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id):
+		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, registration_time)
+		VALUES(%s, %s, %s, %s, %s, %s)"""
+		try:
+			self.cur.execute(sql, (user_id, es_id, ud_id, ga_id, rs_id, datetime.now()))
+			self.db.commit()
+			return True
+		except Exception, err:
+			print "Unexpected Error when inserting registration option: "+str(err)
+			return False 
+
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
 	query = Query()
-
+	form = Form("form.xml")
 	server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
 	try:
 		server.serve_forever()
