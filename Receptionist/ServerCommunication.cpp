@@ -37,14 +37,9 @@ String^ ServerCommunication::GetXmlFile(System::String^ file)
 	return result;
 }
 
-int ServerCommunication::GetCodeFromResult(String^ result)
-{
-	return Convert::ToInt32(result[0])-48;
-}
-
-int ServerCommunication::SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args)
+String^ ServerCommunication::SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args)
 {
 	String^ result;
 	result = sendRequest("localhost:9999", "register", args, result);
-	return GetCodeFromResult(result);
+	return result;
 }

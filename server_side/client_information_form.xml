@@ -17,17 +17,15 @@
         <input id="phone" name="Phone Number" type="text"/>
         <input id="alternate_phone" name="Alternate Phone Number" type="text" placeholder="n/a"/>
         <input id="email" name="Email" type="text"/>
-    </div>
-
-    <div id="Registration_Option">
-        <input id="employment_situation" name="Employment Situation" type="list"/>
-        <input id="unemployment_duration" name="Unemployment Duration" type="list" placeholder="n/a"/>
+		<br/>
+		<br/>
+        <input id="es_id" name="Employment Situation" type="list"/>
+        <input id="ud_id" name="Unemployment Duration" type="list" placeholder="n/a"/>
         <br/>
-        <input id="government_assistance" name="Government Assistance" type="list" placeholder="n/a"/>
-        <input id="residency_status" name="Residency Status" type="list"/>
-    </div>
-
-    <div id="Residency_Status">
-        <input id="office_use" name="Office Use" type="list"/>
+        <input id="ga_id" name="Government Assistance" type="list" placeholder="n/a"/>
+        <input id="rs_id" name="Residency Status" type="list"/>
+		<br/>
+		<br/>
+        <input id="ou_id" name="Office Use" type="list"/>
     </div>
 </form>

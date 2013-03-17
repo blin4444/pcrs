@@ -19,9 +19,8 @@ ref class ServerCommunication
 public:
 	ServerCommunication(void);
 	String^ GetXmlFile(System::String^ file);
-	int SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args);
+	String^ SubmitUserInfo(Collections::Generic::List<KeyValue^>^ args);
 	String^ sendRequest(String^ host, String^ path, Collections::Generic::List<KeyValue^>^ args, String^ result);
-	int GetCodeFromResult(String^ result);
 private:
 	HttpClient^ client;
 };

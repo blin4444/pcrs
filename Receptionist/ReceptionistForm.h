@@ -82,66 +82,10 @@ namespace Receptionist {
 
 	private:
 
+		Label^ output;
 		XmlGuiParser^ guiParser;
 
-		/*void GetData(String^ id, System::Collections::Generic::List<FormElement^>^ elements)
-		{
-			bool isRequired;
-			String^ sgId;
-			String^ sgValue;
-
-			if (id != "")
-			{
-				Collections::Generic::List<KeyValue^>^ args = gcnew Collections::Generic::List<KeyValue^>();
-				args->Add(gcnew KeyValue("sectionID", id));
-
-				for each (FormElement^ formElement in elements)
-				{
-					sgValue = nullptr;
-					isRequired = formElement->isRequired;
-					sgId = formElement->id;
-
-					if (formElement->IsType(PCRS::SectionType))
-					{
-						auto section = (Section^) formElement;
-						GetData(section->id, section->elements);
-					}
-					else if (formElement->IsType(PCRS::RadioGroupType))
-					{
-						auto section = (RadioGroup^) formElement;
-						int value = section->Value;
-						sgValue = value.ToString();
-					}
-					else if (formElement->IsType(PCRS::TextFieldType))
-					{
-						auto textField = (TextField^) formElement;
-						sgValue = textField->Value;
-					}
-					else if (formElement->IsType(PCRS::DateType))
-					{
-						auto date = (DateElement^) formElement;
-						sgValue = date->Value;
-
-					}
-					else if (formElement->IsType(PCRS::BreakType))
-					{
-						continue;
-					}
-
-					if (!formElement->IsType(PCRS::SectionType))
-						args->Add(gcnew KeyValue(sgId, sgValue));
-
-					if (sgValue == nullptr)
-					{
-						sgValue = "N/A";
-					}
-					Console::WriteLine(sgId + ": " + sgValue);
-				}
-			}
-
-		}*/
-
-		void GetData()
+		String^ GetData()
 		{
 			String^ placeholder;
 			String^ sgId;
@@ -191,14 +135,26 @@ namespace Receptionist {
 						args->Add(gcnew KeyValue(sgId, sgValue));
 						Console::WriteLine(sgId + ": " + sgValue);
 					}
-					sCom->SubmitUserInfo(args);
+					return sCom->SubmitUserInfo(args);
 				}
 			}
 		}
 
 		System::Void btnSubmit_Click(System::Object^  sender, System::EventArgs^  e)
 		{
-			GetData();
+			String^ result = GetData();
+			int resultCode = Convert::ToInt32(result[0])-48;
+			switch(resultCode)
+			{
+			case 0:
+				ReceptionistForm::ForeColor = Color::Green;
+				ReceptionistForm::output->Text = "Success! User token is: " + result;
+				break;
+			default:
+				ReceptionistForm::output->Text = result;
+				ReceptionistForm::ForeColor = Color::Red;
+				break;
+			}
 		}
 
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -281,11 +237,23 @@ namespace Receptionist {
 				submit->AutoSize = true;
 				submit->Click += gcnew System::EventHandler(this, &ReceptionistForm::btnSubmit_Click);
 				newPanel->Controls->Add(submit);
+
 				panel->Controls->Add(newPanel);
 				panel->SetRow(newPanel, maker->IncRow());
+
+				Label^ output_text = gcnew Label();
+				output_text->Text = "";
+				output_text->Font = gcnew System::Drawing::Font("Segoe UI", 12);
+				output_text->Anchor = AnchorStyles::Right;
+				this->output = output_text;
+
+				Panel^ output_panel = gcnew Panel();
+				output_panel->Size = System::Drawing::Size(100, 120);
+				output_panel->Controls->Add(output_text);
+				output_panel->Anchor = AnchorStyles::Top;
+				panel->Controls->Add(output_panel);
+				panel->SetRow(output_panel, maker->IncRow());
 			}
 		}
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-			 }
 	};
 }

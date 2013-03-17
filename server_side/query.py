@@ -7,7 +7,7 @@ class Query:
 		self.db = MySQLdb.connect(host="localhost",
 				user = "root",
 				passwd = "root",
-				db="PCRS_V3");
+				db="PCRS_V4");
 		self.cur = self.db.cursor()
 		self.word = TokenGenerator("wordlist.txt")
 
@@ -111,11 +111,11 @@ class Query:
 		sql_rs = """SELECT * FROM Residency_Status"""
 		sql_ou = """SELECT * FROM Office_Use"""
 
-		tables = [("employment_situation", sql_es),
-		("unemployment_duration", sql_ud),
-		("government_assistance", sql_ga),
-		("residency_status", sql_rs),
-                ("office_use", sql_ou)]
+		tables = [("es_id", sql_es),
+		("ud_id", sql_ud),
+		("ga_id", sql_ga),
+		("rs_id", sql_rs),
+                ("ou_id", sql_ou)]
 
 		query_list = []
 
