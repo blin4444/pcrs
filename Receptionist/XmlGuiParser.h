@@ -62,8 +62,6 @@ public:
 					id = reader->GetAttribute("id");
 					label = reader->GetAttribute("name");
 					style = reader->GetAttribute("style");
-					required = reader->GetAttribute("required");
-					isRequired = (required != nullptr && required == "true");
 					placeholder = reader->GetAttribute("placeholder");
 					elementType = reader->Name;
 					Console::Write("ELEMENT <" + elementType + id);
@@ -90,7 +88,7 @@ public:
 								bool isDate = type == "date";
 								if (isText || isNumber)
 								{
-									textField = gcnew TextField(id, label);
+									textField = gcnew TextField(id, label, placeholder);
 									textField->isNumber = isNumber;
 									newElement = textField;
 								}
@@ -99,7 +97,7 @@ public:
 								}
 								else if (isRadio || isList || isGender)
 								{
-									radioGroup = gcnew RadioGroup(id, label);
+									radioGroup = gcnew RadioGroup(id, label, placeholder);
 									radioGroup->isGender = isGender;
 									radioGroup->isList = isList;
 									newElement = radioGroup;
@@ -107,7 +105,7 @@ public:
 								}
 								else if (isDate)
 								{
-									dateElement = gcnew DateElement(id, label);
+									dateElement = gcnew DateElement(id, label, placeholder);
 									newElement = dateElement;
 								}
 									

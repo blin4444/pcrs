@@ -6,11 +6,11 @@ ref class TextField :
 public FormElement
 {
 public:
-	TextField(String^ id, String^ label)
+	TextField(String^ id, String^ label, String^ placeholder)
 	{
 		this->id = id;
 		this->label = label;
-		this->isRequired = false;
+		this->placeHolder = placeholder;
 		this->isNumber = false;
 	}
 

@@ -143,7 +143,7 @@ namespace Receptionist {
 
 		void GetData()
 		{
-			bool isRequired;
+			String^ placeholder;
 			String^ sgId;
 			String^ sgValue;
 			ServerCommunication^ sCom = gcnew ServerCommunication();
@@ -157,7 +157,8 @@ namespace Receptionist {
 					for each (FormElement^ formElement in section->elements)
 					{
 						sgValue = nullptr;
-						isRequired = formElement->isRequired;
+						placeholder = nullptr;
+						placeholder = formElement->placeHolder;
 						sgId = formElement->id;
 
 						if (formElement->IsType(PCRS::RadioGroupType))
@@ -182,9 +183,9 @@ namespace Receptionist {
 							continue;
 						}
 
-						if (sgValue == nullptr)
+						if (sgValue == nullptr && placeholder != nullptr)
 						{
-							sgValue = "N/A";
+							sgValue = placeholder;
 						}
 
 						args->Add(gcnew KeyValue(sgId, sgValue));

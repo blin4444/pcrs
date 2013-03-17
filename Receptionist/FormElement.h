@@ -15,7 +15,6 @@ public:
 
 	String^ id;
 	String^ label; 
-	bool isRequired;
 	String^ placeHolder;
 	String^ value;
 

@@ -11,7 +11,6 @@ public:
 	Section(String^ tableId)
 	{
 		this->id = tableId;
-		this->isRequired = false;
 		this->label = nullptr;
 		elements = gcnew System::Collections::Generic::List<FormElement^>();
 	}

@@ -6,11 +6,11 @@ public FormElement
 {
 public:
 
-	DateElement(String^ id, String^ label)
+	DateElement(String^ id, String^ label, String^ placeholder)
 	{
 		this->id = id;
 		this->label = label;
-		this->isRequired = false;
+		this->placeHolder = placeholder;
 	}
 
 	virtual bool IsType(PCRS::ElementType type) override

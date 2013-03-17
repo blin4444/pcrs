@@ -5,11 +5,11 @@ ref class RadioGroup :
 public FormElement
 {
 public:
-	RadioGroup(String^ id, String^ label)
+	RadioGroup(String^ id, String^ label, String^ placeholder)
 	{
 		this->id = id;
 		this->label = label;
-		this->isRequired = false;
+		this->placeHolder = placeholder;
 		this->isList = false;
 		this->strings = gcnew System::ComponentModel::BindingList<String^>();
 		this->isGender = false;
