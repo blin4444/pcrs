@@ -104,22 +104,21 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			sin = None
 			for argument in arguments:
 				if argument != "sin":
-					print "Not sin"
 					(value, response_data) = self.process_param(response_data, argument, request.headers.get(argument, False))
 					if not value:
 						should_register = False
 					args.append(value)
 				else:
 					sin = request.headers.get("sin", "0")
-					print "SIN!" + sin
+					
 					if not self.validate_sin(sin):
-						response_data = response_data + "sin is invalid\n"
+						response_data = response_data + "12 - sin is invalid\n"
 						should_register = False;
 					else:					
 						print "is valid"						
 						check_duplicate = query.sin_already_exists(sin)
 						if check_duplicate:
-							response_data = response_data + "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
+							response_data = response_data + "11 - User with this SIN already exists. Here is the related info: "+str(check_duplicate)
 							should_register = False;
 						else:
 							args.append(sin)
@@ -133,17 +132,6 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
 			response_data = "9 - unknown request"
 		
 		self.request.sendall(response_data)
-
-	def insert_registration_option(self, user_id, es_id, ud_id, ga_id, rs_id):
-		sql = """INSERT INTO Registration_Option(user_id, es_id, ud_id, ga_id, rs_id, registration_time)
-		VALUES(%s, %s, %s, %s, %s, %s)"""
-		try:
-			self.cur.execute(sql, (user_id, es_id, ud_id, ga_id, rs_id, datetime.now()))
-			self.db.commit()
-			return True
-		except Exception, err:
-			print "Unexpected Error when inserting registration option: "+str(err)
-			return False 
 
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
