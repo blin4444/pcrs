@@ -118,7 +118,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 						check_duplicate = query.sin_already_exists(sin)
 						if check_duplicate:
 							response_data = response_data + \
-									"User with this SIN already existself. Here is the related info: "\
+									"A user with this SIN already exists. Here is the related info: "\
 									+str(check_duplicate)
 							should_register = False;
 						else:
