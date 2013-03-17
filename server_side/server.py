@@ -44,7 +44,7 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	def process_param(self, response_data, name, value):
 		print "processing "+name+" "+str(value)
-		if value and value.strip() != "":
+		if value and value.strip() != "" and value != "-1":
 			if (name == "Postal Code"): # I am SO SORRY!!
 				value = "".join(value.strip().split())
 			else:
