@@ -56,41 +56,41 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if (len(sin) != 9): return False
 		return sin.isdigit()
 	
-	def do_POST(s):
+	def do_POST(self):
 		response_data = ""
-		if s.path == "/validate/":
-			if 'token' in s.headers:
-				token = s.headers["token"]
+		if self.path == "/validate/":
+			if 'token' in self.headers:
+				token = self.headers["token"]
 				if query.validate_token(token) == None:
 					response_data = "1 - No token found when user tries to sign in"
 				else:	
 					response_data = "0 - Success"
 
 		
-		elif s.path == "/getxml/":
-			file = headers.get("file", False)
+		elif self.path == "/getxml/":
+			file = headerself.get("file", False)
 			try:
-				if s.file == "remote_generated_xml":
-					response_data = s.options()
+				if self.file == "remote_generated_xml":
+					response_data = self.options()
 				else:
 					response_data = str(open(file).read())
 			except Exception, err:
 				response_data = "5 - Xml request failed, file not found"
 		
 
-		elif s.path == "/signin/":
-			if 'token' in s.headers and 'reason_id' \
-			in s.headers:			
-				token = s.headers["token"]
-				reason_id = s.headers["reason_id"]
+		elif self.path == "/signin/":
+			if 'token' in self.headers and 'reason_id' \
+			in self.headers:			
+				token = self.headers["token"]
+				reason_id = self.headers["reason_id"]
 				response_data = self.sign_in(token, int(reason_id))
 			else:
 				response_data = "2 - request must have both token and reason_id in header"
 		
-		elif s.path == "/register/":
+		elif self.path == "/register/":
 			response_data = ""
 			should_register = True
-			sectionID = s.headers.get("sectionID", False)
+			sectionID = self.headerself.get("sectionID", False)
 			argumentMap = form.buildArgumentMap()
 			arguments = argumentMap[sectionID]
 			args = list()
@@ -98,12 +98,12 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			for argument in arguments:
 				if argument != "sin":
 					print "Not sin"
-					(value, response_data) = self.process_param(response_data, argument, s.headers.get(argument, False))
+					(value, response_data) = self.process_param(response_data, argument, self.headerself.get(argument, False))
 					if not value:
 						should_register = False
-					args.append(value)
+					argself.append(value)
 				else:
-					sin = s.headers.get("sin", "0")
+					sin = self.headerself.get("sin", "0")
 					print "SIN!" + sin
 					if not self.validate_sin(sin):
 						response_data = response_data + "sin is invalid\n"
@@ -112,10 +112,10 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 						print "is valid"						
 						check_duplicate = query.sin_already_exists(sin)
 						if check_duplicate:
-							response_data = response_data + "User with this SIN already exists. Here is the related info: "+str(check_duplicate)
+							response_data = response_data + "User with this SIN already existself. Here is the related info: "+str(check_duplicate)
 							should_register = False;
 						else:
-							args.append(sin)
+							argself.append(sin)
 			if should_register and sin != None:
 				response_data = self.register(sectionID, args, sin)
 			else:
@@ -123,10 +123,10 @@ class CustomHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			response_data = "9 - Unknown request"
 
-		s.send_response(200)
-		s.send_header("Content-type", "text/html")
-		s.end_headers()
-		s.wfile.write(response_data)
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.end_headers()
+		self.wfile.write(response_data)
 
 if __name__ == "__main__":
 	HOST, PORT = "localhost", 9999
