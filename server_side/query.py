@@ -41,7 +41,7 @@ class Query:
 
 	def sin_already_exists(self, sin):
 		query = """SELECT * FROM User_Info WHERE sin = %s"""
-		info_query = """SELECT * FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
+		info_query = """SELECT first_name, last_name, date_of_birth, sin, token FROM User u, User_Info i where i.sin=%s AND u.id=i.id"""
 		self.cur.execute(query, (sin))
 		row = self.cur.fetchone()
 		print "does sin already exist?"+str(row)
@@ -54,7 +54,9 @@ class Query:
 				self.cur.execute(info_query, (sin))
 				result = self.cur.fetchone()		
 			print str(result)
-			return result
+			return "\nName: "+result[0]+" "+result[1]+\
+				"\nDate of Birth: "+str(result[2])+\
+				"\nSIN: "+result[3]+"\ntoken: "+ result[4]
 		else:
 			return None
 

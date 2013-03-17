@@ -47,5 +47,5 @@ class Form:
             fields = section.findall("./*")
             for field in fields:
                 if (field.tag != "br"):
-                    arguments.append(field.attrib["id"])
+                    arguments.append((field.attrib["id"], field.attrib["name"]))
         return mapping

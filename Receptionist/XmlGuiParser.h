@@ -24,11 +24,15 @@ public:
 
 	void Parse(String^ file)
 	{
-		ServerCommunication^ comm = gcnew ServerCommunication();
-		String^ test = comm->GetXmlFile(file);
-		String^ xml = comm->GetXmlFile(file);
-		Console::Write(xml);
-		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(xml));
+		#if SERVER_SIDE
+			ServerCommunication^ comm = gcnew ServerCommunication();
+			String^ test = comm->GetXmlFile(file);
+			String^ xml = comm->GetXmlFile(file);
+			Console::Write(xml);
+			Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader(gcnew IO::StringReader(xml));
+		#else
+			Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("../server_side/client_information_form.xml");
+		#endif
 
 		String^ id;
 		String^ label;
