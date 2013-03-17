@@ -12,7 +12,9 @@ public:
 		this->isRequired = false;
 		this->isList = false;
 		this->strings = gcnew System::ComponentModel::BindingList<String^>();
+		this->strings->Add("Nothing available");
 		this->isGender = false;
+		this->index = 0;
 	}
 
 	virtual bool IsType(PCRS::ElementType type) override
@@ -26,5 +28,17 @@ public:
 	System::Windows::Forms::ComboBox^ comboBox;*/
 
 	System::ComponentModel::BindingList<String^>^ strings;
+
+	int index;
+
+	property int Value
+    {
+    public:
+		int get() { return this->index; }
+        void set(int v)
+		{
+			this->index = v;
+		}
+    }
 };
 

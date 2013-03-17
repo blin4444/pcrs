@@ -122,6 +122,7 @@ public:
 		listBox->Font = GetTextBoxFont();
 		listBox->Size = GetTextBoxSize();
 		listBox->SelectedIndex = 0;
+		listBox->DataBindings->Add("SelectedIndex", radioGroup, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 		listBox->DropDownStyle = ComboBoxStyle::DropDownList;
 		PlaceToRight(label, listBox);
 		newPanel->Controls->Add(listBox);
@@ -166,12 +167,13 @@ public:
 		newPanel->Controls->Add(label);
 		//newPanel->SetFlowBreak(label, true);
 		ComboBox^ listBox = gcnew ComboBox();
-		
+
 		listBox->DataSource = radioGroup->strings;
 		//listBox->AutoSize = true;
 		listBox->Width = 300;
 		listBox->Name = radioGroup->id;
 		listBox->DropDownWidth = 450;
+		listBox->DataBindings->Add("SelectedIndex", radioGroup, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 
 		/*for (vector<String^>::iterator it = radioGroup.begin(); it != radioGroup.end(); it++)
 		{
@@ -224,7 +226,8 @@ public:
 		// Show the CheckBox and display the control as an up-down control.
 		//dateTimePicker->ShowCheckBox = true;
 		//dateTimePicker->ShowUpDown = true;
-		newPanel->Controls->Add(label);
+
+		dateTimePicker->DataBindings->Add("Text", date, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 		PlaceToRight(label, dateTimePicker);
 		newPanel->Controls->Add(dateTimePicker);
 	}
