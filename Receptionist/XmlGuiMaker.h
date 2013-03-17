@@ -7,6 +7,7 @@ using namespace System::Drawing;
 using namespace System::Windows::Forms;
 using namespace std;
 #include <vector>
+#include "TextField.h"
 
 ref class XmlGuiMaker abstract 
 {
@@ -29,13 +30,14 @@ public:
 
 	virtual Panel^ CreateNewPanel() = 0;
 
-	virtual void AddField(System::String^ text)
+	virtual void AddField(TextField^ textField)
 	{
 		Panel^ newPanel = CreateNewPanel();
-		Label^ label = CreateLabel(text);
+		Label^ label = CreateLabel(textField->label);
 			
 		newPanel->Controls->Add(label);
 		TextBox^ textBox = gcnew TextBox();
+		textBox->DataBindings->Add("Text", textField, "Value", false, DataSourceUpdateMode::OnPropertyChanged);
 		textBox->Font = ((XmlGuiMaker^) this)->GetTextBoxFont();
 		textBox->Size = ((XmlGuiMaker^) this)->GetTextBoxSize();
 		PlaceToRight(label, textBox);

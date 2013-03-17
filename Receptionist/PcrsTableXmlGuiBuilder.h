@@ -81,7 +81,7 @@ public:
 			}
 			else if (element->IsType(TextFieldType))
 			{
-				this->AddField(((TextField^) element)->label);
+				this->AddField((TextField^) element);
 			}
 			NewRow();
 		}

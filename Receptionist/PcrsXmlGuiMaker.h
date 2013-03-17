@@ -90,7 +90,7 @@ public:
 			}
 			else if (element->IsType(TextFieldType))
 			{
-				this->AddField(((TextField^) element)->label);
+				this->AddField(((TextField^) element));
 			}
 			else if (element->IsType(DateType))
 			{

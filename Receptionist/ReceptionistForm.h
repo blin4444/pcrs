@@ -44,6 +44,8 @@ namespace Receptionist {
 			}
 		}
 
+	protected: 
+
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -78,7 +80,17 @@ namespace Receptionist {
 #pragma endregion
 	
 	private:
+
+		XmlGuiParser^ guiParser;
 	
+		System::Void btnSubmit_Click(System::Object^  sender, System::EventArgs^  e)
+		{
+			for each (FormElement^ formElement in guiParser->elements)
+			{
+				Console::WriteLine(formElement->id + ": " + formElement->Value);
+			}
+		}
+
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
 			/*FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
@@ -96,7 +108,7 @@ namespace Receptionist {
 			this->Controls->Add(panel);
 
 			auto maker = gcnew PcrsTableXmlGuiMaker(panel);
-			XmlGuiParser^ guiParser = gcnew XmlGuiParser();
+			guiParser = gcnew XmlGuiParser();
 			XmlOptionsParser^ optionsParser = gcnew XmlOptionsParser(guiParser->radioGroups);
 
 			bool isError = false;
@@ -150,11 +162,14 @@ namespace Receptionist {
 				submit->Text = "Submit";
 				//submit->Size = System::Drawing::Size(300, 40);
 				submit->AutoSize = true;
+				submit->Click += gcnew System::EventHandler(this, &ReceptionistForm::btnSubmit_Click);
 				newPanel->Controls->Add(submit);
 				panel->Controls->Add(newPanel);
 				//panel->Controls->Add(submit);
 				panel->SetRow(newPanel, maker->IncRow());
 			}
 		}
-	};
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+			 }
+};
 }
