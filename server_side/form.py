@@ -33,7 +33,7 @@ class Form:
                 string2 += "%s, "
         if (elements[len(elements)-1].tag != "br"):
             string += elements[len(elements)-1].attrib['id'] + ") "
-            string2 += "'%s') "
+            string2 += "%s) "
         string += string2
         return str(string)
 
