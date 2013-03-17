@@ -4,7 +4,7 @@
 		<Field id="First Name" column="first_name" type="string"/>
 		<Field id="Middle Name" column="middle_name" type="string"/>
 		<Field id="Last Name" column="last_name" type="string"/>
-		<Field id="SIN Number" column="sin" type="string"/>
+		<Field id="SIN" column="sin" type="string"/>
         <br />
         <Field id="Birth Date" column="date_of_birth" type="string"/>
         <Field id="Gender" column="gender" type="string"/>

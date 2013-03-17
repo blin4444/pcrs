@@ -7,24 +7,6 @@ ref class XmlGuiMaker abstract
 {
 public:
 
-	/*XmlGuiMaker(Panel^ panel)
-	{
-		this->panel = panel;
-		isSeparateLines = false;
-	}
-
-	XmlGuiMaker(void)
-	{
-		isSeparateLines = false;
-	}*/
-	Panel^ CreateNewPanel()
-	{
-		Panel^ newPanel = gcnew Panel();
-		lastControl = newPanel;
-		panel->Controls->Add(newPanel);
-		return newPanel;
-	}
-
 	virtual void AddField(System::String^ text) = 0;
 
 	virtual void AddGenderField() = 0;
@@ -34,13 +16,26 @@ public:
 		this->isSeparateLines = isSeparateLines;
 	}
 
+	virtual bool GetSeparateLines()
+	{
+		return this->isSeparateLines;
+	}
+
+	virtual void CreateBreak(bool isForce) = 0;
+
 	virtual void PlaceToRight(Control^ left, Control^ right) 
 	{
 		right->SetBounds(left->Bounds.Width + 10,0, right->Bounds.Width, right->Bounds.Height);
 	}
 
+	virtual Label^ CreateLabel(System::String^ text)
+	{
+		Label^ label = gcnew Label();
+		label->Text = text;
+		return label;
+	}
+
 protected:
-	Panel^ panel;
 	bool isSeparateLines;
 	Control^ lastControl;
 };

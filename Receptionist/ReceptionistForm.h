@@ -70,36 +70,15 @@ namespace Receptionist {
 #pragma endregion
 	
 	private:
-		int currentRow;
-		int currentCol;
-		
-		Control^ lastControl;
-		bool isSeparateLines;
-
-		
-
-		
-
-		void AddFieldToFlowLayout()
-		{
-			
-		}
 	
 		System::Void ReceptionistForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		Xml::XmlTextReader^ reader = gcnew Xml::XmlTextReader("form.xml");
-		
-			/*TableLayoutPanel^ panel = gcnew TableLayoutPanel();
-			panel->AutoScroll = true;
-			panel->Dock = DockStyle::Fill;*/
-			isSeparateLines = false;
 
 			FlowLayoutPanel^ panel = gcnew FlowLayoutPanel();
+			panel->Padding = System::Windows::Forms::Padding(32);
 			panel->AutoScroll = true;
 			panel->Dock = DockStyle::Fill;
 			this->Controls->Add(panel);
-
-			currentRow = 0;
-			currentCol = 0;
 
 			String^ id;
 			String^ elementType;
@@ -119,7 +98,7 @@ namespace Receptionist {
 						{
 							if (type != nullptr)
 							{
-								isSeparateLines = type->Contains("separate");
+								maker->SetSeparateLines(type->Contains("separate"));
 							}
 						}
 						else if (elementType == "Field")
@@ -134,24 +113,16 @@ namespace Receptionist {
 								{
 									maker->AddField(id);
 								}
-								if (isSeparateLines)
+								if (maker->GetSeparateLines())
 								{
-									panel->SetFlowBreak(lastControl, true);
+									maker->CreateBreak(true);
 								}
 							}
 							//Ignoring fields with no ID
 						}
 						else if (elementType == "br")
 						{
-							currentRow++;
-							currentCol = 0;
-							if (lastControl != nullptr)
-							{
-								if (!isSeparateLines)
-								{
-									panel->SetFlowBreak(lastControl, true);
-								}
-							}
+							maker->CreateBreak(false);
 						}
 						break;
 					case XmlNodeType::Text: //Display the text in each element.
